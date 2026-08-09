@@ -279,6 +279,23 @@ static GENRE_TO_DOMAIN_MAP: LazyLock<HashMap<&'static str, &'static str>> = Lazy
     m.insert("Journalism & Media", "Periodicals & Reference");
     m.insert("Periodicals & Journals", "Periodicals & Reference");
     m.insert("General Collections", "Periodicals & Reference");
+    m.insert("Horror & Gothic", "Literature & Fiction");
+    m.insert("Children's Literature", "Literature & Fiction");
+    m.insert("Action & Adventure", "Literature & Fiction");
+    m.insert("Art & Architecture", "Arts & Recreation");
+    m.insert("Music", "Arts & Recreation");
+    m.insert("Fine Arts", "Arts & Recreation");
+    m.insert("Sports & Recreation", "Arts & Recreation");
+    m.insert("General World History", "History & Geography");
+    m.insert("American History", "History & Geography");
+    m.insert("European History", "History & Geography");
+    m.insert("Science & Nature", "Science & Technology");
+    m.insert("Technology & Engineering", "Science & Technology");
+    m.insert("Mathematics & Computing", "Science & Technology");
+    m.insert("Economics & Business", "Social Sciences");
+    m.insert("Sociology", "Social Sciences");
+    m.insert("Politics & Government", "Law & Government");
+    m.insert("Travel & Exploration", "History & Geography");
     m
 });
 
