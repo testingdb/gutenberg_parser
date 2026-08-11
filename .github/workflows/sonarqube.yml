@@ -2,8 +2,16 @@ name: SonarCloud analysis
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/**'
+      - '**/*.lock'
+      - '**/*.toml'
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - 'src/**'
+      - '**/*.lock'
+      - '**/*.toml'
 jobs:
   sonarqube:
     runs-on: ubuntu-latest
