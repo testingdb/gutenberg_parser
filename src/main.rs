@@ -311,6 +311,8 @@ static RE_SHELF_CAT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)^Catego
 
 #[derive(Serialize, Debug, Clone)]
 pub struct Agent {
+    #[serde(rename = "type")]
+    pub agent_type: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub agent_id: Option<u64>,
     pub name: String,
@@ -354,14 +356,8 @@ pub struct Ebook {
     pub alternative_titles: Vec<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub issued_date: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub author: Option<Agent>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub translator: Option<Agent>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub introduction_author: Option<Agent>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub illustrator: Option<Agent>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub agents: Vec<Agent>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     pub language: String,
@@ -544,7 +540,7 @@ fn extract_taxonomy(subjects_raw: &[String], bookshelves_raw: &[String]) -> Taxo
 // XML Parser Logic
 // ---------------------------------------------------------------------------
 
-fn parse_agent(parent_node: Option<Node>, ebook_id: &str, mirror_base: &str) -> Option<Agent> {
+fn parse_agent(parent_node: Option<Node>, agent_type: &str, ebook_id: &str, mirror_base: &str) -> Option<Agent> {
     let parent = parent_node?;
     let agent_node = if parent.tag_name().name() == "agent" && parent.tag_name().namespace() == NAMESPACES.get("pgterms").copied() {
         parent
@@ -593,6 +589,7 @@ fn parse_agent(parent_node: Option<Node>, ebook_id: &str, mirror_base: &str) -> 
         .map(|t| t.trim().to_string());
 
     Some(Agent {
+        agent_type: agent_type.to_string(),
         agent_id,
         name: name.to_string(),
         aliases,
@@ -695,12 +692,21 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
         return Err("filter_required_formats");
     }
 
-    let author = parse_agent(ebook.children().find(|n| n.tag_name().name() == "creator"), &ebook_id, mirror_base);
-    let translator = parse_agent(ebook.children().find(|n| n.tag_name().name() == "trl"), &ebook_id, mirror_base);
-    let introduction_author = parse_agent(ebook.children().find(|n| n.tag_name().name() == "aui"), &ebook_id, mirror_base);
-    let illustrator = parse_agent(ebook.children().find(|n| n.tag_name().name() == "ill"), &ebook_id, mirror_base);
+    let mut agents = Vec::new();
+    if let Some(agent) = parse_agent(ebook.children().find(|n| n.tag_name().name() == "creator"), "author", &ebook_id, mirror_base) {
+        agents.push(agent);
+    }
+    if let Some(agent) = parse_agent(ebook.children().find(|n| n.tag_name().name() == "trl"), "translator", &ebook_id, mirror_base) {
+        agents.push(agent);
+    }
+    if let Some(agent) = parse_agent(ebook.children().find(|n| n.tag_name().name() == "aui"), "introduction_author", &ebook_id, mirror_base) {
+        agents.push(agent);
+    }
+    if let Some(agent) = parse_agent(ebook.children().find(|n| n.tag_name().name() == "ill"), "illustrator", &ebook_id, mirror_base) {
+        agents.push(agent);
+    }
 
-    if author.is_none() && translator.is_none() && introduction_author.is_none() && illustrator.is_none() {
+    if agents.is_empty() {
         return Err("filter_creator");
     }
 
@@ -759,10 +765,7 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
         title,
         alternative_titles,
         issued_date,
-        author,
-        translator,
-        introduction_author,
-        illustrator,
+        agents,
         description,
         language,
         formats: format_objects,
