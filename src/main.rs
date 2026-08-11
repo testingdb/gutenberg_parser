@@ -279,16 +279,10 @@ static GENRE_TO_DOMAIN_MAP: LazyLock<HashMap<&'static str, &'static str>> = Lazy
     m.insert("Journalism & Media", "Periodicals & Reference");
     m.insert("Periodicals & Journals", "Periodicals & Reference");
     m.insert("General Collections", "Periodicals & Reference");
-    m.insert("Horror & Gothic", "Literature & Fiction");
-    m.insert("Children's Literature", "Literature & Fiction");
-    m.insert("Action & Adventure", "Literature & Fiction");
     m.insert("Art & Architecture", "Arts & Recreation");
     m.insert("Music", "Arts & Recreation");
     m.insert("Fine Arts", "Arts & Recreation");
     m.insert("Sports & Recreation", "Arts & Recreation");
-    m.insert("General World History", "History & Geography");
-    m.insert("American History", "History & Geography");
-    m.insert("European History", "History & Geography");
     m.insert("Science & Nature", "Science & Technology");
     m.insert("Technology & Engineering", "Science & Technology");
     m.insert("Mathematics & Computing", "Science & Technology");
@@ -385,7 +379,7 @@ fn transform_url(url: Option<&str>, ebook_id: &str, mirror_base: &str) -> Option
     }
 
     let ebook_id_clean = ebook_id.trim();
-    let digit_path = if ebook_id_clean.len() == 1 || !ebook_id_clean.chars().all(|c| c.is_ascii_digit()) {
+    let digit_path = if ebook_id_clean.len() <= 1 || !ebook_id_clean.chars().all(|c| c.is_ascii_digit()) {
         ebook_id_clean.to_string()
     } else {
         let chars: Vec<char> = ebook_id_clean.chars().collect();
@@ -462,6 +456,12 @@ fn extract_taxonomy(subjects_raw: &[String], bookshelves_raw: &[String]) -> Taxo
         } else {
             let parts: Vec<&str> = subj_clean.split(" -- ").map(|p| p.trim()).filter(|p| !p.is_empty()).collect();
             if !parts.is_empty() {
+                let heading = parts[0];
+                let heading_lower = heading.to_lowercase();
+                if let Some(&(dom, gen)) = LCSH_FORM_GENRE_MAP.get(heading_lower.as_str()) {
+                    inferred_domains.insert(dom);
+                    genres.insert(gen);
+                }
                 let mut filtered_subtopics = Vec::new();
                 for p in &parts[1..] {
                     let p_lower = p.to_lowercase();
@@ -472,7 +472,7 @@ fn extract_taxonomy(subjects_raw: &[String], bookshelves_raw: &[String]) -> Taxo
                         filtered_subtopics.push(p.to_string());
                     }
                 }
-                let mut topic_entry = vec![parts[0].to_string()];
+                let mut topic_entry = vec![heading.to_string()];
                 topic_entry.extend(filtered_subtopics);
                 raw_topics.push(topic_entry);
             }
@@ -667,10 +667,10 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
                 .trim();
 
             if let Some(transformed_url) = transform_url(Some(file_url), &ebook_id, mirror_base) {
-                let combined = format!("{} {}", fmt_val, transformed_url).to_lowercase();
-                let mime_key = if combined.contains("html") || combined.contains("htm") {
+                let url_lower = transformed_url.to_lowercase();
+                let mime_key = if fmt_val.contains("text/html") || url_lower.ends_with(".htm") || url_lower.ends_with(".html") {
                     Some("text/html")
-                } else if combined.contains("epub") {
+                } else if fmt_val.contains("epub") || url_lower.ends_with(".epub") {
                     Some("application/epub+zip")
                 } else {
                     None
@@ -693,17 +693,20 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
     }
 
     let mut agents = Vec::new();
-    if let Some(agent) = parse_agent(ebook.children().find(|n| n.tag_name().name() == "creator"), "author", &ebook_id, mirror_base) {
-        agents.push(agent);
-    }
-    if let Some(agent) = parse_agent(ebook.children().find(|n| n.tag_name().name() == "trl"), "translator", &ebook_id, mirror_base) {
-        agents.push(agent);
-    }
-    if let Some(agent) = parse_agent(ebook.children().find(|n| n.tag_name().name() == "aui"), "introduction_author", &ebook_id, mirror_base) {
-        agents.push(agent);
-    }
-    if let Some(agent) = parse_agent(ebook.children().find(|n| n.tag_name().name() == "ill"), "illustrator", &ebook_id, mirror_base) {
-        agents.push(agent);
+    let push_agents = |tag: &str, agent_type: &str, agents: &mut Vec<Agent>| {
+        for node in ebook.children().filter(|n| n.is_element() && n.tag_name().name() == tag) {
+            if let Some(agent) = parse_agent(Some(node), agent_type, &ebook_id, mirror_base) {
+                agents.push(agent);
+            }
+        }
+    };
+
+    push_agents("creator", "author", &mut agents);
+    push_agents("trl", "translator", &mut agents);
+    push_agents("aui", "introduction_author", &mut agents);
+    push_agents("ill", "illustrator", &mut agents);
+    if !agents.iter().any(|a| a.agent_type == "author") {
+        push_agents("aut", "author", &mut agents);
     }
 
     if agents.is_empty() {
@@ -800,13 +803,13 @@ fn write_chunk(data: &mut [Ebook], path: &str) -> std::io::Result<()> {
     data.sort_by_key(|e| e.ebook_id.parse::<u64>().unwrap_or(u64::MAX));
 
     let file = File::create(path)?;
-    let writer = BufWriter::new(file);
+    let mut writer = BufWriter::new(file);
 
-    let write_array = |mut w: Box<dyn Write>| -> std::io::Result<()> {
+    let write_array = |w: &mut dyn Write| -> std::io::Result<()> {
         w.write_all(b"[\n")?;
         let total = data.len();
         for (i, ebook) in data.iter().enumerate() {
-            serde_json::to_writer(&mut w, ebook)?;
+            serde_json::to_writer(&mut *w, ebook)?;
             if i + 1 < total {
                 w.write_all(b",\n")?;
             } else {
@@ -818,10 +821,11 @@ fn write_chunk(data: &mut [Ebook], path: &str) -> std::io::Result<()> {
     };
 
     if path.ends_with(".gz") {
-        let encoder = GzEncoder::new(writer, Compression::default());
-        write_array(Box::new(encoder))?;
+        let mut encoder = GzEncoder::new(writer, Compression::default());
+        write_array(&mut encoder)?;
+        encoder.finish()?;
     } else {
-        write_array(Box::new(writer))?;
+        write_array(&mut writer)?;
     }
     Ok(())
 }
