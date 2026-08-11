@@ -1,4 +1,16 @@
 # Project Gutenberg RDF/XML Archive Parser
+![Cover image](.misc/Gemini_Generated_Image_yjcci3yjcci3yjcc.png)
+
+<div align="center">
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
+
+</div>
 
 A high-performance, multi-threaded Rust CLI utility designed to parse, transform, and index Project Gutenberg RDF/XML metadata archives (`.tar.bz2`). 
 
@@ -107,17 +119,19 @@ Limit processing to 5,000 matches and split the output into chunks of 1,000 item
 [
   {
     "title": "The Adventures of Sherlock Holmes",
-    "alternative_titles": [],
     "issued_date": "1999-03-01",
-    "author": {
-      "agent_id": 467,
-      "name": "Doyle, Arthur Conan",
-      "aliases": ["Doyle, A. Conan"],
-      "webpage": "https://en.wikipedia.org/wiki/Arthur_Conan_Doyle",
-      "birth_date": "1859",
-      "death_date": "1930"
-    },
-    "description": null,
+    "agents": [
+      {
+        "type": "author",
+        "agent_id": 467,
+        "name": "Doyle, Arthur Conan",
+        "aliases": ["Doyle, A. Conan"],
+        "webpage": "https://en.wikipedia.org/wiki/Arthur_Conan_Doyle",
+        "birth_date": "1859",
+        "death_date": "1930"
+      }
+    ],
+    "description": "A collection of Sherlock Holmes short stories, originally published in The Strand Magazine.",
     "language": "en",
     "formats": [
       {
@@ -132,12 +146,13 @@ Limit processing to 5,000 matches and split the output into chunks of 1,000 item
     "taxonomy": {
       "domain": "Literature & Fiction",
       "genres": [
+        "Fiction & Novels",
         "Mystery & Crime"
       ],
       "topics": [
         {
           "heading": "Holmes, Sherlock (Fictional character)",
-          "subtopics": ["Fiction"]
+          "subtopics": ["Detective and mystery stories"]
         }
       ]
     },
