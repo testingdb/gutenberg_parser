@@ -3,6 +3,13 @@
 
 <div align="center">
 
+#### Release & Version
+
+[![Release](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml/badge.svg)](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml)
+[![Version 1.0.3](https://img.shields.io/badge/version-1.0.3-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
+
+#### Code Quality
+
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=testingdb_gutenberg_parser&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=testingdb_gutenberg_parser)
