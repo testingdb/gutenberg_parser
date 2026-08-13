@@ -364,6 +364,94 @@ pub struct Ebook {
 }
 
 // ---------------------------------------------------------------------------
+// Bridge Models: field names follow the target database schema (alt-target-schema.md)
+// ---------------------------------------------------------------------------
+
+#[derive(Serialize, Debug, Clone)]
+pub struct BridgeAgent {
+    pub role: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub pg_id: Option<u64>,
+    pub name: String,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub aliases: Vec<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub external_urls: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub birth_date: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub death_date: Option<String>,
+}
+
+#[derive(Serialize, Debug, Clone)]
+pub struct BridgeFormat {
+    pub mime_type: String,
+    pub file_url: String,
+}
+
+#[derive(Serialize, Debug, Clone)]
+pub struct BridgeEbook {
+    pub title: String,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub alternative_titles: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub issued_date: Option<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub agents: Vec<BridgeAgent>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub description: Option<String>,
+    pub lang_code: String,
+    pub formats: Vec<BridgeFormat>,
+    pub taxonomy: Taxonomy,
+    pub pg_download_count: u64,
+    pub pg_id: u64,
+    pub md_cover_image_url: String,
+    pub license_statement: String,
+}
+
+impl From<&Agent> for BridgeAgent {
+    fn from(agent: &Agent) -> Self {
+        BridgeAgent {
+            role: agent.agent_type.clone(),
+            pg_id: agent.agent_id,
+            name: agent.name.clone(),
+            aliases: agent.aliases.clone(),
+            external_urls: agent.webpage.clone().into_iter().collect(),
+            birth_date: agent.birth_date.clone(),
+            death_date: agent.death_date.clone(),
+        }
+    }
+}
+
+impl From<&Format> for BridgeFormat {
+    fn from(format: &Format) -> Self {
+        BridgeFormat {
+            mime_type: format.mime_type.clone(),
+            file_url: format.url.clone(),
+        }
+    }
+}
+
+impl From<&Ebook> for BridgeEbook {
+    fn from(ebook: &Ebook) -> Self {
+        BridgeEbook {
+            title: ebook.title.clone(),
+            alternative_titles: ebook.alternative_titles.clone(),
+            issued_date: ebook.issued_date.clone(),
+            agents: ebook.agents.iter().map(BridgeAgent::from).collect(),
+            description: ebook.description.clone(),
+            lang_code: ebook.language.clone(),
+            formats: ebook.formats.iter().map(BridgeFormat::from).collect(),
+            taxonomy: ebook.taxonomy.clone(),
+            pg_download_count: ebook.downloads,
+            pg_id: ebook.ebook_id.parse::<u64>().unwrap_or(0),
+            md_cover_image_url: ebook.cover_image.clone(),
+            license_statement: ebook.license.clone(),
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Helpers & Data Logic
 // ---------------------------------------------------------------------------
 
@@ -796,9 +884,11 @@ struct Args {
     max_results: Option<usize>,
     #[arg(short, long)]
     chunk_size: Option<usize>,
+    #[arg(long, help = "Rename output object fields to match the target database schema (alt-target-schema.md)")]
+    bridge: bool,
 }
 
-fn write_chunk(data: &mut [Ebook], path: &str) -> std::io::Result<()> {
+fn write_chunk(data: &mut [Ebook], path: &str, bridge: bool) -> std::io::Result<()> {
     // Sort deterministically by numeric ebook_id
     data.sort_by_key(|e| e.ebook_id.parse::<u64>().unwrap_or(u64::MAX));
 
@@ -809,7 +899,11 @@ fn write_chunk(data: &mut [Ebook], path: &str) -> std::io::Result<()> {
         w.write_all(b"[\n")?;
         let total = data.len();
         for (i, ebook) in data.iter().enumerate() {
-            serde_json::to_writer(&mut *w, ebook)?;
+            if bridge {
+                serde_json::to_writer(&mut *w, &BridgeEbook::from(ebook))?;
+            } else {
+                serde_json::to_writer(&mut *w, ebook)?;
+            }
             if i + 1 < total {
                 w.write_all(b",\n")?;
             } else {
@@ -851,6 +945,9 @@ fn main() {
 
     println!("[INFO] Opening archive: {}", args.archive_path);
     println!("[INFO] Using mirror base: {}", mirror_base);
+    if args.bridge {
+        println!("[INFO] Bridge output mode enabled: field names match the target database schema");
+    }
 
     let (raw_tx, raw_rx): (Sender<Vec<u8>>, Receiver<Vec<u8>>) = bounded(2048);
     let (parsed_tx, parsed_rx): (Sender<Ebook>, Receiver<Ebook>) = bounded(2048);
@@ -914,7 +1011,7 @@ fn main() {
         if let Some(c_size) = args.chunk_size {
             if current_chunk.len() >= c_size {
                 let path = get_chunk_path(&args.output, chunk_index);
-                write_chunk(&mut current_chunk, &path).expect("Failed to write chunk");
+                write_chunk(&mut current_chunk, &path, args.bridge).expect("Failed to write chunk");
                 println!("[INFO] Flushed chunk {} ({} items) -> {}", chunk_index, current_chunk.len(), path);
                 chunk_index += 1;
                 current_chunk.clear();
@@ -931,10 +1028,10 @@ fn main() {
     if !current_chunk.is_empty() {
         if args.chunk_size.is_some() {
             let path = get_chunk_path(&args.output, chunk_index);
-            write_chunk(&mut current_chunk, &path).expect("Failed to write final chunk");
+            write_chunk(&mut current_chunk, &path, args.bridge).expect("Failed to write final chunk");
             println!("[INFO] Flushed final chunk {} ({} items) -> {}", chunk_index, current_chunk.len(), path);
         } else {
-            write_chunk(&mut current_chunk, &args.output).expect("Failed to write output");
+            write_chunk(&mut current_chunk, &args.output, args.bridge).expect("Failed to write output");
             println!("[INFO] Wrote {} matched items -> {}", total_matched, args.output);
         }
     }

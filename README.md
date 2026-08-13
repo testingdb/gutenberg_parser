@@ -6,7 +6,7 @@
 #### Release & Version
 
 [![Release](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml/badge.svg)](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml)
-[![Version 1.0.3](https://img.shields.io/badge/version-1.0.3-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
+[![Version 1.0.5](https://img.shields.io/badge/version-1.0.5-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
 
 #### Code Quality
 
@@ -74,7 +74,8 @@ Options:
   -m, --mirror <MIRROR>          Mirror key or base URL [default: gutenberg]
       --max-results <MAX_RESULTS> Maximum number of matched ebooks to output
   -c, --chunk-size <CHUNK_SIZE>  Number of items per chunk file
-  -h, --help                     Print help
+      --bridge                   Rename output object fields to match the target database schema (alt-target-schema.md)
+  -h, --help                     Print helpẑ
   -V, --version                  Print version
 ```
 
@@ -167,6 +168,75 @@ Limit processing to 5,000 matches and split the output into chunks of 1,000 item
     "ebook_id": "1661",
     "cover_image": "https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg",
     "license": "Public domain in the USA."
+  }
+]
+```
+
+---
+
+## Bridge Mode
+
+Passing `--bridge` keeps the same one-object-per-book structure but renames output object fields:
+
+| Parser field | Bridge field | Target column |
+| :--- | :--- | :--- |
+| `ebook_id` | `pg_id` | `books.pg_id` |
+| `language` | `lang_code` | `books.lang_code` |
+| `downloads` | `pg_download_count` | `books.pg_download_count` |
+| `cover_image` | `md_cover_image_url` | `books.md_cover_image_url` |
+| `license` | `license_statement` | `books.license_statement` |
+| `formats[].type` | `formats[].mime_type` | `formats.mime_type` |
+| `formats[].url` | `formats[].file_url` | `formats.file_url` |
+| `agents[].type` | `agents[].role` | `books_contributions.role` |
+| `agents[].agent_id` | `agents[].pg_id` | `agents.pg_id` |
+| `agents[].webpage` | `agents[].external_urls` | `agents.external_urls` |
+
+### 4. Bridge Output Example
+
+```bash
+./target/release/gutenberg_parser rdf-files.tar.bz2 \
+  --output catalog_bridge.json \
+  --bridge
+```
+
+```json
+[
+  {
+    "title": "The Adventures of Sherlock Holmes",
+    "issued_date": "1999-03-01",
+    "agents": [
+      {
+        "role": "author",
+        "pg_id": 467,
+        "name": "Doyle, Arthur Conan",
+        "external_urls": ["https://en.wikipedia.org/wiki/Arthur_Conan_Doyle"]
+      }
+    ],
+    "lang_code": "en",
+    "formats": [
+      {
+        "mime_type": "text/html",
+        "file_url": "https://www.gutenberg.org/files/1661/1661-h/1661-h.htm"
+      },
+      {
+        "mime_type": "application/epub+zip",
+        "file_url": "https://www.gutenberg.org/ebooks/1661.epub3.images"
+      }
+    ],
+    "taxonomy": {
+      "domain": "Literature & Fiction",
+      "genres": ["Fiction & Novels", "Mystery & Crime"],
+      "topics": [
+        {
+          "heading": "Holmes, Sherlock (Fictional character)",
+          "subtopics": ["Detective and mystery stories"]
+        }
+      ]
+    },
+    "pg_download_count": 14520,
+    "pg_id": 1661,
+    "md_cover_image_url": "https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg",
+    "license_statement": "Public domain in the USA."
   }
 ]
 ```
