@@ -476,6 +476,10 @@ impl From<&Ebook> for BridgeEbook {
 // Helpers & Data Logic
 // ---------------------------------------------------------------------------
 
+fn is_public_domain_license(license: &str) -> bool {
+    license.to_lowercase().contains("public domain")
+}
+
 fn transform_url(url: Option<&str>, ebook_id: &str, mirror_base: &str) -> Option<String> {
     let url = url?;
     if url.is_empty() || mirror_base.is_empty() {
@@ -717,7 +721,7 @@ fn parse_agent(parent_node: Option<Node>, agent_type: &str, ebook_id: &str, mirr
     })
 }
 
-fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static str> {
+fn process_rdf_xml(xml_data: &[u8], mirror_base: &str, include_licensed: bool) -> Result<Ebook, &'static str> {
     let xml_str = std::str::from_utf8(xml_data).map_err(|_| "utf8_error")?;
     let doc = Document::parse(xml_str).map_err(|_| "xml_parse_error")?;
 
@@ -766,6 +770,10 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
         .and_then(|n| n.text())
         .map(|t| t.trim().to_string())
         .unwrap_or_else(|| "Public domain in the USA.".to_string());
+
+    if !include_licensed && !is_public_domain_license(&license) {
+        return Err("filter_license");
+    }
 
     let mut seen_mime = HashSet::new();
     let mut format_objects = Vec::new();
@@ -933,6 +941,11 @@ struct Args {
         help = "Rename output object fields to match the target database schema (alt-target-schema.md)"
     )]
     bridge: bool,
+    #[arg(
+        long,
+        help = "Also include ebooks that are NOT Public Domain (copyrighted or otherwise licensed)"
+    )]
+    include_licensed: bool,
 }
 
 fn write_chunk(data: &mut [Ebook], path: &str, bridge: bool) -> std::io::Result<()> {
@@ -995,6 +1008,11 @@ fn main() {
     if args.bridge {
         println!("[INFO] Bridge output mode enabled: field names match the target database schema");
     }
+    if args.include_licensed {
+        println!("[INFO] Including non-Public-Domain (licensed) ebooks");
+    } else {
+        println!("[INFO] Filtering to Public Domain ebooks only");
+    }
 
     let (raw_tx, raw_rx): (Sender<Vec<u8>>, Receiver<Vec<u8>>) = bounded(2048);
     let (parsed_tx, parsed_rx): (Sender<Ebook>, Receiver<Ebook>) = bounded(2048);
@@ -1029,10 +1047,11 @@ fn main() {
         let rx = raw_rx.clone();
         let tx = parsed_tx.clone();
         let mirror = mirror_base.clone();
+        let include_licensed = args.include_licensed;
 
         std::thread::spawn(move || {
             while let Ok(raw_bytes) = rx.recv() {
-                if let Ok(ebook) = process_rdf_xml(&raw_bytes, &mirror) {
+                if let Ok(ebook) = process_rdf_xml(&raw_bytes, &mirror, include_licensed) {
                     if tx.send(ebook).is_err() {
                         break;
                     }
