@@ -1,0 +1,30 @@
+# Cargo-deny configuration for gutenberg_parser.
+# Docs: https://embarkstudios.github.io/cargo-deny/
+# Note: security advisories are handled by `cargo audit` (see audit.yml);
+# cargo-deny covers bans, licenses, and sources.
+
+[bans]
+multiple-versions = "warn"
+wildcards = "allow"
+highlight = "all"
+deny = []
+
+[licenses]
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-3-Clause",
+    "Unlicense",
+    "Unicode-3.0",
+    "0BSD",
+    "Zlib",
+]
+confidence-threshold = 0.8
+exceptions = []
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

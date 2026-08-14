@@ -2,6 +2,7 @@
 name = "gutenberg_parser"
 version = "1.0.5"
 edition = "2021"
+license = "MIT"
 
 [dependencies]
 bzip2 = "0.4"
