@@ -1,25 +1,53 @@
 name: SonarCloud analysis
+
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - 'src/**'
       - '**/*.lock'
       - '**/*.toml'
+      - '.github/workflows/sonarqube.yml'
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
       - 'src/**'
       - '**/*.lock'
       - '**/*.toml'
+      - '.github/workflows/sonarqube.yml'
+
+concurrency:
+  group: sonar-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   sonarqube:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
-      - uses: dtolnay/rust-toolchain@stable
-        with: { components: clippy }
-      - uses: SonarSource/sonarqube-scan-action@v6
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, llvm-tools-preview
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: sonar
+
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+
+      - name: Generate LCOV Coverage Report
+        run: cargo llvm-cov --all-features --tests --lcov --output-path lcov.info
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
