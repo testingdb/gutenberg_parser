@@ -1,0 +1,68 @@
+name: Dependency Audit
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'deny.toml'
+      - '.github/workflows/audit.yml'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'deny.toml'
+      - '.github/workflows/audit.yml'
+
+concurrency:
+  group: audit-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  cargo-audit:
+    name: Security advisories (cargo audit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Audit Dependencies
+        uses: actions-rust-lang/audit@v1
+
+  cargo-deny:
+    name: cargo-deny (${{ matrix.checks }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        checks: [bans, licenses, sources]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Cargo Deny - ${{ matrix.checks }}
+        uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check ${{ matrix.checks }}
+
+  dependency-review:
+    name: Dependency Review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Review Changed Dependencies
+        uses: actions/dependency-review-action@v4
