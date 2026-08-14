@@ -52,11 +52,12 @@ jobs:
       - name: Verify Tag Matches Cargo Version
         if: github.event_name == 'push'
         run: |
+          tag="${{ github.ref_name }}"
           version="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n 1)"
-          if [ "v${version}" = "${{ github.ref_name }}" ]; then
-            echo "Tag ${{ github.ref_name }} matches Cargo.toml version v${version}."
+          if [ "v${version}" = "${tag}" ]; then
+            echo "Tag ${tag} matches Cargo.toml version v${version}."
           else
-            echo "::error::Tag ${{ github.ref_name }} does not match Cargo.toml version v${version}."
+            echo "::error::Tag ${tag} does not match Cargo.toml version v${version}."
             exit 1
           fi
 
@@ -98,7 +99,7 @@ jobs:
       - name: Generate Checksums
         run: |
           cd artifacts
-          sha256sum * > SHA256SUMS.txt
+          sha256sum ./* > SHA256SUMS.txt
 
       - name: Upload Checksum Artifact
         uses: actions/upload-artifact@v4
