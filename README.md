@@ -31,6 +31,7 @@ The parser extracts author metadata, taxonomy structures (Library of Congress co
 - **Taxonomy Normalization:** Maps LC Classification codes and Gutenberg bookshelves into standardized domains, genres, and hierarchical subtopics.
 - **Mirror Rewriting:** Rewrites format and cover image URLs to specified Project Gutenberg mirror sites.
 - **Strict Quality Filtering:** Automatically filters out non-text entries, entries without authors/contributors, and entries missing required format types (EPUB and HTML).
+- **Public Domain Filtering:** Only Public Domain ebooks are included by default; pass `--include-licensed` to also keep copyrighted or otherwise licensed ebooks.
 - **Flexible Output Handling:** Supports single JSON files, Gzip compression (`.json.gz`), and chunked output files.
 
 ---
@@ -84,6 +85,7 @@ Options:
       --max-results <MAX_RESULTS> Maximum number of matched ebooks to output
   -c, --chunk-size <CHUNK_SIZE>  Number of items per chunk file
       --bridge                   Rename output object fields to match the target database schema (alt-target-schema.md)
+      --include-licensed         Also include ebooks that are NOT Public Domain (copyrighted or otherwise licensed)
   -h, --help                     Print helpẑ
   -V, --version                  Print version
 ```
@@ -106,9 +108,16 @@ The `--mirror` option accepts custom URLs or any of the following predefined mir
 ## Examples
 
 ### 1. Basic Processing
-Extract metadata from `rdf-files.tar.bz2` to `filtered_ebooks.json`:
+Extract Public Domain metadata from `rdf-files.tar.bz2` to `filtered_ebooks.json`:
 ```bash
 ./target/release/gutenberg_parser rdf-files.tar.bz2
+```
+
+### 1b. Including Licensed Books
+Parse an archive while keeping copyrighted or otherwise licensed ebooks:
+```bash
+./target/release/gutenberg_parser rdf-files.tar.bz2 \
+  --include-licensed
 ```
 
 ### 2. Compressed Output with a Custom Mirror
