@@ -51,6 +51,7 @@ jobs:
 
       - name: Verify Tag Matches Cargo Version
         if: github.event_name == 'push'
+        shell: bash
         run: |
           tag="${{ github.ref_name }}"
           version="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n 1)"
