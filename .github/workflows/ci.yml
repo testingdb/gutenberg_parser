@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Detect Changed Paths
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      rust: ${{ steps.filter.outputs.rust }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Filter Rust Changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            rust:
+              - 'src/**'
+              - 'Cargo.toml'
+              - 'Cargo.lock'
+              - '.rustfmt.toml'
+              - 'rust-toolchain.toml'
+              - 'rust-toolchain'
+              - '.github/workflows/ci.yml'
+
+  quality-gate:
+    name: fmt / clippy / build / test
+    needs: changes
+    if: needs.changes.outputs.rust == 'true'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ci-${{ matrix.os }}
+
+      - name: Check Formatting
+        run: cargo fmt --all -- --check
+
+      - name: Lint (Clippy)
+        run: cargo clippy --all-targets --all-features --locked -- -D warnings
+
+      - name: Install Machete
+        uses: taiki-e/install-action@cargo-machete
+
+      - name: Check Unused Dependencies
+        run: cargo machete
+
+      - name: Build Release Binary
+        run: cargo build --release --locked
+
+      - name: Run Tests
+        run: cargo test --all-features --locked
+
+      - name: Build Docs
+        run: cargo doc --no-deps --all-features
+
+  lint-workflows:
+    name: Validate Workflow YAML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run actionlint
+        uses: raven-actions/actionlint@v2

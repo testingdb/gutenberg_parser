@@ -34,7 +34,10 @@ static GUTENBERG_MIRRORS: LazyLock<HashMap<&'static str, &'static str>> = LazyLo
     m.insert("pglaf", "https://gutenberg.pglaf.org/");
     m.insert("odu", "https://mirror.cs.odu.edu/gutenberg/");
     m.insert("waterloo", "http://mirror.csclub.uwaterloo.ca/gutenberg/");
-    m.insert("uk", "http://www.mirrorservice.org/sites/ftp.ibiblio.org/pub/docs/books/gutenberg/");
+    m.insert(
+        "uk",
+        "http://www.mirrorservice.org/sites/ftp.ibiblio.org/pub/docs/books/gutenberg/",
+    );
     m.insert("xmission", "http://mirrors.xmission.com/gutenberg/");
     m
 });
@@ -189,7 +192,10 @@ static LC_MAP: LazyLock<HashMap<&'static str, (&'static str, &'static str)>> = L
 
 static BOOKSHELF_MAP: LazyLock<Vec<(Regex, &'static str)>> = LazyLock::new(|| {
     vec![
-        (Regex::new(r"(?i)science[- ]fiction|fantasy").unwrap(), "Science Fiction & Fantasy"),
+        (
+            Regex::new(r"(?i)science[- ]fiction|fantasy").unwrap(),
+            "Science Fiction & Fantasy",
+        ),
         (Regex::new(r"(?i)horror").unwrap(), "Horror & Gothic"),
         (Regex::new(r"(?i)crime|thriller|mystery").unwrap(), "Mystery & Crime"),
         (Regex::new(r"(?i)novel").unwrap(), "Fiction & Novels"),
@@ -206,10 +212,19 @@ static BOOKSHELF_MAP: LazyLock<Vec<(Regex, &'static str)>> = LazyLock::new(|| {
         (Regex::new(r"(?i)history - modern").unwrap(), "Modern History"),
         (Regex::new(r"(?i)biograph").unwrap(), "Biography & Memoir"),
         (Regex::new(r"(?i)parenthood|family").unwrap(), "Family & Relationships"),
-        (Regex::new(r"(?i)essay|letter|speech").unwrap(), "Essays & Literary Collections"),
-        (Regex::new(r"(?i)religion|spirituality").unwrap(), "Religion & Spirituality"),
+        (
+            Regex::new(r"(?i)essay|letter|speech").unwrap(),
+            "Essays & Literary Collections",
+        ),
+        (
+            Regex::new(r"(?i)religion|spirituality").unwrap(),
+            "Religion & Spirituality",
+        ),
         (Regex::new(r"(?i)adventure").unwrap(), "Action & Adventure"),
-        (Regex::new(r"(?i)journalism|media|writing").unwrap(), "Journalism & Media"),
+        (
+            Regex::new(r"(?i)journalism|media|writing").unwrap(),
+            "Journalism & Media",
+        ),
         (Regex::new(r"(?i)poetry").unwrap(), "Poetry"),
         (Regex::new(r"(?i)children|juvenile").unwrap(), "Children's Literature"),
         (Regex::new(r"(?i)philosophy").unwrap(), "Philosophy"),
@@ -218,8 +233,14 @@ static BOOKSHELF_MAP: LazyLock<Vec<(Regex, &'static str)>> = LazyLock::new(|| {
         (Regex::new(r"(?i)politics|government").unwrap(), "Politics & Government"),
         (Regex::new(r"(?i)economics|business").unwrap(), "Economics & Business"),
         (Regex::new(r"(?i)sociology").unwrap(), "Sociology"),
-        (Regex::new(r"(?i)science[- ]nature|natural history|natural science").unwrap(), "Science & Nature"),
-        (Regex::new(r"(?i)technology|engineering").unwrap(), "Technology & Engineering"),
+        (
+            Regex::new(r"(?i)science[- ]nature|natural history|natural science").unwrap(),
+            "Science & Nature",
+        ),
+        (
+            Regex::new(r"(?i)technology|engineering").unwrap(),
+            "Technology & Engineering",
+        ),
         (Regex::new(r"(?i)travel|exploration").unwrap(), "Travel & Exploration"),
     ]
 });
@@ -491,10 +512,9 @@ fn transform_url(url: Option<&str>, ebook_id: &str, mirror_base: &str) -> Option
     ];
 
     for prefix in prefixes {
-        if url.starts_with(prefix) {
-            let rel_path = &url[prefix.len()..];
-            if rel_path.starts_with("ebooks/") {
-                return Some(format!("{}cache/epub/{}/pg{}", mirror_clean, ebook_id_clean, &rel_path[7..]));
+        if let Some(rel_path) = url.strip_prefix(prefix) {
+            if let Some(file_part) = rel_path.strip_prefix("ebooks/") {
+                return Some(format!("{}cache/epub/{}/pg{}", mirror_clean, ebook_id_clean, file_part));
             }
             return Some(format!("{}{}", mirror_clean, rel_path));
         }
@@ -542,7 +562,11 @@ fn extract_taxonomy(subjects_raw: &[String], bookshelves_raw: &[String]) -> Taxo
             lc_domains.insert(dom);
             genres.insert(gen);
         } else {
-            let parts: Vec<&str> = subj_clean.split(" -- ").map(|p| p.trim()).filter(|p| !p.is_empty()).collect();
+            let parts: Vec<&str> = subj_clean
+                .split(" -- ")
+                .map(|p| p.trim())
+                .filter(|p| !p.is_empty())
+                .collect();
             if !parts.is_empty() {
                 let heading = parts[0];
                 let heading_lower = heading.to_lowercase();
@@ -630,14 +654,20 @@ fn extract_taxonomy(subjects_raw: &[String], bookshelves_raw: &[String]) -> Taxo
 
 fn parse_agent(parent_node: Option<Node>, agent_type: &str, ebook_id: &str, mirror_base: &str) -> Option<Agent> {
     let parent = parent_node?;
-    let agent_node = if parent.tag_name().name() == "agent" && parent.tag_name().namespace() == NAMESPACES.get("pgterms").copied() {
-        parent
-    } else {
-        parent.children().find(|n| n.is_element() && n.tag_name().name() == "agent")?
-    };
+    let agent_node =
+        if parent.tag_name().name() == "agent" && parent.tag_name().namespace() == NAMESPACES.get("pgterms").copied() {
+            parent
+        } else {
+            parent
+                .children()
+                .find(|n| n.is_element() && n.tag_name().name() == "agent")?
+        };
 
     let about = agent_node.attribute((NAMESPACES["rdf"], "about")).unwrap_or("");
-    let agent_id = RE_AGENT_ID.captures(about).and_then(|c| c.get(1)).and_then(|m| m.as_str().parse::<u64>().ok());
+    let agent_id = RE_AGENT_ID
+        .captures(about)
+        .and_then(|c| c.get(1))
+        .and_then(|m| m.as_str().parse::<u64>().ok());
 
     let name = agent_node
         .children()
@@ -740,8 +770,14 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
     let mut seen_mime = HashSet::new();
     let mut format_objects = Vec::new();
 
-    for has_fmt in ebook.children().filter(|n| n.is_element() && n.tag_name().name() == "hasFormat") {
-        if let Some(file_node) = has_fmt.children().find(|n| n.is_element() && n.tag_name().name() == "file") {
+    for has_fmt in ebook
+        .children()
+        .filter(|n| n.is_element() && n.tag_name().name() == "hasFormat")
+    {
+        if let Some(file_node) = has_fmt
+            .children()
+            .find(|n| n.is_element() && n.tag_name().name() == "file")
+        {
             let file_url = file_node
                 .attribute((NAMESPACES["rdf"], "about"))
                 .or_else(|| file_node.attribute((NAMESPACES["rdf"], "resource")))
@@ -756,13 +792,14 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
 
             if let Some(transformed_url) = transform_url(Some(file_url), &ebook_id, mirror_base) {
                 let url_lower = transformed_url.to_lowercase();
-                let mime_key = if fmt_val.contains("text/html") || url_lower.ends_with(".htm") || url_lower.ends_with(".html") {
-                    Some("text/html")
-                } else if fmt_val.contains("epub") || url_lower.ends_with(".epub") {
-                    Some("application/epub+zip")
-                } else {
-                    None
-                };
+                let mime_key =
+                    if fmt_val.contains("text/html") || url_lower.ends_with(".htm") || url_lower.ends_with(".html") {
+                        Some("text/html")
+                    } else if fmt_val.contains("epub") || url_lower.ends_with(".epub") {
+                        Some("application/epub+zip")
+                    } else {
+                        None
+                    };
 
                 if let Some(key) = mime_key {
                     if seen_mime.insert(key) {
@@ -782,7 +819,10 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
 
     let mut agents = Vec::new();
     let push_agents = |tag: &str, agent_type: &str, agents: &mut Vec<Agent>| {
-        for node in ebook.children().filter(|n| n.is_element() && n.tag_name().name() == tag) {
+        for node in ebook
+            .children()
+            .filter(|n| n.is_element() && n.tag_name().name() == tag)
+        {
             if let Some(agent) = parse_agent(Some(node), agent_type, &ebook_id, mirror_base) {
                 agents.push(agent);
             }
@@ -802,10 +842,14 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str) -> Result<Ebook, &'static
     }
 
     let cover_image = transform_url(
-        Some(&format!("https://www.gutenberg.org/cache/epub/{}/pg{}.cover.medium.jpg", ebook_id, ebook_id)),
+        Some(&format!(
+            "https://www.gutenberg.org/cache/epub/{}/pg{}.cover.medium.jpg",
+            ebook_id, ebook_id
+        )),
         &ebook_id,
         mirror_base,
-    ).unwrap();
+    )
+    .unwrap();
 
     let description = ebook
         .children()
@@ -884,7 +928,10 @@ struct Args {
     max_results: Option<usize>,
     #[arg(short, long)]
     chunk_size: Option<usize>,
-    #[arg(long, help = "Rename output object fields to match the target database schema (alt-target-schema.md)")]
+    #[arg(
+        long,
+        help = "Rename output object fields to match the target database schema (alt-target-schema.md)"
+    )]
     bridge: bool,
 }
 
@@ -925,8 +972,8 @@ fn write_chunk(data: &mut [Ebook], path: &str, bridge: bool) -> std::io::Result<
 }
 
 fn get_chunk_path(base_path: &str, chunk_index: usize) -> String {
-    if base_path.ends_with(".json.gz") {
-        format!("{}_{}.json.gz", &base_path[..base_path.len() - 8], chunk_index)
+    if let Some(stripped) = base_path.strip_suffix(".json.gz") {
+        format!("{}_{}.json.gz", stripped, chunk_index)
     } else if let Some(pos) = base_path.rfind('.') {
         format!("{}_{}.{}", &base_path[..pos], chunk_index, &base_path[pos + 1..])
     } else {
@@ -966,10 +1013,8 @@ fn main() {
                 if name.ends_with(".xml") || name.ends_with(".rdf") {
                     let mut buffer = Vec::new();
                     let mut entry = entry;
-                    if entry.read_to_end(&mut buffer).is_ok() {
-                        if raw_tx.send(buffer).is_err() {
-                            break;
-                        }
+                    if entry.read_to_end(&mut buffer).is_ok() && raw_tx.send(buffer).is_err() {
+                        break;
                     }
                 }
             }
@@ -977,9 +1022,7 @@ fn main() {
     });
 
     // Worker Threads (Rayon Work Stealing Pool)
-    let num_workers = std::thread::available_parallelism()
-        .map(|n| n.get())
-        .unwrap_or(4);
+    let num_workers = std::thread::available_parallelism().map(|n| n.get()).unwrap_or(4);
     println!("[INFO] Spawning {} parallel worker threads", num_workers);
 
     for _ in 0..num_workers {
@@ -1012,7 +1055,12 @@ fn main() {
             if current_chunk.len() >= c_size {
                 let path = get_chunk_path(&args.output, chunk_index);
                 write_chunk(&mut current_chunk, &path, args.bridge).expect("Failed to write chunk");
-                println!("[INFO] Flushed chunk {} ({} items) -> {}", chunk_index, current_chunk.len(), path);
+                println!(
+                    "[INFO] Flushed chunk {} ({} items) -> {}",
+                    chunk_index,
+                    current_chunk.len(),
+                    path
+                );
                 chunk_index += 1;
                 current_chunk.clear();
             }
@@ -1029,7 +1077,12 @@ fn main() {
         if args.chunk_size.is_some() {
             let path = get_chunk_path(&args.output, chunk_index);
             write_chunk(&mut current_chunk, &path, args.bridge).expect("Failed to write final chunk");
-            println!("[INFO] Flushed final chunk {} ({} items) -> {}", chunk_index, current_chunk.len(), path);
+            println!(
+                "[INFO] Flushed final chunk {} ({} items) -> {}",
+                chunk_index,
+                current_chunk.len(),
+                path
+            );
         } else {
             write_chunk(&mut current_chunk, &args.output, args.bridge).expect("Failed to write output");
             println!("[INFO] Wrote {} matched items -> {}", total_matched, args.output);
@@ -1037,5 +1090,8 @@ fn main() {
     }
 
     let elapsed = start_time.elapsed().as_secs_f64();
-    println!("[INFO] Pipeline complete in {:.2}s. Total Matched: {}", elapsed, total_matched);
+    println!(
+        "[INFO] Pipeline complete in {:.2}s. Total Matched: {}",
+        elapsed, total_matched
+    );
 }
