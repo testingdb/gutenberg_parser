@@ -1,9 +1,0 @@
-# Release-plz configuration for gutenberg_parser.
-# Docs: https://release-plz.dev/docs/config
-
-[workspace]
-# gutenberg_parser is a CLI binary and is NOT published to crates.io.
-# git_only makes release-plz derive the current version from git tags
-# (pattern `v{{ version }}`, e.g. v1.0.5) instead of the cargo registry.
-# Publishing is skipped automatically when git_only is enabled.
-git_only = true

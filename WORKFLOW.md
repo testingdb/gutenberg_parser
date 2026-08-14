@@ -14,13 +14,12 @@ automation that powers `gutenberg_parser`.
 
 ## 1. Overview
 
-The pipeline is split across five focused workflows. They cover two lifecycles:
+The pipeline is split across four focused workflows. They cover two lifecycles:
 
 - **Merge gate (pull requests):** every PR to `main` is vetted by CI
   (compile/lint/test on 3 OSes), dependency security, and SonarCloud.
-- **Release path (post-merge):** `release-plz` proposes version bumps and a
-  changelog, and — after you push a `v*` tag — cross-platform binaries and
-  checksums are published to a GitHub Release.
+- **Release path (post-merge):** after you push a `v*` tag, cross-platform
+  binaries and checksums are published to a GitHub Release.
 
 ```mermaid
 flowchart TB
@@ -39,10 +38,9 @@ flowchart TB
 
     MERGE --> MAIN["Push to main (post-merge)"]
 
-    MAIN --> RPLZ["release-plz.yml<br/>opens / updates Release PR<br/>(Cargo.toml bump + CHANGELOG)"]
     MAIN --> RECUR["audit.yml / sonarqube.yml<br/>path-filtered push re-runs"]
+    MAIN --> TAG{"Push tag vX.Y.Z"}
 
-    RPLZ --> TAG{"Merge Release PR,<br/>then push tag vX.Y.Z"}
     TAG -->|"yes"| REL["release.yml<br/>build 4 targets → SHA256SUMS<br/>publish GitHub Release"]
 ```
 
@@ -54,12 +52,10 @@ flowchart TB
 | `audit.yml` | Dependency security: RustSec advisories, cargo-deny (bans/licenses/sources), dependency review | `schedule` (Mon 03:00 UTC), `workflow_dispatch`, `push` + `pull_request` | `Cargo.toml`, `Cargo.lock`, `deny.toml`, workflow file | yes | none |
 | `sonarqube.yml` | Static analysis + line coverage on SonarCloud | `push` + `pull_request` on `main` | `src/**`, `*.lock`, `*.toml`, workflow file | yes | `SONAR_TOKEN` |
 | `release.yml` | Cross-platform binaries, SHA256 checksums, GitHub Release | tag push `v*`, `workflow_dispatch` | no | no | none (uses `GITHUB_TOKEN`) |
-| `release-plz.yml` | Automatic Release PR (version bump + changelog) | `push` to `main` | no | no | none (uses `GITHUB_TOKEN`) |
 
 > **Concurrency:** `ci`, `audit`, and `sonar` group by `github.ref` and cancel
-> stale runs; `release-plz` groups by ref but **does not** cancel (a partially
-> processed Release PR must not be preempted). `release` runs without
-> concurrency settings — each tag is a distinct, short-lived build.
+> stale runs. `release` runs without concurrency settings — each tag is a
+> distinct, short-lived build.
 
 ---
 
@@ -291,8 +287,8 @@ if [ "v${version}" = "${tag}" ]; then ... else exit 1; fi
 ```
 
 A tag `v1.0.6` with `Cargo.toml` at `1.0.5` fails the build. This keeps release
-metadata honest and is why a version bump (normally proposed by `release-plz`)
-must land **before** tagging.
+metadata honest and is why a version bump must land in `Cargo.toml` **before**
+tagging.
 
 ### 6.5 Packaging
 
@@ -322,103 +318,7 @@ must land **before** tagging.
 
 ---
 
-## 7. release-plz.yml — Release PR Automation
-
-File: `.github/workflows/release-plz.yml` · Workflow name: **Release-plz**
-
-### 7.1 What it does
-
-On every push to `main`, `release-plz` (`release-plz/action@v0.5`,
-`command: release-pr`) opens or keeps up to date a **Release PR** containing:
-
-- the next semantic version in `Cargo.toml` (+ `Cargo.lock`),
-- a generated `CHANGELOG.md`.
-
-Version selection is driven by **Conventional Commits**:
-`feat:` → minor, `fix:`/`chore:` → patch, `!`/BREAKING → major.
-
-<<<<<<< Updated upstream
-### 7.2 Concurrency
-=======
-### 7.2 Configuration (release-plz.toml)
-
-`release-plz.toml` at the repo root (same directory as the root `Cargo.toml`):
-
-```toml
-[workspace]
-git_only = true
-```
-
-**Why it is required:** by default release-plz determines the *current* version
-by querying the cargo registry. `gutenberg_parser` is a CLI binary that is not
-published to crates.io, so that lookup fails:
-
-```
-package `gutenberg_parser` not found in the registry, but the git tag v1.0.5 exists.
-Consider running `cargo publish` manually to publish this package.
-```
-
-`git_only = true` switches version detection to **git tags** (matching the
-default `v{{ version }}` tag pattern, e.g. `v1.0.5`) and skips publishing
-automatically. It is mutually exclusive with `publish = true`.
-
-### 7.3 Concurrency
->>>>>>> Stashed changes
-
-```yaml
-concurrency:
-  group: release-plz-${{ github.ref }}
-  cancel-in-progress: false
-```
-
-The group prevents parallel runs from fighting over the same Release PR, but
-`cancel-in-progress: false` ensures a run that already started is never killed
-mid-update.
-
-<<<<<<< Updated upstream
-### 7.3 Permissions & token
-=======
-### 7.4 Permissions & token
->>>>>>> Stashed changes
-
-- `permissions: contents: write, pull-requests: write` — enough to push a
-  branch and open a PR.
-- `GITHUB_TOKEN` is sufficient **because this workflow only opens PRs**. It does
-  not create tags or releases.
-
-<<<<<<< Updated upstream
-### 7.4 Hand-off to release.yml
-=======
-### 7.5 Hand-off to release.yml
->>>>>>> Stashed changes
-
-The intended flow:
-
-1. Contribute conventional commits to `main`.
-2. `release-plz` maintains a Release PR (version bump + changelog).
-3. Merge the Release PR.
-4. Push the matching tag: `git push origin v<new-version>`.
-5. `release.yml` builds the binaries and publishes the release.
-
-> **Extending to full automation:** adding a `command: release` job would make
-<<<<<<< Updated upstream
-> release-plz create the tag itself. That requires a `release-plz.toml`
-> (`git_only = true` because the crate is not on crates.io,
-> `publish = false`, `git_release_enable = false` so `release.yml` stays the
-> sole release creator) and — critically — a **PAT** instead of `GITHUB_TOKEN`,
-> because tags created by `GITHUB_TOKEN` do **not** trigger downstream tag-push
-> workflows like `release.yml`.
-=======
-> release-plz create the tag itself. `release-plz.toml` already has
-> `git_only = true`; you'd additionally set `git_release_enable = false` so
-> `release.yml` stays the sole release creator — and critically, use a **PAT**
-> instead of `GITHUB_TOKEN`, because tags created by `GITHUB_TOKEN` do **not**
-> trigger downstream tag-push workflows like `release.yml`.
->>>>>>> Stashed changes
-
----
-
-## 8. Branch Protection Setup (required checks)
+## 7. Branch Protection Setup (required checks)
 
 Configure in **Settings → Branches → Add/Edit rule for `main`** →
 "Require status checks to pass before merging". Add these exact check names:
@@ -460,19 +360,19 @@ Configure in **Settings → Branches → Add/Edit rule for `main`** →
 
 ---
 
-## 9. Secrets & Pinned Actions
+## 8. Secrets & Pinned Actions
 
-### 9.1 Secrets
+### 8.1 Secrets
 
 | Secret | Used by | Notes |
 | :--- | :--- | :--- |
 | `SONAR_TOKEN` | `sonarqube.yml` | SonarCloud user token; org `testingdb`, project `testingdb_gutenberg_parser` |
-| `GITHUB_TOKEN` | `release.yml`, `release-plz.yml` | Automatic; no setup needed |
+| `GITHUB_TOKEN` | `release.yml` | Automatic; no setup needed |
 
 No other secrets exist. `CARGO_REGISTRY_TOKEN` is intentionally absent (the
 crate is not published to crates.io).
 
-### 9.2 Third-party actions (all version-pinned)
+### 8.2 Third-party actions (all version-pinned)
 
 | Action | Version |
 | :--- | :--- |
@@ -488,14 +388,13 @@ crate is not published to crates.io).
 | `SonarSource/sonarqube-scan-action` | `v6` |
 | `actions/upload-artifact` / `download-artifact` | `v4` |
 | `softprops/action-gh-release` | `v2` |
-| `release-plz/action` | `v0.5` |
 
 Keep these coordinated — Dependabot (configured at the GitHub level) will
 propose bumps, and every bump must keep `actionlint` green.
 
 ---
 
-## 10. Local Verification
+## 9. Local Verification
 
 Before pushing workflow changes, lint them with the same tool CI uses:
 
@@ -522,28 +421,23 @@ cargo build --release --locked
 
 ---
 
-## 11. Troubleshooting Runbook
+## 10. Troubleshooting Runbook
 
 | Symptom | Cause | Fix |
 | :--- | :--- | :--- |
 | "Error during parsing of the generic coverage report… expected XML format" (exit 3) | `sonar-project.properties` uses `sonar.coverageReportPaths` (XML-only) for LCOV | Use `sonar.rust.lcov.reportPaths=lcov.info` (§5.4) |
 | Scan runs but shows 0% coverage | No tests run during `cargo llvm-cov` (0 unit tests) or wrong property | Add tests; keep LCOV property correct |
-| PR shows no checks / "Expected — waiting" | Path-filtered workflow never ran for those paths | Add `Detect Changed Paths` to required checks (§8) |
+| PR shows no checks / "Expected — waiting" | Path-filtered workflow never ran for those paths | Add `Detect Changed Paths` to required checks (§7) |
 | ShellCheck: `SC2193` constant comparison | `${{ }}` expansion + `[ ... = "${{ … }}" ]` looks constant | Assign the value to a variable first (§6.4) |
 | ShellCheck: `SC2035` | Unquoted `*` glob in `sha256sum` | Use `sha256sum ./*` (§6.6) |
 | "Tag vX.Y.Z does not match Cargo.toml version" | Tag and manifest out of sync | Bump `Cargo.toml` first; tag `v<exact version>` |
-<<<<<<< Updated upstream
-=======
-| release-plz fails: "package \`gutenberg_parser\` not found in the registry, but the git tag v1.0.5 exists" | Default registry mode; crate is not on crates.io | Add `release-plz.toml` with `[workspace] git_only = true` (§7.2) |
->>>>>>> Stashed changes
-| Release has binaries but no release-plz PR | PR-only commits aren't Conventional Commits | Use `feat:`, `fix:`, `chore:` prefixes |
 | `cargo machete` job fails | Unused dependency introduced | Remove the dependency, or update the Cargo.lock |
 | Dependency review blocks PR | New dep is high-risk / no allowlisted license | Verify the dep; add license to `deny.toml` if appropriate |
-| Workflow changes rejected by actionlint | YAML/shell issue | Run the local check from §10 |
+| Workflow changes rejected by actionlint | YAML/shell issue | Run the local check from §9 |
 
 ---
 
-## 12. Maintenance Guide
+## 11. Maintenance Guide
 
 **Add an OS/architecture to releases**
 
@@ -563,15 +457,6 @@ cargo build --release --locked
 wired in: `quality-gate` runs `cargo test`, and `sonarqube.yml` runs
 `cargo llvm-cov`. More tests → real LCOV data → real SonarCloud coverage.
 
-<<<<<<< Updated upstream
-**Extend release automation (auto-tagging)** — see §7.4: add the `release`
-=======
-**Extend release automation (auto-tagging)** — see §7.5: add the `release`
->>>>>>> Stashed changes
-command job, ship a `release-plz.toml` (`git_only`, `publish = false`,
-`git_release_enable = false`), and use a PAT so the created tag actually
-triggers `release.yml`.
-
 ---
 
 ## Appendix — Glossary
@@ -580,6 +465,5 @@ triggers `release.yml`.
 | :--- | :--- |
 | LCOV | Line-coverage interchange format consumed by SonarCloud's Rust analyzer |
 | Conventional Commit | `type(scope): summary` format (`feat`, `fix`, `chore`, …; `!` = breaking) |
-| Release PR | PR opened by release-plz that bumps the version and changelog |
 | Path filter | Restricts a workflow/job to run only when listed files change |
 | `GITHUB_TOKEN` | Auto-issued, scoped token; can't trigger downstream workflow runs on pushes it makes |
