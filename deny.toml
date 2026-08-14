@@ -19,6 +19,8 @@ allow = [
     "Unicode-3.0",
     "0BSD",
     "Zlib",
+    "ISC",
+    "CDLA-Permissive-2.0",
 ]
 confidence-threshold = 0.8
 exceptions = []
