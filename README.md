@@ -35,6 +35,15 @@ The parser extracts author metadata, taxonomy structures (Library of Congress co
 
 ---
 
+## CI/CD
+
+The repository uses a GitHub Actions pipeline covering quality gates, dependency
+security, SonarCloud analysis, and automated release builds. See
+**[WORKFLOW.md](WORKFLOW.md)** for the full guide (triggers, required checks,
+secrets, troubleshooting, and how to extend the pipeline).
+
+---
+
 ## Prerequisites & Installation
 
 Ensure you have Rust and Cargo installed on your system.
