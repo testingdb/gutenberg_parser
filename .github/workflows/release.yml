@@ -51,7 +51,7 @@ jobs:
             # For tag pushes, github.ref_name automatically holds the tag string (e.g., 'v1.0.0')
             TAG="${{ github.ref_name }}"
           fi
-          echo "tag_name=${TAG}" >> $GITHUB_OUTPUT
+          echo "tag_name=${TAG}" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
