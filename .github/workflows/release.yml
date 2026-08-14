@@ -3,7 +3,7 @@ name: Build and Publish Tagged Release
 on:
   push:
     tags:
-      - 'v*' # Triggers on any tag push starting with 'v' (e.g., v1.0.0, v0.1.2)
+      - 'v*'
   workflow_dispatch:
     inputs:
       tag_name:
@@ -11,18 +11,29 @@ on:
         required: true
         type: string
 
-permissions:
-  contents: write
-
 jobs:
-  build-and-release:
-    name: Build & Release
-    runs-on: ubuntu-latest
-
-    # Security check: Allows all Git tag pushes OR manual dispatch by the repo owner
+  build:
+    name: Build (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    permissions:
+      actions: write
+    # Security check: Only Git tag pushes OR manual dispatch by the repo owner.
+    # Every other job `needs` this one, so a skipped build gates the whole pipeline.
     if: >-
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) ||
       (github.event_name == 'workflow_dispatch' && github.actor == github.repository_owner)
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: macos-15-intel
+            target: x86_64-apple-darwin
+          - os: macos-latest
+            target: aarch64-apple-darwin
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
 
     steps:
       - name: Checkout Code
@@ -30,17 +41,87 @@ jobs:
 
       - name: Install Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
 
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
+        with:
+          key: release-${{ matrix.target }}
+
+      - name: Verify Tag Matches Cargo Version
+        if: github.event_name == 'push'
+        run: |
+          version="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n 1)"
+          if [ "v${version}" = "${{ github.ref_name }}" ]; then
+            echo "Tag ${{ github.ref_name }} matches Cargo.toml version v${version}."
+          else
+            echo "::error::Tag ${{ github.ref_name }} does not match Cargo.toml version v${version}."
+            exit 1
+          fi
 
       - name: Build Release Binary
-        run: cargo build --release --locked
+        run: cargo build --release --locked --target ${{ matrix.target }}
 
-      - name: Prepare Release Artifacts
+      - name: Package Artifact
+        shell: bash
         run: |
           mkdir -p dist
-          tar -czf dist/gutenberg_parser-linux-amd64.tar.gz -C target/release gutenberg_parser
+          bin="target/${{ matrix.target }}/release/gutenberg_parser"
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            powershell Compress-Archive -Force -Path "$(cygpath -w "$bin").exe" \
+              -DestinationPath "dist/gutenberg_parser-${{ matrix.target }}.zip"
+          else
+            tar -czf "dist/gutenberg_parser-${{ matrix.target }}.tar.gz" \
+              -C "target/${{ matrix.target }}/release" gutenberg_parser
+          fi
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gutenberg_parser-${{ matrix.target }}
+          path: dist/*
+
+  checksum:
+    name: Generate SHA256 Checksums
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Generate Checksums
+        run: |
+          cd artifacts
+          sha256sum * > SHA256SUMS.txt
+
+      - name: Upload Checksum Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: checksums
+          path: artifacts
+
+  release:
+    name: Create GitHub Release
+    needs: [build, checksum]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
 
       - name: Determine Tag Name
         id: tag
@@ -48,7 +129,6 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             TAG="${{ inputs.tag_name }}"
           else
-            # For tag pushes, github.ref_name automatically holds the tag string (e.g., 'v1.0.0')
             TAG="${{ github.ref_name }}"
           fi
           echo "tag_name=${TAG}" >> "$GITHUB_OUTPUT"
@@ -61,9 +141,16 @@ jobs:
           body: |
             Automated Release for `${{ steps.tag.outputs.tag_name }}`.
             - **Commit:** `${{ github.sha }}`
+
+            ## Assets
+            - `gutenberg_parser-x86_64-unknown-linux-gnu.tar.gz`
+            - `gutenberg_parser-x86_64-apple-darwin.tar.gz`
+            - `gutenberg_parser-aarch64-apple-darwin.tar.gz`
+            - `gutenberg_parser-x86_64-pc-windows-msvc.zip`
+            - `SHA256SUMS.txt`
           draft: false
           prerelease: false
           files: |
-            dist/gutenberg_parser-linux-amd64.tar.gz
+            artifacts/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
