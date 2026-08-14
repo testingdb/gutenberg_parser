@@ -1021,7 +1021,7 @@ fn main() {
         }
     });
 
-    // Worker Threads (Rayon Work Stealing Pool)
+    // Worker Threads (std::thread Pool)
     let num_workers = std::thread::available_parallelism().map(|n| n.get()).unwrap_or(4);
     println!("[INFO] Spawning {} parallel worker threads", num_workers);
 
