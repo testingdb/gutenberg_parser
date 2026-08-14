@@ -6,7 +6,7 @@
 #### Release & Version
 
 [![Release](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml/badge.svg)](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml)
-[![Version 1.0.5](https://img.shields.io/badge/version-1.0.5-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
+[![Version 1.1.0](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
 
 #### Code Quality
 
@@ -28,6 +28,7 @@ The parser extracts author metadata, taxonomy structures (Library of Congress co
 ## Features
 
 - **Multi-Threaded Pipeline:** Utilizes `crossbeam-channel` and worker thread pools to extract and process XML files concurrently.
+- **Automatic Archive Download:** Pass `--download` to fetch the latest `rdf-files.tar.bz2` directly from Project Gutenberg, parse it, and delete the archive afterwards — no manual provisioning needed.
 - **Taxonomy Normalization:** Maps LC Classification codes and Gutenberg bookshelves into standardized domains, genres, and hierarchical subtopics.
 - **Mirror Rewriting:** Rewrites format and cover image URLs to specified Project Gutenberg mirror sites.
 - **Strict Quality Filtering:** Automatically filters out non-text entries, entries without authors/contributors, and entries missing required format types (EPUB and HTML).
@@ -69,15 +70,17 @@ Project Gutenberg provides raw RDF catalog archives updated daily. Download the 
 wget https://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.bz2
 ```
 
+Alternatively, skip manual provisioning entirely and let the parser fetch the archive itself with `--download` (see [CLI Usage](#cli-usage)); the downloaded archive is automatically deleted after parsing.
+
 ---
 
 ## CLI Usage
 
 ```text
-Usage: gutenberg_parser [OPTIONS] <ARCHIVE_PATH>
+Usage: gutenberg_parser [OPTIONS] [ARCHIVE_PATH]
 
 Arguments:
-  <ARCHIVE_PATH>  Path to the Project Gutenberg .tar.bz2 archive
+  [ARCHIVE_PATH]  Path to the Project Gutenberg .tar.bz2 archive (required unless --download is used)
 
 Options:
   -o, --output <OUTPUT>          Output file path [default: filtered_ebooks.json]
@@ -86,6 +89,7 @@ Options:
   -c, --chunk-size <CHUNK_SIZE>  Number of items per chunk file
       --bridge                   Rename output object fields to match the target database schema (alt-target-schema.md)
       --include-licensed         Also include ebooks that are NOT Public Domain (copyrighted or otherwise licensed)
+      --download                 Automatically download rdf-files.tar.bz2 from Project Gutenberg, parse it, then delete the archive afterwards
   -h, --help                     Print helpẑ
   -V, --version                  Print version
 ```
@@ -118,6 +122,12 @@ Parse an archive while keeping copyrighted or otherwise licensed ebooks:
 ```bash
 ./target/release/gutenberg_parser rdf-files.tar.bz2 \
   --include-licensed
+```
+
+### 1c. Auto-Download the Archive
+Fetch the latest `rdf-files.tar.bz2` from Project Gutenberg, parse it, and delete the archive afterwards:
+```bash
+./target/release/gutenberg_parser --download
 ```
 
 ### 2. Compressed Output with a Custom Mirror

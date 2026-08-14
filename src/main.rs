@@ -9,9 +9,11 @@ use serde::Serialize;
 use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufReader, BufWriter, Read, Write};
+use std::path::PathBuf;
 use std::sync::LazyLock;
 use std::time::Instant;
 use tar::Archive;
+use tempfile::NamedTempFile;
 
 // ---------------------------------------------------------------------------
 // Static Configuration & Data Tables
@@ -41,6 +43,8 @@ static GUTENBERG_MIRRORS: LazyLock<HashMap<&'static str, &'static str>> = LazyLo
     m.insert("xmission", "http://mirrors.xmission.com/gutenberg/");
     m
 });
+
+const RDF_FEED_URL: &str = "https://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.bz2";
 
 static LC_MAP: LazyLock<HashMap<&'static str, (&'static str, &'static str)>> = LazyLock::new(|| {
     let mut m = HashMap::new();
@@ -927,7 +931,12 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str, include_licensed: bool) -
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Ultra-fast Multi-threaded Gutenberg Archive Extractor")]
 struct Args {
-    archive_path: String,
+    #[arg(
+        required_unless_present = "download",
+        conflicts_with = "download",
+        help = "Path to the Project Gutenberg .tar.bz2 archive (required unless --download is used)"
+    )]
+    archive_path: Option<String>,
     #[arg(short, long, default_value = "filtered_ebooks.json")]
     output: String,
     #[arg(short, long, default_value = "gutenberg")]
@@ -946,6 +955,11 @@ struct Args {
         help = "Also include ebooks that are NOT Public Domain (copyrighted or otherwise licensed)"
     )]
     include_licensed: bool,
+    #[arg(
+        long,
+        help = "Automatically download rdf-files.tar.bz2 from Project Gutenberg, parse it, then delete the archive afterwards"
+    )]
+    download: bool,
 }
 
 fn write_chunk(data: &mut [Ebook], path: &str, bridge: bool) -> std::io::Result<()> {
@@ -994,6 +1008,79 @@ fn get_chunk_path(base_path: &str, chunk_index: usize) -> String {
     }
 }
 
+fn download_rdf_archive() -> Result<NamedTempFile, String> {
+    let start = Instant::now();
+    println!("[INFO] Downloading rdf-files.tar.bz2 from {}", RDF_FEED_URL);
+
+    let mut response = ureq::get(RDF_FEED_URL)
+        .call()
+        .map_err(|e| format!("Failed to download archive: {}", e))?;
+
+    if response.status() != 200 {
+        return Err(format!(
+            "Failed to download archive: HTTP {} from {}",
+            response.status(),
+            RDF_FEED_URL
+        ));
+    }
+
+    let total_bytes = response
+        .headers()
+        .get("content-length")
+        .and_then(|v| v.to_str().ok())
+        .and_then(|s| s.parse::<u64>().ok());
+
+    let mut temp_file = tempfile::Builder::new()
+        .prefix("rdf-files-")
+        .suffix(".tar.bz2")
+        .tempfile_in(".")
+        .map_err(|e| format!("Failed to create temporary archive file: {}", e))?;
+
+    let mut reader = response.body_mut().as_reader();
+    let mut buffer = [0u8; 128 * 1024];
+    let mut downloaded: u64 = 0;
+    let mut last_progress = Instant::now();
+
+    loop {
+        let n = reader
+            .read(&mut buffer)
+            .map_err(|e| format!("Failed reading download stream: {}", e))?;
+        if n == 0 {
+            break;
+        }
+        temp_file
+            .write_all(&buffer[..n])
+            .map_err(|e| format!("Failed writing archive to disk: {}", e))?;
+        downloaded += n as u64;
+
+        if last_progress.elapsed().as_secs() >= 2 {
+            let progress = match total_bytes {
+                Some(total) if total > 0 => format!(
+                    "{:.1} / {:.1} MB",
+                    downloaded as f64 / 1_048_576.0,
+                    total as f64 / 1_048_576.0
+                ),
+                _ => format!("{:.1} MB", downloaded as f64 / 1_048_576.0),
+            };
+            println!("[INFO] Downloaded {}", progress);
+            last_progress = Instant::now();
+        }
+    }
+
+    temp_file
+        .flush()
+        .map_err(|e| format!("Failed to flush archive to disk: {}", e))?;
+
+    println!(
+        "[INFO] Download complete: {:.1} MB in {:.2}s -> {}",
+        downloaded as f64 / 1_048_576.0,
+        start.elapsed().as_secs_f64(),
+        temp_file.path().display()
+    );
+
+    Ok(temp_file)
+}
+
 fn main() {
     let args = Args::parse();
     let start_time = Instant::now();
@@ -1003,7 +1090,21 @@ fn main() {
         .unwrap_or(&args.mirror.as_str())
         .to_string();
 
-    println!("[INFO] Opening archive: {}", args.archive_path);
+    let (_downloaded_archive, archive_path) = if args.download {
+        let temp = download_rdf_archive().unwrap_or_else(|e| {
+            eprintln!("[ERROR] {}", e);
+            std::process::exit(1);
+        });
+        let path = temp.path().to_path_buf();
+        (Some(temp), path)
+    } else {
+        (None, PathBuf::from(args.archive_path.clone().unwrap()))
+    };
+
+    println!("[INFO] Opening archive: {}", archive_path.display());
+    if args.download {
+        println!("[INFO] Downloaded archive will be deleted after parsing");
+    }
     println!("[INFO] Using mirror base: {}", mirror_base);
     if args.bridge {
         println!("[INFO] Bridge output mode enabled: field names match the target database schema");
@@ -1018,9 +1119,9 @@ fn main() {
     let (parsed_tx, parsed_rx): (Sender<Ebook>, Receiver<Ebook>) = bounded(2048);
 
     // Producer Thread: Single-pass bz2 stream decompression
-    let archive_path = args.archive_path.clone();
+    let producer_archive_path = archive_path.clone();
     std::thread::spawn(move || {
-        let file = File::open(&archive_path).expect("Failed to open archive file");
+        let file = File::open(&producer_archive_path).expect("Failed to open archive file");
         let buf_reader = BufReader::with_capacity(1024 * 1024, file);
         let bz_decoder = BzDecoder::new(buf_reader);
         let mut archive = Archive::new(bz_decoder);
@@ -1113,4 +1214,8 @@ fn main() {
         "[INFO] Pipeline complete in {:.2}s. Total Matched: {}",
         elapsed, total_matched
     );
+
+    if args.download {
+        println!("[INFO] Deleting downloaded archive: {}", archive_path.display());
+    }
 }

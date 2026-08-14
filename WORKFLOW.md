@@ -161,7 +161,7 @@ File: `.github/workflows/audit.yml` · Workflow name: **Dependency Audit**
 | Section | Policy for `gutenberg_parser` |
 | :--- | :--- |
 | `[bans]` | Multiple versions of a crate → warn; duplicate-blocklist is empty |
-| `[licenses]` | Allow list: MIT, Apache-2.0, Apache-2.0 WITH LLVM-exception, BSD-3-Clause, Unlicense, Unicode-3.0, 0BSD, Zlib; confidence ≥ 0.8 |
+| `[licenses]` | Allow list: MIT, Apache-2.0, Apache-2.0 WITH LLVM-exception, BSD-3-Clause, Unlicense, Unicode-3.0, 0BSD, Zlib, ISC, CDLA-Permissive-2.0; confidence ≥ 0.8 |
 | `[sources]` | crates.io registry only; any unknown registry/Git source is denied |
 
 Two deliberate choices, both documented in `deny.toml`:
