@@ -6,7 +6,7 @@
 #### Release & Version
 
 [![Release](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml/badge.svg)](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml)
-[![Version 1.1.0](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
+[![Version 1.1.1](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
 
 #### Code Quality
 

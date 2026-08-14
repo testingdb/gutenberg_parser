@@ -257,7 +257,7 @@ dependencies = [
 
 [[package]]
 name = "gutenberg_parser"
-version = "1.1.0"
+version = "1.1.1"
 dependencies = [
  "bzip2",
  "clap",
