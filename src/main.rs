@@ -335,7 +335,7 @@ pub struct Agent {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub agent_id: Option<u64>,
     pub name: String,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub aliases: Vec<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub webpage: Option<String>,
@@ -355,27 +355,27 @@ pub struct Format {
 #[derive(Serialize, Debug, Clone)]
 pub struct Topic {
     pub heading: String,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub subtopics: Vec<String>,
 }
 
 #[derive(Serialize, Debug, Clone)]
 pub struct Taxonomy {
     pub domain: String,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub genres: Vec<String>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub topics: Vec<Topic>,
 }
 
 #[derive(Serialize, Debug, Clone)]
 pub struct Ebook {
     pub title: String,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub alternative_titles: Vec<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub issued_date: Option<String>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub agents: Vec<Agent>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
@@ -398,9 +398,9 @@ pub struct BridgeAgent {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pg_id: Option<u64>,
     pub name: String,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub aliases: Vec<String>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub external_urls: Vec<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub birth_date: Option<String>,
@@ -417,11 +417,11 @@ pub struct BridgeFormat {
 #[derive(Serialize, Debug, Clone)]
 pub struct BridgeEbook {
     pub title: String,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub alternative_titles: Vec<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub issued_date: Option<String>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub agents: Vec<BridgeAgent>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,

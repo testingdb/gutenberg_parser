@@ -6,7 +6,7 @@
 #### Release & Version
 
 [![Release](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml/badge.svg)](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml)
-[![Version 1.1.1](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
+[![Version 1.1.2](https://img.shields.io/badge/version-1.1.2-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
 
 #### Code Quality
 
@@ -268,3 +268,98 @@ Passing `--bridge` keeps the same one-object-per-book structure but renames outp
   }
 ]
 ```
+
+---
+
+## JSON Output Contract
+
+The parser guarantees a **stable JSON schema** for all output modes. This section documents field presence rules so downstream consumers can rely on consistent structure.
+
+### Array Fields (Always Present, Never Omitted)
+
+These fields are **always serialized as arrays** — empty `[]` when no data exists, never `null` or missing:
+
+| Field | Description |
+|-------|-------------|
+| `taxonomy.genres` | Mapped genre labels (e.g., `["Fiction & Novels", "Mystery & Crime"]`) |
+| `taxonomy.topics` | Hierarchical topic objects with `heading` and `subtopics` |
+| `taxonomy.topics[].subtopics` | Subtopic strings for each topic heading |
+| `agents[].aliases` | Alternative name forms for each agent (author, translator, etc.) |
+| `agents[].external_urls` | *(Bridge mode only)* Agent webpage URLs as array |
+| `alternative_titles` | Alternate title strings for the work |
+| `agents` | Contributor objects (authors, translators, illustrators, etc.) |
+
+**Example — Book with No Genres/Topics:**
+```json
+{
+  "taxonomy": {
+    "domain": "General & Uncategorized",
+    "genres": [],
+    "topics": []
+  },
+  "alternative_titles": [],
+  "agents": [
+    { "type": "author", "name": "Anonymous", "aliases": [], ... }
+  ]
+}
+```
+
+### Optional Scalar Fields (Omitted When `null`)
+
+These fields are **only present when a value exists** — absent from JSON when `None`/`null`:
+
+| Field | Context |
+|-------|---------|
+| `issued_date` | Publication date (may be unknown) |
+| `description` | Summary/notes (MARC 520/500) |
+| `webpage` | *(Parser mode)* Agent homepage URL |
+| `birth_date` / `death_date` | Agent lifespan dates |
+| `agent_id` / `pg_id` | Project Gutenberg agent/book numeric IDs |
+
+### Required Non-Null Fields (Always Present, Non-Empty)
+
+These fields are **guaranteed present and non-null** for every output object:
+
+| Parser Mode | Bridge Mode | Description |
+|-------------|-------------|-------------|
+| `title` | `title` | Work title |
+| `language` | `lang_code` | ISO 639 language code |
+| `formats` | `formats` | Array of format objects (HTML + EPUB minimum) |
+| `taxonomy.domain` | `taxonomy.domain` | Primary domain classification |
+| `ebook_id` | `pg_id` | Project Gutenberg book ID |
+| `cover_image` | `md_cover_image_url` | Cover image URL |
+| `license` | `license_statement` | License text |
+| `downloads` | `pg_download_count` | Download counter |
+| `agents[]` | `agents[]` | At least one contributor (required by filter) |
+
+### Minimal Valid Output Example
+
+A book with only required fields and all optional arrays empty:
+
+```json
+{
+  "title": "Untitled Work",
+  "alternative_titles": [],
+  "issued_date": null,
+  "agents": [
+    { "type": "author", "agent_id": null, "name": "Unknown", "aliases": [], "webpage": null, "birth_date": null, "death_date": null }
+  ],
+  "description": null,
+  "language": "en",
+  "formats": [
+    { "type": "text/html", "url": "https://www.gutenberg.org/files/12345/12345-h/12345-h.htm" },
+    { "type": "application/epub+zip", "url": "https://www.gutenberg.org/ebooks/12345.epub3.images" }
+  ],
+  "taxonomy": {
+    "domain": "General & Uncategorized",
+    "genres": [],
+    "topics": []
+  },
+  "downloads": 0,
+  "ebook_id": "12345",
+  "cover_image": "https://www.gutenberg.org/cache/epub/12345/pg12345.cover.medium.jpg",
+  "license": "Public domain in the USA."
+}
+```
+
+> **Note:** In Bridge mode (`--bridge`), field names follow the target database schema (see [Bridge Mode](#bridge-mode) table). The presence rules above apply identically — array fields are always present, optional scalars omitted when null.
