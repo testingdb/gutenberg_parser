@@ -323,6 +323,7 @@ static RE_PREFIX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^([A-Z]{1,3})"
 static RE_AGENT_ID: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"agents/(\d+)").unwrap());
 static RE_FILES_DIRS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?:files|dirs)/([^/]+)/(.+)").unwrap());
 static RE_SHELF_CAT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)^Category:\s*").unwrap());
+static RE_MARC_SUBFIELD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\$[a-zA-Z]\b").unwrap());
 
 // ---------------------------------------------------------------------------
 // Structs & Models (Zero-Cost Serialization Pruning)
@@ -482,6 +483,14 @@ impl From<&Ebook> for BridgeEbook {
 
 fn is_public_domain_license(license: &str) -> bool {
     license.to_lowercase().contains("public domain")
+}
+
+fn clean_marc_subfields(s: &str) -> String {
+    RE_MARC_SUBFIELD
+        .replace_all(s, " ")
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ")
 }
 
 fn transform_url(url: Option<&str>, ebook_id: &str, mirror_base: &str) -> Option<String> {
@@ -755,7 +764,7 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str, include_licensed: bool) -
         .children()
         .find(|n| n.is_element() && n.tag_name().name() == "title")
         .and_then(|n| n.text())
-        .map(|t| t.trim().to_string())
+        .map(clean_marc_subfields)
         .filter(|t| !t.is_empty())
         .ok_or("filter_title")?;
 
@@ -874,7 +883,7 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str, include_licensed: bool) -
         .children()
         .filter(|n| n.tag_name().name() == "alternative")
         .filter_map(|n| n.text())
-        .map(|t| t.trim().to_string())
+        .map(clean_marc_subfields)
         .filter(|t| !t.is_empty())
         .collect();
 
@@ -1218,5 +1227,71 @@ fn main() {
 
     if args.download {
         println!("[INFO] Deleting downloaded archive: {}", archive_path.display());
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::clean_marc_subfields;
+
+    #[test]
+    fn strips_subfield_code_in_middle() {
+        assert_eq!(
+            clean_marc_subfields("Eloisa : $b or, A series of original letters"),
+            "Eloisa : or, A series of original letters"
+        );
+    }
+
+    #[test]
+    fn strips_leading_and_trailing_codes() {
+        assert_eq!(clean_marc_subfields("$a The Title"), "The Title");
+        assert_eq!(clean_marc_subfields("The Title $b"), "The Title");
+    }
+
+    #[test]
+    fn strips_code_followed_by_colon() {
+        assert_eq!(
+            clean_marc_subfields("Dress design $b: an account of costume"),
+            "Dress design : an account of costume"
+        );
+    }
+
+    #[test]
+    fn strips_code_followed_by_punctuation() {
+        assert_eq!(clean_marc_subfields("Title $b, subtitle"), "Title , subtitle");
+        assert_eq!(clean_marc_subfields("Title $b. subtitle"), "Title . subtitle");
+    }
+
+    #[test]
+    fn strips_consecutive_codes_and_normalizes_spacing() {
+        assert_eq!(clean_marc_subfields("$a Title $b  subtitle"), "Title subtitle");
+        assert_eq!(
+            clean_marc_subfields("Title  with\t double  spacing"),
+            "Title with double spacing"
+        );
+    }
+
+    #[test]
+    fn preserves_dollar_amounts() {
+        assert_eq!(clean_marc_subfields("The $100 Startup"), "The $100 Startup");
+        assert_eq!(clean_marc_subfields("The $5 Man"), "The $5 Man");
+    }
+
+    #[test]
+    fn preserves_words_starting_with_dollar_fragment() {
+        assert_eq!(clean_marc_subfields("How to Make $billions"), "How to Make $billions");
+        assert_eq!(clean_marc_subfields("$aThe Title"), "$aThe Title");
+    }
+
+    #[test]
+    fn trims_whitespace() {
+        assert_eq!(clean_marc_subfields("  Title  "), "Title");
+    }
+
+    #[test]
+    fn empty_input_stays_empty() {
+        assert_eq!(clean_marc_subfields(""), "");
+        assert_eq!(clean_marc_subfields("  "), "");
+        assert_eq!(clean_marc_subfields("$b"), "");
     }
 }
