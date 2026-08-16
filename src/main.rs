@@ -845,6 +845,7 @@ fn process_rdf_xml(xml_data: &[u8], mirror_base: &str, include_licensed: bool) -
     push_agents("trl", "translator", &mut agents);
     push_agents("aui", "introduction_author", &mut agents);
     push_agents("ill", "illustrator", &mut agents);
+    push_agents("edt", "editor", &mut agents);
     if !agents.iter().any(|a| a.agent_type == "author") {
         push_agents("aut", "author", &mut agents);
     }
