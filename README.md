@@ -154,47 +154,64 @@ Limit processing to 5,000 matches and split the output into chunks of 1,000 item
 ```json
 [
   {
-    "title": "The Adventures of Sherlock Holmes",
-    "issued_date": "1999-03-01",
+    "title": "Alice's Adventures in Wonderland",
+    "issued_date": "1994-10-01",
+    "alternative_titles": [
+      "Alice in Wonderland"
+    ],
     "agents": [
       {
         "type": "author",
-        "agent_id": 467,
-        "name": "Doyle, Arthur Conan",
-        "aliases": ["Doyle, A. Conan"],
-        "webpage": "https://en.wikipedia.org/wiki/Arthur_Conan_Doyle",
-        "birth_date": "1859",
-        "death_date": "1930"
+        "agent_id": 18,
+        "name": "Carroll, Lewis",
+        "aliases": ["Dodgson, Charles Lutwidge"],
+        "webpage": "https://en.wikipedia.org/wiki/Lewis_Carroll",
+        "birth_date": "1832",
+        "death_date": "1898"
+      },
+      {
+        "type": "illustrator",
+        "agent_id": 100,
+        "name": "Tenniel, John",
+        "aliases": ["Tenniel, Sir John"],
+        "webpage": "https://en.wikipedia.org/wiki/John_Tenniel",
+        "birth_date": "1820",
+        "death_date": "1914"
       }
     ],
-    "description": "A collection of Sherlock Holmes short stories, originally published in The Strand Magazine.",
+    "description": "Alice's Adventures in Wonderland (commonly shortened to Alice in Wonderland) is an 1865 novel written by English author Charles Lutwidge Dodgson under the pseudonym Lewis Carroll. It tells of a girl named Alice falling through a rabbit hole into a fantasy world populated by peculiar, anthropomorphic creatures.",
     "language": "en",
     "formats": [
       {
         "type": "text/html",
-        "url": "https://www.gutenberg.org/files/1661/1661-h/1661-h.htm"
+        "url": "https://www.gutenberg.org/files/11/11-h/11-h.htm"
       },
       {
         "type": "application/epub+zip",
-        "url": "https://www.gutenberg.org/ebooks/1661.epub3.images"
+        "url": "https://www.gutenberg.org/ebooks/11.epub3.images"
       }
     ],
     "taxonomy": {
       "domain": "Literature & Fiction",
       "genres": [
-        "Fiction & Novels",
-        "Mystery & Crime"
+        "Children's Literature",
+        "Classics",
+        "Fantasy"
       ],
       "topics": [
         {
-          "heading": "Holmes, Sherlock (Fictional character)",
-          "subtopics": ["Detective and mystery stories"]
+          "heading": "Fantasy literature",
+          "subtopics": ["Children's stories", "Imaginary places"]
+        },
+        {
+          "heading": "Animals",
+          "subtopics": ["Rabbits", "Cats"]
         }
       ]
     },
-    "downloads": 14520,
-    "ebook_id": "1661",
-    "cover_image": "https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg",
+    "downloads": 62000,
+    "ebook_id": "11",
+    "cover_image": "https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg",
     "license": "Public domain in the USA."
   }
 ]
@@ -230,40 +247,55 @@ Passing `--bridge` keeps the same one-object-per-book structure but renames outp
 ```json
 [
   {
-    "title": "The Adventures of Sherlock Holmes",
-    "issued_date": "1999-03-01",
+    "title": "Around the World in Eighty Days",
+    "issued_date": "1995-11-01",
+    "alternative_titles": [
+      "Le tour du monde en quatre-vingts jours. English",
+      "Around the World in 80 Days"
+    ],
     "agents": [
       {
         "role": "author",
-        "pg_id": 467,
-        "name": "Doyle, Arthur Conan",
-        "external_urls": ["https://en.wikipedia.org/wiki/Arthur_Conan_Doyle"]
+        "pg_id": 31,
+        "name": "Verne, Jules",
+        "external_urls": ["https://en.wikipedia.org/wiki/Jules_Verne"],
+        "aliases": ["Verne, Jules Gabriel"],
+        "birth_date": "1828",
+        "death_date": "1905"
       }
     ],
     "lang_code": "en",
     "formats": [
       {
         "mime_type": "text/html",
-        "file_url": "https://www.gutenberg.org/files/1661/1661-h/1661-h.htm"
+        "file_url": "https://www.gutenberg.org/files/103/103-h/103-h.htm"
       },
       {
         "mime_type": "application/epub+zip",
-        "file_url": "https://www.gutenberg.org/ebooks/1661.epub3.images"
+        "file_url": "https://www.gutenberg.org/ebooks/103.epub3.images"
       }
     ],
     "taxonomy": {
       "domain": "Literature & Fiction",
-      "genres": ["Fiction & Novels", "Mystery & Crime"],
+      "genres": [
+        "Action & Adventure",
+        "Classics",
+        "Fiction & Novels"
+      ],
       "topics": [
         {
-          "heading": "Holmes, Sherlock (Fictional character)",
-          "subtopics": ["Detective and mystery stories"]
+          "heading": "Voyages around the world",
+          "subtopics": ["Adventure stories"]
+        },
+        {
+          "heading": "Ballooning",
+          "subtopics": []
         }
       ]
     },
-    "pg_download_count": 14520,
-    "pg_id": 1661,
-    "md_cover_image_url": "https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg",
+    "pg_download_count": 45000,
+    "pg_id": 103,
+    "md_cover_image_url": "https://www.gutenberg.org/cache/epub/103/pg103.cover.medium.jpg",
     "license_statement": "Public domain in the USA."
   }
 ]
@@ -297,7 +329,7 @@ These fields are **always serialized as arrays** — empty `[]` when no data exi
     "genres": [],
     "topics": []
   },
-  "alternative_titles": [],
+  "alternative_titles": ["Alternate Title Example"],
   "agents": [
     { "type": "author", "name": "Anonymous", "aliases": [], ... }
   ]
@@ -339,7 +371,7 @@ A book with only required fields and all optional arrays empty:
 ```json
 {
   "title": "Untitled Work",
-  "alternative_titles": [],
+  "alternative_titles": ["Also Known As"],
   "issued_date": null,
   "agents": [
     { "type": "author", "agent_id": null, "name": "Unknown", "aliases": [], "webpage": null, "birth_date": null, "death_date": null }
