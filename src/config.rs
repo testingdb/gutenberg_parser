@@ -387,6 +387,12 @@ pub static BOOKSHELF_MAP: LazyLock<Vec<(Regex, &'static str)>> = LazyLock::new(|
         ),
         (Regex::new(r"(?i)horror").unwrap(), "Horror & Gothic"),
         (Regex::new(r"(?i)crime|thriller|mystery").unwrap(), "Mystery & Crime"),
+        (Regex::new(r"(?i)historical fiction").unwrap(), "Historical Fiction"),
+        (Regex::new(r"(?i)graphic[- ]novel").unwrap(), "Graphic Novels"),
+        (
+            Regex::new(r"(?i)crime[- ]fiction|detective[- ]fiction").unwrap(),
+            "Crime Fiction",
+        ),
         (Regex::new(r"(?i)novel").unwrap(), "Fiction & Novels"),
         (Regex::new(r"(?i)british literature").unwrap(), "British Literature"),
         (Regex::new(r"(?i)american literature").unwrap(), "American Literature"),
@@ -500,6 +506,13 @@ pub static LCSH_FORM_GENRE_MAP: LazyLock<HashMap<&'static str, (&'static str, &'
     m.insert("reference", ("General Works", "Reference Works"));
     m.insert("bibliography", ("Bibliography & Library Science", "Bibliography"));
     m.insert("bibliographies", ("Bibliography & Library Science", "Bibliography"));
+    // Expanded genre/forms for improved accuracy
+    m.insert("young adult fiction", ("Language & Literature", "Young Adult"));
+    m.insert("graphic novels", ("Language & Literature", "Graphic Novels"));
+    m.insert("cookbooks", ("General Works", "Cookbooks"));
+    m.insert("travel guides", ("History", "Travel & Exploration"));
+    m.insert("crime fiction", ("Language & Literature", "Mystery & Crime"));
+    m.insert("detective fiction", ("Language & Literature", "Mystery & Crime"));
     m
 });
 
@@ -557,6 +570,12 @@ pub static GENRE_TO_DOMAIN_MAP: LazyLock<HashMap<&'static str, &'static str>> = 
     m.insert("Politics & Government", "Law & Jurisprudence");
     m.insert("Travel & Exploration", "History");
     m.insert("History", "History");
+    m.insert("Young Adult", "Language & Literature");
+    m.insert("Graphic Novels", "Language & Literature");
+    m.insert("Cookbooks", "General Works");
+    m.insert("Crime Fiction", "Language & Literature");
+    m.insert("Historical Fiction", "Language & Literature");
+    m.insert("Detective Fiction", "Language & Literature");
     m
 });
 
