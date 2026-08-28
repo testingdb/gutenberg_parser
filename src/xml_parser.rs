@@ -574,8 +574,7 @@ mod tests {
 
     #[test]
     fn process_rdf_filter_required_formats_missing_epub() {
-        let xml = format!(
-            r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
+        let xml = r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
 <ebook rdf:about="ebooks/42" xmlns="http://www.gutenberg.org/2009/pgterms/">
 <type><value>text</value></type>
 <title>The Test Book</title>
@@ -584,8 +583,7 @@ mod tests {
 <creator><agent rdf:about="http://www.gutenberg.org/ebooks/agents/1"><name>Author</name></agent></creator>
 <hasFormat><file rdf:about="https://www.gutenberg.org/files/42/42-0.html"><value>text/html</value></file></hasFormat>
 </ebook>
-</rdf:RDF>"#
-        );
+</rdf:RDF>"#.to_string();
         assert_eq!(
             process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
             "filter_required_formats"
@@ -594,8 +592,7 @@ mod tests {
 
     #[test]
     fn process_rdf_filter_required_formats_missing_html() {
-        let xml = format!(
-            r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        let xml = r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 <ebook rdf:about="ebooks/42">
 <type><value>text</value></type>
 <title>T</title>
@@ -604,7 +601,7 @@ mod tests {
 <hasFormat><file rdf:about="https://example.org/1.epub"><value>application/epub+zip</value></file></hasFormat>
 </ebook>
 </rdf:RDF>"#
-        );
+            .to_string();
         assert_eq!(
             process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
             "filter_required_formats"
@@ -629,8 +626,7 @@ mod tests {
     // =======================================================================
 
     fn complete_ebook_xml() -> String {
-        format!(
-            r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:dcterms="http://purl.org/dc/terms/"
          xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/"
          xmlns:marcrel="http://id.loc.gov/vocabulary/relators/">
@@ -691,7 +687,7 @@ mod tests {
            </hasFormat>
          </ebook>
          </rdf:RDF>"#
-        )
+            .to_string()
     }
 
     #[test]
@@ -719,8 +715,7 @@ mod tests {
 
     #[test]
     fn process_rdf_full_success_aut_fallback_when_no_creator() {
-        let xml = format!(
-            r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
+        let xml = r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
             <ebook rdf:about="ebooks/123" xmlns="http://www.gutenberg.org/2009/pgterms/">
               <type><value>text</value></type>
               <title>Aut Only</title>
@@ -738,8 +733,7 @@ mod tests {
                 <file rdf:about="https://www.gutenberg.org/files/123/123.epub"><value>application/epub+zip</value></file>
               </hasFormat>
             </ebook>
-            </rdf:RDF>"#
-        );
+            </rdf:RDF>"#.to_string();
         let res = process_rdf_xml(xml.as_bytes(), "", false);
         assert!(res.is_ok(), "Expected Ok for aut fallback, got {:?}", res);
         let ebook = res.unwrap();
@@ -755,8 +749,7 @@ mod tests {
 
     #[test]
     fn process_rdf_format_inference_by_extension_only() {
-        let xml = format!(
-            r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
+        let xml = r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
             <ebook rdf:about="ebooks/1" xmlns="http://www.gutenberg.org/2009/pgterms/">
               <type><value>text</value></type>
               <title>T</title>
@@ -766,8 +759,7 @@ mod tests {
               <hasFormat><file rdf:about="https://www.gutenberg.org/files/1/1.html"><value>unknown</value></file></hasFormat>
               <hasFormat><file rdf:about="https://www.gutenberg.org/files/1/1.epub"><value>unknown</value></file></hasFormat>
             </ebook>
-            </rdf:RDF>"#
-        );
+            </rdf:RDF>"#.to_string();
         let res = process_rdf_xml(xml.as_bytes(), "", false);
         assert!(res.is_ok());
         let ebook = res.unwrap();
