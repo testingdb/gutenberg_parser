@@ -23,6 +23,100 @@ use crate::models::{Taxonomy, Topic};
 use crate::utils::parse_lc_code;
 use std::collections::HashSet;
 
+const GENRE_INDICATORS: &[&str] = &[
+    "biography",
+    "autobiography",
+    "memoir",
+    "memoirs",
+    "diaries",
+    "letters",
+    "speeches",
+    "correspondence",
+    "interviews",
+    "journals",
+    "notebooks",
+    "fiction",
+    "novel",
+    "novels",
+    "drama",
+    "poetry",
+    "poem",
+    "poems",
+    "short stories",
+    "short story",
+    "essays",
+    "essay",
+    "satire",
+    "humor",
+    "horror",
+    "mystery",
+    "crime",
+    "detective",
+    "science fiction",
+    "fantasy",
+    "romance",
+    "historical fiction",
+    "adventure",
+    "war stories",
+    "juvenile",
+    "children",
+    "encyclopedias",
+    "encyclopedia",
+    "dictionaries",
+    "dictionary",
+    "reference",
+    "collections",
+    "series",
+    "pamphlets",
+    "periodicals",
+    "yearbooks",
+    "almanacs",
+    "directories",
+    "thriller",
+    "western",
+    "gothic",
+    "plays",
+    "tragedy",
+    "comedy",
+    "fairy tales",
+    "folklore",
+    "mythology",
+    "legend",
+    "legends",
+    "travel",
+    "travelogue",
+    "guide",
+    "guides",
+    "manual",
+    "manuals",
+    "cookbook",
+    "cookbooks",
+    "recipe",
+    "recipes",
+];
+
+/// Checks whether a particular description from `LC_MAP` reads as a
+/// form / genre keyword (e.g. "Biography", "Fiction", "Essays").
+fn is_genre_keyword(s: &str) -> bool {
+    let lower = s.to_lowercase();
+    // Check against LCSH form/genre keywords.
+    if LCSH_FORM_GENRE_MAP.contains_key(lower.as_str()) {
+        return true;
+    }
+    // Normalize: lowercase, collapse multiple spaces, strip punctuation
+    let normalized = lower
+        .replace(|c: char| !c.is_alphanumeric() && c != ' ', " ")
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ");
+    for indicator in GENRE_INDICATORS {
+        if normalized.contains(indicator) {
+            return true;
+        }
+    }
+    false
+}
+
 /// Builds a `Taxonomy` from raw RDF `subject` and `bookshelf` values.
 ///
 /// # Arguments
