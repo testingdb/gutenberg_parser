@@ -363,14 +363,28 @@ mod tests {
     // parse_agent tests
     // =======================================================================
 
-    fn agent_xml_self(name: &str, aliases: &[&str], birth: Option<&str>, death: Option<&str>, pages: &[&str], about: &str) -> String {
+    fn agent_xml_self(
+        name: &str,
+        aliases: &[&str],
+        birth: Option<&str>,
+        death: Option<&str>,
+        pages: &[&str],
+        about: &str,
+    ) -> String {
         let mut aliases_xml = String::new();
         for a in aliases {
             aliases_xml.push_str(&format!("<alias>{}</alias>", a));
         }
-        let birth_xml = birth.map(|b| format!("<birthdate>{}</birthdate>", b)).unwrap_or_default();
-        let death_xml = death.map(|d| format!("<deathdate>{}</deathdate>", d)).unwrap_or_default();
-        let pages_xml = pages.iter().map(|p| format!("<webpage rdf:resource=\"{}\"/>", p)).collect::<String>();
+        let birth_xml = birth
+            .map(|b| format!("<birthdate>{}</birthdate>", b))
+            .unwrap_or_default();
+        let death_xml = death
+            .map(|d| format!("<deathdate>{}</deathdate>", d))
+            .unwrap_or_default();
+        let pages_xml = pages
+            .iter()
+            .map(|p| format!("<webpage rdf:resource=\"{}\"/>", p))
+            .collect::<String>();
         format!(
             r#"<agent xmlns="http://www.gutenberg.org/2009/pgterms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="{}">
 <name>{}</name>
@@ -393,12 +407,19 @@ mod tests {
 
     #[test]
     fn parse_agent_none_parent() {
-        assert!(parse_agent(None, "author", "1", "") .is_none());
+        assert!(parse_agent(None, "author", "1", "").is_none());
     }
 
     #[test]
     fn parse_agent_self_agent_node() {
-        let xml = agent_xml_self("Alice", &["Alicia"], Some("1900"), Some("1950"), &["https://example.com/alice"], "http://www.gutenberg.org/ebooks/agents/42");
+        let xml = agent_xml_self(
+            "Alice",
+            &["Alicia"],
+            Some("1900"),
+            Some("1950"),
+            &["https://example.com/alice"],
+            "http://www.gutenberg.org/ebooks/agents/42",
+        );
         let doc = Document::parse(&xml).unwrap();
         let agent = parse_agent(Some(doc.root_element()), "author", "123", "");
         let a = agent.unwrap();
@@ -453,10 +474,19 @@ mod tests {
     #[test]
     fn process_rdf_no_ebook_element() {
         let xml = r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><other/></rdf:RDF>"#;
-        assert_eq!(process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(), "no_ebook_element");
+        assert_eq!(
+            process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
+            "no_ebook_element"
+        );
     }
 
-    fn base_ebook_xml(type_val: &str, title_text: &str, language_text: &str, rights_text: &str, _include_licensed: bool) -> Vec<u8> {
+    fn base_ebook_xml(
+        type_val: &str,
+        title_text: &str,
+        language_text: &str,
+        rights_text: &str,
+        _include_licensed: bool,
+    ) -> Vec<u8> {
         format!(
             r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
 <ebook rdf:about="ebooks/1">
@@ -556,7 +586,10 @@ mod tests {
 </ebook>
 </rdf:RDF>"#
         );
-        assert_eq!(process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(), "filter_required_formats");
+        assert_eq!(
+            process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
+            "filter_required_formats"
+        );
     }
 
     #[test]
@@ -572,13 +605,23 @@ mod tests {
 </ebook>
 </rdf:RDF>"#
         );
-        assert_eq!(process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(), "filter_required_formats");
+        assert_eq!(
+            process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
+            "filter_required_formats"
+        );
     }
 
     #[test]
     fn process_rdf_filter_creator_no_agents() {
-        let xml = full_ebook_xml_with_formats("https://www.gutenberg.org/files/42/42-0.html", "https://www.gutenberg.org/files/42/42.epub", true);
-        assert_eq!(process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(), "filter_creator");
+        let xml = full_ebook_xml_with_formats(
+            "https://www.gutenberg.org/files/42/42-0.html",
+            "https://www.gutenberg.org/files/42/42.epub",
+            true,
+        );
+        assert_eq!(
+            process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
+            "filter_creator"
+        );
     }
 
     // =======================================================================
@@ -700,7 +743,10 @@ mod tests {
         let res = process_rdf_xml(xml.as_bytes(), "", false);
         assert!(res.is_ok(), "Expected Ok for aut fallback, got {:?}", res);
         let ebook = res.unwrap();
-        assert!(ebook.agents.iter().any(|a| a.agent_type == "author" && a.name == "Aut Writer"));
+        assert!(ebook
+            .agents
+            .iter()
+            .any(|a| a.agent_type == "author" && a.name == "Aut Writer"));
     }
 
     // =======================================================================
