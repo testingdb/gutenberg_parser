@@ -48,6 +48,12 @@ pub fn clean_marc_subfields(s: &str) -> String {
         .join(" ")
 }
 
+/// Tries the `.images.epub` path on pglaf; falls back to `.epub`.
+fn resolve_pglaf_epub_url(mirror_base: &str, ebook_id: &str) -> String {
+    let mirror_clean = format!("{}/", mirror_base.trim_end_matches('/'));
+    format!("{}cache/epub/{}/pg{}-images.epub", mirror_clean, ebook_id, ebook_id)
+}
+
 /// Transforms a Gutenberg URL to a mirror-compatible URL.
 ///
 /// # Behavior
@@ -107,6 +113,9 @@ pub fn transform_url(url: Option<&str>, ebook_id: &str, mirror_base: &str) -> Op
     for prefix in prefixes {
         if let Some(rel_path) = url.strip_prefix(prefix) {
             if let Some(file_part) = rel_path.strip_prefix("ebooks/") {
+                if mirror_base.to_lowercase().contains("pglaf") && (file_part.contains("epub") || file_part.ends_with(".epub3.images")) {
+                    return Some(resolve_pglaf_epub_url(mirror_base, ebook_id_clean));
+                }
                 return Some(format!("{}cache/epub/{}/pg{}", mirror_clean, ebook_id_clean, file_part));
             }
             return Some(format!("{}{}", mirror_clean, rel_path));
