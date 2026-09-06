@@ -4,20 +4,6 @@ on:
   schedule:
     - cron: '0 3 * * 1'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Cargo.toml'
-      - 'Cargo.lock'
-      - 'deny.toml'
-      - '.github/workflows/audit.yml'
-  pull_request:
-    types: [opened, synchronize, reopened]
-    paths:
-      - 'Cargo.toml'
-      - 'Cargo.lock'
-      - 'deny.toml'
-      - '.github/workflows/audit.yml'
 
 concurrency:
   group: audit-${{ github.ref }}

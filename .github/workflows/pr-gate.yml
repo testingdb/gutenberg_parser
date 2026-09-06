@@ -1,4 +1,4 @@
-name: CI
+name: PR Gate
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: pr-gate-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -39,7 +39,7 @@ jobs:
               - '.rustfmt.toml'
               - 'rust-toolchain.toml'
               - 'rust-toolchain'
-              - '.github/workflows/ci.yml'
+              - '.github/workflows/pr-gate.yml'
 
   quality-gate:
     name: fmt / clippy / build / test
@@ -50,7 +50,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -63,7 +62,7 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
         with:
-          key: ci-${{ matrix.os }}
+          key: pr-gate-${{ matrix.os }}
 
       - name: Check Formatting
         run: cargo fmt --all -- --check
@@ -95,3 +94,69 @@ jobs:
 
       - name: Run actionlint
         uses: raven-actions/actionlint@v2
+
+  audit:
+    name: Dependency Audit
+    needs: quality-gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Security advisories (cargo audit)
+        uses: actions-rust-lang/audit@v1
+
+      - name: Cargo Deny
+        uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check bans
+
+      - name: Cargo Deny (licenses)
+        uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check licenses
+
+      - name: Cargo Deny (sources)
+        uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check sources
+
+      - name: Dependency Review
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  sonarqube:
+    name: SonarCloud analysis
+    needs: audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, llvm-tools-preview
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: pr-gate-sonar
+
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+
+      - name: Generate LCOV Coverage Report
+        run: cargo llvm-cov --all-features --tests --lcov --output-path lcov.info
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
