@@ -128,7 +128,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: actions/dependency-review-action@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   sonarqube:
     name: SonarCloud analysis
