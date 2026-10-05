@@ -41,8 +41,8 @@ use crate::xml_parser::*;
 ///
 /// The parser enforces mutual exclusion between `archive_path` and
 /// `--download`, and provides optional chunking, result limits,
-/// mirror selection, bridge-mode schema conversion, and licensed-content
-/// inclusion.
+/// mirror selection, bridge-mode schema conversion, licensed-content
+/// inclusion, and Wikipedia image enrichment.
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Ultra-fast Multi-threaded Gutenberg Archive Extractor")]
 pub struct Args {
@@ -84,6 +84,14 @@ pub struct Args {
         help = "Also include ebooks that are NOT Public Domain (copyrighted or otherwise licensed)"
     )]
     include_licensed: bool,
+
+    /// Resolve agent images from Wikipedia.
+    #[arg(
+        short = 'w',
+        long,
+        help = "Look up a thumbnail image for every agent that has a Wikipedia page (via the Wikipedia REST API)"
+    )]
+    wiki_images: bool,
 
     /// Automatically download the RDF archive, parse it, and delete it.
     #[arg(
@@ -295,6 +303,9 @@ pub fn run() {
     } else {
         println!("[INFO] Filtering to Public Domain ebooks only");
     }
+    if args.wiki_images {
+        println!("[INFO] Wikipedia image enrichment enabled: resolving thumbnails for agents with a Wikipedia page");
+    }
 
     // Bounded channels link producer → workers → consumer.
     let (raw_tx, raw_rx): (Sender<Vec<u8>>, Receiver<Vec<u8>>) = bounded(2048);
@@ -331,10 +342,11 @@ pub fn run() {
         let tx = parsed_tx.clone();
         let mirror = mirror_base.clone();
         let include_licensed = args.include_licensed;
+        let wiki_images = args.wiki_images;
 
         std::thread::spawn(move || {
             while let Ok(raw_bytes) = rx.recv() {
-                if let Ok(ebook) = process_rdf_xml(&raw_bytes, &mirror, include_licensed) {
+                if let Ok(ebook) = process_rdf_xml(&raw_bytes, &mirror, include_licensed, wiki_images) {
                     if tx.send(ebook).is_err() {
                         break;
                     }

@@ -11,9 +11,9 @@
 //! `md_cover_image_url`, etc.) that match the target database schema.
 //!
 //! ## Serialization Pruning
-//! Optional fields (`agent_id`, `birth_date`, `death_date`, `description`,
-//! `issued_date`) are omitted from JSON when `None` or empty, reducing
-//! payload size.
+//! Optional fields (`agent_id`, `birth_date`, `death_date`, `image`,
+//! `description`, `issued_date`) are omitted from JSON when `None` or empty,
+//! reducing payload size.
 
 use serde::Serialize;
 
@@ -25,7 +25,8 @@ use serde::Serialize;
 ///
 /// The `agent_type` string identifies the role (`author`, `translator`,
 /// `illustrator`, `editor`, etc.). `agent_id` links to the Gutenberg agent
-/// database when present.
+/// database when present. `image` carries a Wikipedia thumbnail when the
+/// `--wiki-images` flag resolved one.
 #[derive(Serialize, Debug, Clone)]
 pub struct Agent {
     /// Role of the agent (`author`, `translator`, etc.).
@@ -44,7 +45,8 @@ pub struct Agent {
     #[serde(default)]
     pub aliases: Vec<String>,
 
-    /// External web pages (personal sites, Wikipedia, etc.).
+    /// External webpages of the agent (personal sites, Wikipedia, etc.),
+    /// read from the `webpage` RDF child nodes.
     #[serde(default)]
     pub webpages: Vec<String>,
 
@@ -55,6 +57,12 @@ pub struct Agent {
     /// Death year / date, when known.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub death_date: Option<String>,
+
+    /// Thumbnail image URL of the agent, resolved from Wikipedia when
+    /// `--wiki-images` is enabled and the agent has a Wikipedia page.
+    /// Omitted from JSON when `None`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub image: Option<String>,
 }
 
 // ---------------------------------------------------------------------------
@@ -196,6 +204,10 @@ pub struct BridgeAgent {
     /// Death date.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub death_date: Option<String>,
+
+    /// Wikipedia thumbnail image URL (same name as in parser mode).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub image: Option<String>,
 }
 
 /// Bridge representation of a format with renamed fields.
@@ -271,6 +283,7 @@ impl From<&Agent> for BridgeAgent {
             external_urls: agent.webpages.clone(),
             birth_date: agent.birth_date.clone(),
             death_date: agent.death_date.clone(),
+            image: agent.image.clone(),
         }
     }
 }
@@ -325,6 +338,7 @@ mod tests {
             webpages: vec![],
             birth_date: None,
             death_date: None,
+            image: None,
         };
         assert_eq!(agent.name, "Alice");
     }
@@ -354,5 +368,29 @@ mod tests {
         let bridge: BridgeEbook = BridgeEbook::from(&ebook);
         assert_eq!(bridge.title, "Test");
         assert_eq!(bridge.pg_id, 42);
+    }
+
+    /// A resolved Wikipedia thumbnail survives the bridge conversion, and is
+    /// omitted from JSON when no image was resolved.
+    #[test]
+    fn bridge_agent_carries_optional_image() {
+        let mut agent = Agent {
+            agent_type: "author".to_string(),
+            agent_id: Some(31),
+            name: "Verne, Jules".to_string(),
+            aliases: vec![],
+            webpages: vec!["https://en.wikipedia.org/wiki/Jules_Verne".to_string()],
+            birth_date: None,
+            death_date: None,
+            image: Some("https://thumb.wikimedia.org/jules.jpg".to_string()),
+        };
+        assert_eq!(
+            BridgeAgent::from(&agent).image.as_deref(),
+            Some("https://thumb.wikimedia.org/jules.jpg")
+        );
+
+        agent.image = None;
+        let json = serde_json::to_string(&BridgeAgent::from(&agent)).unwrap();
+        assert!(!json.contains("\"image\""), "image must be omitted: {}", json);
     }
 }

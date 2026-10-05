@@ -10,8 +10,12 @@
 //!   handling `files/` and `dirs/` paths as well as `cache/epub/` prefixes.
 //! - `parse_lc_code`: Parses Library of Congress classification strings
 //!   and performs prefix fallbacks (`D501` → `D` → `History`).
+//! - `agent_wikipedia_image`: Resolves an agent's Wikipedia thumbnail URL
+//!   from its `webpages` list (results memoized per page).
 
 use crate::config::*;
+use std::collections::HashMap;
+use std::sync::{LazyLock, Mutex, MutexGuard};
 
 /// Determines whether a license string indicates public-domain status.
 ///
@@ -172,6 +176,106 @@ pub fn parse_lc_code(s: &str) -> Option<(&'static str, &'static str)> {
 }
 
 // ---------------------------------------------------------------------------
+// Wikipedia Image Enrichment
+// ---------------------------------------------------------------------------
+
+/// Maximum time a single Wikipedia lookup may take before it is abandoned.
+const WIKIPEDIA_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
+
+/// Shared HTTP client for Wikipedia summary lookups.
+///
+/// The Wikimedia REST API rejects generic clients, so the configured
+/// `User-Agent` identifies the tool; the timeout keeps a stalled endpoint from
+/// blocking a worker thread indefinitely.
+static WIKIPEDIA_AGENT: LazyLock<ureq::Agent> = LazyLock::new(|| {
+    ureq::Agent::config_builder()
+        .user_agent(WIKIPEDIA_USER_AGENT)
+        .timeout_global(Some(WIKIPEDIA_TIMEOUT))
+        .build()
+        .new_agent()
+});
+
+/// Memoized Wikipedia thumbnail lookups, keyed by article URL.
+///
+/// A given agent recurs across many ebooks (an author may have hundreds of
+/// titles), so both hits and misses are cached process-wide to keep the
+/// pipeline at roughly one request per distinct Wikipedia page.
+static WIKI_IMAGE_CACHE: LazyLock<Mutex<HashMap<String, Option<String>>>> =
+    LazyLock::new(|| Mutex::new(HashMap::new()));
+
+/// Locks the Wikipedia cache, recovering from a poisoned mutex instead of
+/// panicking in every worker thread.
+fn wiki_image_cache() -> MutexGuard<'static, HashMap<String, Option<String>>> {
+    WIKI_IMAGE_CACHE.lock().unwrap_or_else(|poisoned| poisoned.into_inner())
+}
+
+/// Extracts the Wikipedia page name from an article URL.
+///
+/// The page name is the string after the last slash
+/// (`https://en.wikipedia.org/wiki/Jules_Verne` → `Jules_Verne`).
+///
+/// # Returns
+/// `None` when the URL has no trailing segment.
+pub fn wikipedia_page_name(url: &str) -> Option<&str> {
+    let page_name = url.rsplit('/').next()?.trim();
+    (!page_name.is_empty()).then_some(page_name)
+}
+
+/// Builds the Wikipedia REST summary endpoint for a page name.
+///
+/// # Arguments
+/// * `page_name` — Wikipedia page name as returned by `wikipedia_page_name`.
+///
+/// # Returns
+/// Full `https://en.wikipedia.org/api/rest_v1/page/summary/<pagename>` URL.
+pub fn wikipedia_summary_url(page_name: &str) -> String {
+    format!("{}{}", WIKIPEDIA_SUMMARY_API, page_name)
+}
+
+/// Requests the thumbnail image URL of a Wikipedia page.
+///
+/// # Arguments
+/// * `page_name` — Wikipedia page name as returned by `wikipedia_page_name`.
+///
+/// # Returns
+/// The `thumbnail.source` value of the summary payload, or `None` when the
+/// request fails, the page is missing, or the article has no lead image.
+fn request_wikipedia_thumbnail(page_name: &str) -> Option<String> {
+    let mut response = WIKIPEDIA_AGENT.get(wikipedia_summary_url(page_name)).call().ok()?;
+    if response.status() != 200 {
+        return None;
+    }
+    serde_json::from_reader::<_, serde_json::Value>(response.body_mut().as_reader())
+        .ok()?
+        .get("thumbnail")?
+        .get("source")?
+        .as_str()
+        .map(str::to_string)
+}
+
+/// Resolves an agent's thumbnail image from its first Wikipedia `webpages` entry.
+///
+/// Uses the process-wide cache, so repeated lookups of the same page (the
+/// common case, since agents recur across ebooks) issue no further requests.
+///
+/// # Arguments
+/// * `webpages` — Agent webpage URLs (from the `webpage` RDF child nodes).
+///
+/// # Returns
+/// Thumbnail URL of the agent's Wikipedia article, or `None` when the agent
+/// has no Wikipedia page, the lookup fails, or the article has no image.
+pub fn agent_wikipedia_image(webpages: &[String]) -> Option<String> {
+    let wiki_url = webpages.iter().find(|url| RE_WIKIPEDIA_URL.is_match(url))?;
+    if let Some(cached) = wiki_image_cache().get(wiki_url) {
+        return cached.clone();
+    }
+    let page_name = wikipedia_page_name(wiki_url);
+    let thumbnail = page_name.and_then(request_wikipedia_thumbnail);
+    wiki_image_cache().insert(wiki_url.clone(), thumbnail.clone());
+    thumbnail
+}
+
+// ---------------------------------------------------------------------------
 // Unit Tests
 // ---------------------------------------------------------------------------
 
@@ -196,5 +300,76 @@ mod tests {
     #[test]
     fn parse_lc_code_fallback() {
         assert_eq!(parse_lc_code("D501"), Some(("History", "World War I")));
+    }
+
+    /// The Wikipedia page name is the substring after the last slash,
+    /// including names that carry disambiguation suffixes or encoded
+    /// characters.
+    #[test]
+    fn wikipedia_page_name_is_text_after_last_slash() {
+        assert_eq!(
+            wikipedia_page_name("https://en.wikipedia.org/wiki/Jules_Verne"),
+            Some("Jules_Verne")
+        );
+        assert_eq!(
+            wikipedia_page_name("https://en.wikipedia.org/wiki/Madame_Blavatsky"),
+            Some("Madame_Blavatsky")
+        );
+        assert_eq!(
+            wikipedia_page_name("https://de.wikipedia.org/wiki/Erika_Mann"),
+            Some("Erika_Mann")
+        );
+    }
+
+    /// A URL whose last segment is empty yields no page name (this case never
+    /// reaches the lookup because `RE_WIKIPEDIA_URL` requires a `/wiki/` path).
+    #[test]
+    fn wikipedia_page_name_rejects_empty_tail() {
+        assert_eq!(wikipedia_page_name("https://en.wikipedia.org/wiki/"), None);
+        assert_eq!(wikipedia_page_name(""), None);
+    }
+
+    /// The summary endpoint is the documented REST path plus the page name.
+    #[test]
+    fn wikipedia_summary_url_targets_rest_endpoint() {
+        assert_eq!(
+            wikipedia_summary_url("Jules_Verne"),
+            "https://en.wikipedia.org/api/rest_v1/page/summary/Jules_Verne"
+        );
+    }
+
+    /// Only Wikipedia article URLs qualify for thumbnail lookups; personal
+    /// sites and Gutenberg pages must be ignored. Scheme-less and extra
+    /// subdomain forms found in the feeds are still accepted.
+    #[test]
+    fn wikipedia_url_pattern_selects_articles_only() {
+        assert!(RE_WIKIPEDIA_URL.is_match("https://en.wikipedia.org/wiki/Jules_Verne"));
+        assert!(RE_WIKIPEDIA_URL.is_match("http://de.wikipedia.org/wiki/Erika_Mann"));
+        assert!(RE_WIKIPEDIA_URL.is_match("en.m.wikipedia.org/wiki/Robert_Thurston_Hopkins"));
+        assert!(RE_WIKIPEDIA_URL.is_match("fr.wikipedia.org/wiki/Joseph_Kervyn_de_Lettenhove"));
+        assert!(!RE_WIKIPEDIA_URL.is_match("https://example.com/alice"));
+        assert!(!RE_WIKIPEDIA_URL.is_match("https://www.gutenberg.org/ebooks/11"));
+        assert!(!RE_WIKIPEDIA_URL.is_match("https://en.wikipedia.org/wiki"));
+        assert!(!RE_WIKIPEDIA_URL.is_match("https://fr.wikipedia"));
+    }
+
+    /// The Wikipedia client identifies the tool and its crate version.
+    #[test]
+    fn wikipedia_user_agent_identifies_tool() {
+        assert!(WIKIPEDIA_USER_AGENT.starts_with("gutenberg_parser/"));
+        assert!(WIKIPEDIA_USER_AGENT.contains(env!("CARGO_PKG_VERSION")));
+    }
+
+    /// Agents without a Wikipedia page resolve to no image, and the negative
+    /// result is memoized so repeated calls stay request-free.
+    #[test]
+    fn agent_image_absent_without_wikipedia_page() {
+        let webpages = vec![
+            "https://example.com/alice".to_string(),
+            "https://www.gutenberg.org/ebooks/agents/42".to_string(),
+        ];
+        assert!(agent_wikipedia_image(&webpages).is_none());
+        assert!(agent_wikipedia_image(&webpages).is_none());
+        assert!(agent_wikipedia_image(&[]).is_none());
     }
 }

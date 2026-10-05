@@ -18,7 +18,10 @@
 //! ## Agent Extraction
 //! `parse_agent` handles nested `agent` nodes inside `creator`, `trl`,
 //! `aui`, `ill`, `edt`, and `aut` tags. It reads `rdf:about`, `name`,
-//! `alias`, `birthdate`, `deathdate`, and `webpage` children.
+//! `alias`, `birthdate`, `deathdate`, and `webpage` children (collected into
+//! the agent's `webpages` field). When `wiki_images` is enabled, agents whose
+//! `webpages` include a Wikipedia article are enriched with the article's
+//! thumbnail image URL.
 
 use crate::config::*;
 use crate::models::*;
@@ -34,10 +37,18 @@ use std::collections::HashSet;
 /// * `agent_type` — Role string (`author`, `translator`, etc.).
 /// * `ebook_id` — Numeric ebook identifier (for URL transformation).
 /// * `mirror_base` — Mirror base URL (passed to `transform_url`).
+/// * `wiki_images` — When `true`, resolves a Wikipedia thumbnail for agents
+///   that have a Wikipedia page in their `webpages` list.
 ///
 /// # Returns
 /// `Some(Agent)` if the agent has a non-empty `name`; `None` otherwise.
-pub fn parse_agent(parent_node: Option<Node>, agent_type: &str, ebook_id: &str, mirror_base: &str) -> Option<Agent> {
+pub fn parse_agent(
+    parent_node: Option<Node>,
+    agent_type: &str,
+    ebook_id: &str,
+    mirror_base: &str,
+    wiki_images: bool,
+) -> Option<Agent> {
     let parent = parent_node?;
 
     // Resolve the `agent` node: either the parent itself (if it is an
@@ -79,7 +90,7 @@ pub fn parse_agent(parent_node: Option<Node>, agent_type: &str, ebook_id: &str, 
         .filter(|t| !t.is_empty())
         .collect();
 
-    // Read optional web pages (transformed to mirror URLs).
+    // Read optional `webpage` children into `webpages` (mirrored URLs).
     let webpages: Vec<String> = agent_node
         .children()
         .filter(|n| n.is_element() && n.tag_name().name() == "webpage")
@@ -101,6 +112,13 @@ pub fn parse_agent(parent_node: Option<Node>, agent_type: &str, ebook_id: &str, 
         .and_then(|n| n.text())
         .map(|t| t.trim().to_string());
 
+    // Resolve the Wikipedia thumbnail (only when enrichment is enabled).
+    let image = if wiki_images {
+        agent_wikipedia_image(&webpages)
+    } else {
+        None
+    };
+
     Some(Agent {
         agent_type: agent_type.to_string(),
         agent_id,
@@ -109,6 +127,7 @@ pub fn parse_agent(parent_node: Option<Node>, agent_type: &str, ebook_id: &str, 
         webpages,
         birth_date,
         death_date,
+        image,
     })
 }
 
@@ -130,10 +149,17 @@ pub fn parse_agent(parent_node: Option<Node>, agent_type: &str, ebook_id: &str, 
 /// * `xml_data` — Raw XML bytes from the archive entry.
 /// * `mirror_base` — Mirror base URL for URL transformation.
 /// * `include_licensed` — If `false`, excludes non-public-domain ebooks.
+/// * `wiki_images` — If `true`, resolves Wikipedia thumbnail images for
+///   agents that have a Wikipedia page.
 ///
 /// # Returns
 /// `Result<Ebook, &'static str>` — Structured ebook or error code.
-pub fn process_rdf_xml(xml_data: &[u8], mirror_base: &str, include_licensed: bool) -> Result<Ebook, &'static str> {
+pub fn process_rdf_xml(
+    xml_data: &[u8],
+    mirror_base: &str,
+    include_licensed: bool,
+    wiki_images: bool,
+) -> Result<Ebook, &'static str> {
     // Decode UTF-8 and parse XML document.
     let xml_str = std::str::from_utf8(xml_data).map_err(|_| "utf8_error")?;
     let doc = Document::parse(xml_str).map_err(|_| "xml_parse_error")?;
@@ -253,7 +279,7 @@ pub fn process_rdf_xml(xml_data: &[u8], mirror_base: &str, include_licensed: boo
             .children()
             .filter(|n| n.is_element() && n.tag_name().name() == tag)
         {
-            if let Some(agent) = parse_agent(Some(node), agent_type, &ebook_id, mirror_base) {
+            if let Some(agent) = parse_agent(Some(node), agent_type, &ebook_id, mirror_base, wiki_images) {
                 agents.push(agent);
             }
         }
@@ -407,7 +433,7 @@ mod tests {
 
     #[test]
     fn parse_agent_none_parent() {
-        assert!(parse_agent(None, "author", "1", "").is_none());
+        assert!(parse_agent(None, "author", "1", "", false).is_none());
     }
 
     #[test]
@@ -421,7 +447,7 @@ mod tests {
             "http://www.gutenberg.org/ebooks/agents/42",
         );
         let doc = Document::parse(&xml).unwrap();
-        let agent = parse_agent(Some(doc.root_element()), "author", "123", "");
+        let agent = parse_agent(Some(doc.root_element()), "author", "123", "", false);
         let a = agent.unwrap();
         assert_eq!(a.agent_type, "author");
         assert_eq!(a.name, "Alice");
@@ -437,7 +463,7 @@ mod tests {
         let xml = agent_xml_child("creator", "author", "Bob", "http://www.gutenberg.org/ebooks/agents/99");
         let doc = Document::parse(&xml).unwrap();
         let parent = doc.root_element();
-        let agent = parse_agent(Some(parent), "author", "777", "");
+        let agent = parse_agent(Some(parent), "author", "777", "", false);
         let a = agent.unwrap();
         assert_eq!(a.name, "Bob");
         assert_eq!(a.agent_id, Some(99));
@@ -447,14 +473,51 @@ mod tests {
     fn parse_agent_empty_name_returns_none() {
         let xml = agent_xml_self("", &[], None, None, &[], "");
         let doc = Document::parse(&xml).unwrap();
-        assert!(parse_agent(Some(doc.root_element()), "author", "1", "").is_none());
+        assert!(parse_agent(Some(doc.root_element()), "author", "1", "", false).is_none());
     }
 
     #[test]
     fn parse_agent_empty_name_child_agent() {
         let xml = agent_xml_child("aut", "author", "", "");
         let doc = Document::parse(&xml).unwrap();
-        assert!(parse_agent(Some(doc.root_element()), "author", "1", "").is_none());
+        assert!(parse_agent(Some(doc.root_element()), "author", "1", "", false).is_none());
+    }
+
+    /// No Wikipedia lookup is attempted while the flag is off, so `image`
+    /// stays absent even when the agent has a Wikipedia page.
+    #[test]
+    fn parse_agent_image_absent_when_wiki_images_disabled() {
+        let xml = agent_xml_self(
+            "Verne, Jules",
+            &[],
+            None,
+            None,
+            &["https://en.wikipedia.org/wiki/Jules_Verne"],
+            "http://www.gutenberg.org/ebooks/agents/31",
+        );
+        let doc = Document::parse(&xml).unwrap();
+        let agent = parse_agent(Some(doc.root_element()), "author", "103", "", false).unwrap();
+        assert!(agent.image.is_none());
+    }
+
+    /// Network-backed check of the enrichment path: run with
+    /// `cargo test -- --ignored` to verify the Wikipedia thumbnail lookup.
+    #[test]
+    #[ignore = "requires network access to the Wikipedia REST API"]
+    fn parse_agent_image_resolved_from_wikipedia() {
+        let xml = agent_xml_self(
+            "Verne, Jules",
+            &[],
+            None,
+            None,
+            &["https://example.com/verne", "https://en.wikipedia.org/wiki/Jules_Verne"],
+            "http://www.gutenberg.org/ebooks/agents/31",
+        );
+        let doc = Document::parse(&xml).unwrap();
+        let agent = parse_agent(Some(doc.root_element()), "author", "103", "", true).unwrap();
+        let image = agent.image.expect("expected a Wikipedia thumbnail URL");
+        assert!(image.starts_with("http"), "unexpected image URL: {}", image);
+        assert!(image.contains("wikimedia.org"), "unexpected image host: {}", image);
     }
 
     // =======================================================================
@@ -463,19 +526,25 @@ mod tests {
 
     #[test]
     fn process_rdf_utf8_error() {
-        assert_eq!(process_rdf_xml(b"\xff\xfe", "", false).unwrap_err(), "utf8_error");
+        assert_eq!(
+            process_rdf_xml(b"\xff\xfe", "", false, false).unwrap_err(),
+            "utf8_error"
+        );
     }
 
     #[test]
     fn process_rdf_xml_parse_error() {
-        assert_eq!(process_rdf_xml(b"<bad", "", false).unwrap_err(), "xml_parse_error");
+        assert_eq!(
+            process_rdf_xml(b"<bad", "", false, false).unwrap_err(),
+            "xml_parse_error"
+        );
     }
 
     #[test]
     fn process_rdf_no_ebook_element() {
         let xml = r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><other/></rdf:RDF>"#;
         assert_eq!(
-            process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
+            process_rdf_xml(xml.as_bytes(), "", false, false).unwrap_err(),
             "no_ebook_element"
         );
     }
@@ -507,44 +576,44 @@ mod tests {
     #[test]
     fn process_rdf_filter_type_not_text() {
         let xml = base_ebook_xml("audio", "Title", "en", "Public domain", false);
-        assert_eq!(process_rdf_xml(&xml, "", false).unwrap_err(), "filter_type");
+        assert_eq!(process_rdf_xml(&xml, "", false, false).unwrap_err(), "filter_type");
     }
 
     #[test]
     fn process_rdf_filter_title_empty() {
         let xml = base_ebook_xml("text", "", "en", "Public domain", false);
-        assert_eq!(process_rdf_xml(&xml, "", false).unwrap_err(), "filter_title");
+        assert_eq!(process_rdf_xml(&xml, "", false, false).unwrap_err(), "filter_title");
     }
 
     #[test]
     fn process_rdf_filter_title_only_subfields() {
         let xml = base_ebook_xml("text", "$b", "en", "Public domain", false);
-        assert_eq!(process_rdf_xml(&xml, "", false).unwrap_err(), "filter_title");
+        assert_eq!(process_rdf_xml(&xml, "", false, false).unwrap_err(), "filter_title");
     }
 
     #[test]
     fn process_rdf_filter_language_empty() {
         let xml = base_ebook_xml("text", "Title", "", "Public domain", false);
-        assert_eq!(process_rdf_xml(&xml, "", false).unwrap_err(), "filter_language");
+        assert_eq!(process_rdf_xml(&xml, "", false, false).unwrap_err(), "filter_language");
     }
 
     #[test]
     fn process_rdf_filter_license_non_public_domain() {
         let xml = base_ebook_xml("text", "Title", "en", "Copyrighted material.", false);
-        assert_eq!(process_rdf_xml(&xml, "", false).unwrap_err(), "filter_license");
+        assert_eq!(process_rdf_xml(&xml, "", false, false).unwrap_err(), "filter_license");
     }
 
     #[test]
     fn process_rdf_filter_license_public_domain_passes() {
         let xml = base_ebook_xml("text", "Title", "en", "Public domain in the USA.", false);
-        let res = process_rdf_xml(&xml, "", false);
+        let res = process_rdf_xml(&xml, "", false, false);
         assert!(!matches!(res, Err("filter_license")));
     }
 
     #[test]
     fn process_rdf_filter_license_include_licensed_allows_non_pd() {
         let xml = base_ebook_xml("text", "Title", "en", "Copyrighted.", true);
-        let res = process_rdf_xml(&xml, "", true);
+        let res = process_rdf_xml(&xml, "", true, false);
         assert!(!matches!(res, Err("filter_license")));
     }
 
@@ -585,7 +654,7 @@ mod tests {
 </ebook>
 </rdf:RDF>"#.to_string();
         assert_eq!(
-            process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
+            process_rdf_xml(xml.as_bytes(), "", false, false).unwrap_err(),
             "filter_required_formats"
         );
     }
@@ -603,7 +672,7 @@ mod tests {
 </rdf:RDF>"#
             .to_string();
         assert_eq!(
-            process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
+            process_rdf_xml(xml.as_bytes(), "", false, false).unwrap_err(),
             "filter_required_formats"
         );
     }
@@ -616,7 +685,7 @@ mod tests {
             true,
         );
         assert_eq!(
-            process_rdf_xml(xml.as_bytes(), "", false).unwrap_err(),
+            process_rdf_xml(xml.as_bytes(), "", false, false).unwrap_err(),
             "filter_creator"
         );
     }
@@ -693,7 +762,7 @@ mod tests {
     #[test]
     fn process_rdf_full_success_path() {
         let xml = complete_ebook_xml();
-        let res = process_rdf_xml(xml.as_bytes(), "https://mirror.example.org/", false);
+        let res = process_rdf_xml(xml.as_bytes(), "https://mirror.example.org/", false, false);
         assert!(res.is_ok(), "Expected Ok, got {:?}", res);
         let ebook = res.unwrap();
         assert_eq!(ebook.ebook_id, "99");
@@ -734,7 +803,7 @@ mod tests {
               </hasFormat>
             </ebook>
             </rdf:RDF>"#.to_string();
-        let res = process_rdf_xml(xml.as_bytes(), "", false);
+        let res = process_rdf_xml(xml.as_bytes(), "", false, false);
         assert!(res.is_ok(), "Expected Ok for aut fallback, got {:?}", res);
         let ebook = res.unwrap();
         assert!(ebook
@@ -760,7 +829,7 @@ mod tests {
               <hasFormat><file rdf:about="https://www.gutenberg.org/files/1/1.epub"><value>unknown</value></file></hasFormat>
             </ebook>
             </rdf:RDF>"#.to_string();
-        let res = process_rdf_xml(xml.as_bytes(), "", false);
+        let res = process_rdf_xml(xml.as_bytes(), "", false, false);
         assert!(res.is_ok());
         let ebook = res.unwrap();
         assert!(ebook.formats.iter().any(|f| f.mime_type == "application/epub+zip"));

@@ -20,7 +20,7 @@
 //!
 //! ## Regex Patterns
 //! Compiled once via `LazyLock<Regex>`; reused in parsing and URL
-//! transformation logic.
+//! transformation logic (`RE_WIKIPEDIA_URL` detects Wikipedia article URLs).
 
 use regex::Regex;
 use std::collections::HashMap;
@@ -65,6 +65,24 @@ pub static GUTENBERG_MIRRORS: LazyLock<HashMap<&'static str, &'static str>> = La
 
 /// URL of the RDF archive feed provided by Project Gutenberg.
 pub const RDF_FEED_URL: &str = "https://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.bz2";
+
+/// Base URL of the English Wikipedia REST summary endpoint.
+///
+/// The page name is appended verbatim to build the lookup URL
+/// (`.../page/summary/<pagename>`); its `thumbnail.source` field holds the
+/// image URL of the article lead image.
+pub const WIKIPEDIA_SUMMARY_API: &str = "https://en.wikipedia.org/api/rest_v1/page/summary/";
+
+/// `User-Agent` sent with every Wikipedia API request.
+///
+/// The Wikimedia REST API rejects generic client identifiers, so a
+/// descriptive product token is required for the lookups to succeed; the
+/// version tracks the crate version.
+pub const WIKIPEDIA_USER_AGENT: &str = concat!(
+    "gutenberg_parser/",
+    env!("CARGO_PKG_VERSION"),
+    " (https://github.com/testingdb/gutenberg_parser)"
+);
 
 // ---------------------------------------------------------------------------
 // Library of Congress Classification (LC_MAP)
@@ -601,6 +619,14 @@ pub static RE_SHELF_CAT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)^Ca
 
 /// Matches MARC subfield markers (`$a`, `$b`, etc.) for cleaning.
 pub static RE_MARC_SUBFIELD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\$[a-zA-Z]\b").unwrap());
+
+/// Matches Wikipedia article URLs (e.g. `https://en.wikipedia.org/wiki/Jules_Verne`).
+///
+/// The scheme, extra subdomains (`www.`, `m.`) and scheme-less forms present in
+/// the RDF feeds are all accepted; the host must be a `wikipedia.org` domain and
+/// the path must start with `wiki/`.
+pub static RE_WIKIPEDIA_URL: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)^(?:https?://)?(?:[a-z-]+\.)*wikipedia\.org/wiki/").unwrap());
 
 // ---------------------------------------------------------------------------
 // Unit Tests

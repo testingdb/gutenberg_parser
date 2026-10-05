@@ -6,7 +6,7 @@
 #### Release & Version
 
 [![Release](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml/badge.svg)](https://github.com/testingdb/gutenberg_parser/actions/workflows/release.yml)
-[![Version 1.4.0](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
+[![Version 1.5.0](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/testingdb/gutenberg_parser/releases)
 
 #### Code Quality
 
@@ -33,6 +33,7 @@ The parser extracts author metadata, taxonomy structures (Library of Congress co
 - **Mirror Rewriting:** Rewrites format and cover image URLs to specified Project Gutenberg mirror sites.
 - **Strict Quality Filtering:** Automatically filters out non-text entries, entries without authors/contributors, and entries missing required format types (EPUB and HTML).
 - **Public Domain Filtering:** Only Public Domain ebooks are included by default; pass `--include-licensed` to also keep copyrighted or otherwise licensed ebooks.
+- **Wikipedia Agent Images:** Pass `--wiki-images` (`-w`) to resolve a thumbnail image for every agent that has a Wikipedia page, via the English Wikipedia REST summary API (results are memoized per page, so each page is requested at most once).
 - **Flexible Output Handling:** Supports single JSON files, Gzip compression (`.json.gz`), and chunked output files.
 
 ---
@@ -89,6 +90,7 @@ Options:
   -c, --chunk-size <CHUNK_SIZE>  Number of items per chunk file
       --bridge                   Rename output object fields to match the target database schema (alt-target-schema.md)
       --include-licensed         Also include ebooks that are NOT Public Domain (copyrighted or otherwise licensed)
+  -w, --wiki-images             Look up a thumbnail image for every agent that has a Wikipedia page (via the Wikipedia REST API)
       --download                 Automatically download rdf-files.tar.bz2 from Project Gutenberg, parse it, then delete the archive afterwards
   -h, --help                     Print helpẑ
   -V, --version                  Print version
@@ -106,6 +108,20 @@ The `--mirror` option accepts custom URLs or any of the following predefined mir
 | `waterloo` | `http://mirror.csclub.uwaterloo.ca/gutenberg/` |
 | `uk` | `http://www.mirrorservice.org/sites/ftp.ibiblio.org/pub/docs/books/gutenberg/` |
 | `xmission` | `http://mirrors.xmission.com/gutenberg/` |
+
+### Wikipedia Agent Images
+
+Passing `--wiki-images` (`-w`) adds an `image` field to every agent that can be matched to a Wikipedia article:
+
+1. The agent's `webpages` list is scanned for a Wikipedia article URL (a `wikipedia.org` host with a `/wiki/` path).
+2. The page name is extracted as the string after the last slash (`.../wiki/Jules_Verne` → `Jules_Verne`).
+3. `https://en.wikipedia.org/api/rest_v1/page/summary/<pagename>` is requested and the URL at `thumbnail.source` is stored.
+
+Notes:
+
+- The field name is `image` in both parser and [Bridge Mode](#bridge-mode); it is **omitted** for agents without a Wikipedia page, articles without a lead image, and failed lookups.
+- Lookups run on the worker threads and are memoized process-wide per page (hits *and* misses), so the number of HTTP requests stays proportional to the number of distinct agents, not to the number of ebooks. A full-archive run still performs one request per distinct agent (tens of thousands), so expect the run to take noticeably longer than a plain parse.
+- Each request has a 10-second timeout, and the API appends `utm_*` tracking parameters to the returned URL.
 
 ---
 
@@ -130,6 +146,13 @@ Fetch the latest `rdf-files.tar.bz2` from Project Gutenberg, parse it, and delet
 ./target/release/gutenberg_parser --download
 ```
 
+### 1d. Agent Images from Wikipedia
+Resolve a thumbnail image for every agent that has a Wikipedia page (one HTTP request per distinct page, cached in-process):
+```bash
+./target/release/gutenberg_parser rdf-files.tar.bz2 \
+  --wiki-images
+```
+
 ### 2. Compressed Output with a Custom Mirror
 Parse an archive, map download links to the Waterloo mirror, and write directly to a Gzip-compressed file:
 ```bash
@@ -151,6 +174,8 @@ Limit processing to 5,000 matches and split the output into chunks of 1,000 item
 
 ## JSON Output Schema Example
 
+Produced with `--wiki-images` (agent `image` fields are omitted otherwise):
+
 ```json
 [
   {
@@ -165,18 +190,20 @@ Limit processing to 5,000 matches and split the output into chunks of 1,000 item
         "agent_id": 18,
         "name": "Carroll, Lewis",
         "aliases": ["Dodgson, Charles Lutwidge"],
-        "webpage": "https://en.wikipedia.org/wiki/Lewis_Carroll",
+        "webpages": ["https://en.wikipedia.org/wiki/Lewis_Carroll"],
         "birth_date": "1832",
-        "death_date": "1898"
+        "death_date": "1898",
+        "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/LewisCarrollSelfPhoto.jpg/330px-LewisCarrollSelfPhoto.jpg"
       },
       {
         "type": "illustrator",
         "agent_id": 100,
         "name": "Tenniel, John",
         "aliases": ["Tenniel, Sir John"],
-        "webpage": "https://en.wikipedia.org/wiki/John_Tenniel",
+        "webpages": ["https://en.wikipedia.org/wiki/John_Tenniel"],
         "birth_date": "1820",
-        "death_date": "1914"
+        "death_date": "1914",
+        "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/John_Tenniel.png/330px-John_Tenniel.png"
       }
     ],
     "description": "Alice's Adventures in Wonderland (commonly shortened to Alice in Wonderland) is an 1865 novel written by English author Charles Lutwidge Dodgson under the pseudonym Lewis Carroll. It tells of a girl named Alice falling through a rabbit hole into a fantasy world populated by peculiar, anthropomorphic creatures.",
@@ -234,14 +261,16 @@ Passing `--bridge` keeps the same one-object-per-book structure but renames outp
 | `formats[].url` | `formats[].file_url` | `formats.file_url` |
 | `agents[].type` | `agents[].role` | `books_contributions.role` |
 | `agents[].agent_id` | `agents[].pg_id` | `agents.pg_id` |
-| `agents[].webpage` | `agents[].external_urls` | `agents.external_urls` |
+| `agents[].webpages` | `agents[].external_urls` | `agents.external_urls` |
+| `agents[].image` | `agents[].image` | *(unchanged)* Wikipedia thumbnail URL |
 
 ### 4. Bridge Output Example
 
 ```bash
 ./target/release/gutenberg_parser rdf-files.tar.bz2 \
   --output catalog_bridge.json \
-  --bridge
+  --bridge \
+  --wiki-images
 ```
 
 ```json
@@ -261,7 +290,8 @@ Passing `--bridge` keeps the same one-object-per-book structure but renames outp
         "external_urls": ["https://en.wikipedia.org/wiki/Jules_Verne"],
         "aliases": ["Verne, Jules Gabriel"],
         "birth_date": "1828",
-        "death_date": "1905"
+        "death_date": "1905",
+        "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Jules_Verne_by_%C3%89tienne_Carjat.jpg/330px-Jules_Verne_by_%C3%89tienne_Carjat.jpg"
       }
     ],
     "lang_code": "en",
@@ -317,7 +347,8 @@ These fields are **always serialized as arrays** — empty `[]` when no data exi
 | `taxonomy.topics` | Hierarchical topic objects with `heading` and `subtopics` |
 | `taxonomy.topics[].subtopics` | Subtopic strings for each topic heading |
 | `agents[].aliases` | Alternative name forms for each agent (author, translator, etc.) |
-| `agents[].external_urls` | *(Bridge mode only)* Agent webpage URLs as array |
+| `agents[].webpages` | *(Parser mode)* Agent webpage URLs as array (always present, `[]` when unknown) |
+| `agents[].external_urls` | *(Bridge mode only)* Agent webpage URLs as array (always present, `[]` when unknown) |
 | `alternative_titles` | Alternate title strings for the work |
 | `agents` | Contributor objects (authors, translators, illustrators, etc.) |
 
@@ -344,9 +375,9 @@ These fields are **only present when a value exists** — absent from JSON when 
 |-------|---------|
 | `issued_date` | Publication date (may be unknown) |
 | `description` | Summary/notes (MARC 520/500) |
-| `webpage` | *(Parser mode)* Agent homepage URL |
 | `birth_date` / `death_date` | Agent lifespan dates |
 | `agent_id` / `pg_id` | Project Gutenberg agent/book numeric IDs |
+| `image` | Agent thumbnail URL — present only with `--wiki-images` and a Wikipedia page that has a lead image |
 
 ### Required Non-Null Fields (Always Present, Non-Empty)
 
@@ -374,7 +405,7 @@ A book with only required fields and all optional arrays empty:
   "alternative_titles": ["Also Known As"],
   "issued_date": null,
   "agents": [
-    { "type": "author", "agent_id": null, "name": "Unknown", "aliases": [], "webpage": null, "birth_date": null, "death_date": null }
+    { "type": "author", "agent_id": null, "name": "Unknown", "aliases": [], "webpages": [], "birth_date": null, "death_date": null }
   ],
   "description": null,
   "language": "en",
