@@ -81,7 +81,7 @@ pub const WIKIPEDIA_SUMMARY_API: &str = "https://en.wikipedia.org/api/rest_v1/pa
 pub const WIKIPEDIA_USER_AGENT: &str = concat!(
     "gutenberg_parser/",
     env!("CARGO_PKG_VERSION"),
-    " (https://github.com/testingdb/gutenberg_parser)"
+    " (https://github.com/testingdb/gutenberg_parser; contact: 180553755+d3bvstack@users.noreply.github.com)"
 );
 
 // ---------------------------------------------------------------------------

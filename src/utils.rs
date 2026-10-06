@@ -182,6 +182,15 @@ pub fn parse_lc_code(s: &str) -> Option<(&'static str, &'static str)> {
 /// Maximum time a single Wikipedia lookup may take before it is abandoned.
 const WIKIPEDIA_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
 
+/// Minimum interval between Wikipedia API requests (100ms) to stay well
+/// under the Wikimedia REST rate limit (~200 req/sec max, but lower is
+/// safer for shared resources).
+const WIKIPEDIA_MIN_INTERVAL: std::time::Duration = std::time::Duration::from_millis(100);
+
+/// Timestamp of the last Wikipedia request for global throttling.
+static WIKIPEDIA_LAST_REQUEST: LazyLock<Mutex<std::time::Instant>> =
+    LazyLock::new(|| Mutex::new(std::time::Instant::now() - WIKIPEDIA_MIN_INTERVAL));
+
 /// Shared HTTP client for Wikipedia summary lookups.
 ///
 /// The Wikimedia REST API rejects generic clients, so the configured
@@ -232,7 +241,23 @@ pub fn wikipedia_summary_url(page_name: &str) -> String {
     format!("{}{}", WIKIPEDIA_SUMMARY_API, page_name)
 }
 
+/// Sleeps so that consecutive Wikipedia requests stay at least
+/// `WIKIPEDIA_MIN_INTERVAL` apart, regardless of which thread issued the last
+/// request.
+fn throttle_wikipedia_request() {
+    let mut last = WIKIPEDIA_LAST_REQUEST.lock().unwrap_or_else(|p| p.into_inner());
+    let now = std::time::Instant::now();
+    let elapsed = now.duration_since(*last);
+    if elapsed < WIKIPEDIA_MIN_INTERVAL {
+        std::thread::sleep(WIKIPEDIA_MIN_INTERVAL - elapsed);
+    }
+    *last = std::time::Instant::now();
+}
+
 /// Requests the thumbnail image URL of a Wikipedia page.
+///
+/// Retries once after a short backoff when the request fails outright or the
+/// API replies with a rate-limit / temporary-failure status.
 ///
 /// # Arguments
 /// * `page_name` — Wikipedia page name as returned by `wikipedia_page_name`.
@@ -241,16 +266,36 @@ pub fn wikipedia_summary_url(page_name: &str) -> String {
 /// The `thumbnail.source` value of the summary payload, or `None` when the
 /// request fails, the page is missing, or the article has no lead image.
 fn request_wikipedia_thumbnail(page_name: &str) -> Option<String> {
-    let mut response = WIKIPEDIA_AGENT.get(wikipedia_summary_url(page_name)).call().ok()?;
-    if response.status() != 200 {
+    // Rate-limit: retry once on 429/503 with backoff, per Wikimedia rate limits.
+    for attempt in 0..2 {
+        throttle_wikipedia_request();
+        let call_result = WIKIPEDIA_AGENT.get(wikipedia_summary_url(page_name)).call();
+        let mut response = match call_result {
+            Ok(r) => r,
+            Err(_) => {
+                if attempt == 0 {
+                    std::thread::sleep(std::time::Duration::from_millis(500));
+                    continue;
+                }
+                return None;
+            }
+        };
+        let status = response.status();
+        if status == 200 {
+            return serde_json::from_reader::<_, serde_json::Value>(response.body_mut().as_reader())
+                .ok()?
+                .get("thumbnail")?
+                .get("source")?
+                .as_str()
+                .map(str::to_string);
+        }
+        if (status == 429 || status == 503) && attempt == 0 {
+            std::thread::sleep(std::time::Duration::from_millis(500));
+            continue;
+        }
         return None;
     }
-    serde_json::from_reader::<_, serde_json::Value>(response.body_mut().as_reader())
-        .ok()?
-        .get("thumbnail")?
-        .get("source")?
-        .as_str()
-        .map(str::to_string)
+    None
 }
 
 /// Resolves an agent's thumbnail image from its first Wikipedia `webpages` entry.
