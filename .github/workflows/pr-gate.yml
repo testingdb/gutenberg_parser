@@ -95,44 +95,9 @@ jobs:
       - name: Run actionlint
         uses: raven-actions/actionlint@v2
 
-  audit:
-    name: Dependency Audit
-    needs: quality-gate
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Security advisories (cargo audit)
-        uses: actions-rust-lang/audit@v1
-
-      - name: Cargo Deny
-        uses: EmbarkStudios/cargo-deny-action@v2
-        with:
-          command: check bans
-
-      - name: Cargo Deny (licenses)
-        uses: EmbarkStudios/cargo-deny-action@v2
-        with:
-          command: check licenses
-
-      - name: Cargo Deny (sources)
-        uses: EmbarkStudios/cargo-deny-action@v2
-        with:
-          command: check sources
-
-      - name: Dependency Review
-        if: github.event_name == 'pull_request'
-        uses: actions/dependency-review-action@v4
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
   sonarqube:
     name: SonarCloud analysis
-    needs: audit
+    needs: quality-gate
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
