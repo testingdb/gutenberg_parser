@@ -38,4 +38,6 @@ The binary (`main.rs`) delegates to `cli::run()` (`src/cli.rs`), which orchestra
 
 `run()` reports download progress, worker count, mirror base, filtering mode, chunk flush events, and final timing statistics.
 
+Related: [Data Models](../architecture/models.md), [Parsing](../architecture/parsing.md), [Taxonomy](../architecture/taxonomy.md), [Filtering](filtering.md), [Wikipedia Integration](../integration/wikipedia.md).
+
 Key resources: `repo://src/cli.rs`, `repo://README.md`, `repo://src/main.rs`.

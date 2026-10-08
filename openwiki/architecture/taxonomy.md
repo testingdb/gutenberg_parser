@@ -32,4 +32,4 @@ Bookshelf labels (`Category: ...`) are stripped with `RE_SHELF_CAT`, matched aga
 
 `primary_domain` prefers LC-derived domains (highest frequency, lexicographic tie-break), falls back to the most frequent inferred domain from genres, and defaults to `"General & Uncategorized"`. Topics are deduplicated via normalized lowercase keys (`heading|subtopics`) (repo://src/taxonomy.rs#L220-L260).
 
-Key resources: `repo://src/taxonomy.rs`, `repo://src/config.rs`.
+Key resources: `repo://src/taxonomy.rs`, `repo://src/config.rs`. Related: [Parsing](parsing.md), [Data Models](models.md), [Pipeline](../features/pipeline.md), [Filtering](../features/filtering.md), [Wikipedia Integration](../integration/wikipedia.md).

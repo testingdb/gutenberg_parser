@@ -31,4 +31,4 @@ When `--wiki-images` (`-w`) is enabled, `agent_wikipedia_image` in `utils.rs` re
 
 `wiki_image_cache()` (process-wide `LazyLock<HashMap<String, Option<String>>`) caches results per Wikipedia URL. Repeated lookups of the same agent page (common across ebooks) issue no further network requests (repo://src/utils.rs#L312-L330).
 
-Key resources: `repo://src/utils.rs`, `repo://src/config.rs`.
+Key resources: `repo://src/utils.rs`, `repo://src/config.rs`. Related: [Parsing](../architecture/parsing.md), [Pipeline](../features/pipeline.md), [Data Models](../architecture/models.md), [Taxonomy](../architecture/taxonomy.md).

@@ -35,4 +35,6 @@ Formats are read from `hasFormat` → `file` nodes, transformed via `transform_u
 
 Errors are returned as static `&'static str` codes (`utf8_error`, `xml_parse_error`, `filter_type`, etc.) rather than exceptions, allowing the pipeline to skip invalid entries without terminating the worker pool.
 
+Related pages: [Data Models](models.md), [Taxonomy](taxonomy.md), [Filtering](../features/filtering.md), [Pipeline](../features/pipeline.md), [Wikipedia Integration](../integration/wikipedia.md).
+
 Key resources: `repo://src/xml_parser.rs`.

@@ -40,4 +40,6 @@ When `--bridge` is set, `BridgeEbook` renames fields (`lang_code`, `pg_download_
 - `BridgeAgent::image` survives conversion and is omitted when `None`.
 - `BridgeEbook::from` clones all strings; no mutation of source `Ebook` occurs.
 
+Related: [Parsing](parsing.md), [Taxonomy](taxonomy.md), [Pipeline](../features/pipeline.md), [Filtering](../features/filtering.md), [Wikipedia Integration](../integration/wikipedia.md).
+
 Key evidence resources: `repo://src/models.rs`.

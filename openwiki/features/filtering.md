@@ -37,4 +37,6 @@ By default, only public-domain ebooks are included. `license` text is checked wi
 - Entries without any agent are excluded (`filter_creator`).
 - The pipeline continues processing other entries after any filter failure; workers never abort the pool.
 
+Related: [Parsing](../architecture/parsing.md), [Pipeline](pipeline.md), [Data Models](../architecture/models.md), [Taxonomy](../architecture/taxonomy.md).
+
 Key resources: `repo://README.md`, `repo://src/cli.rs`, `repo://src/xml_parser.rs`.
