@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:70103831a638b6442a344a6ab149e4a772064199b303df9486f7d810dc52530c",
+  "claims": [
+    {
+      "id": "claim_f94b2c5067c34c84b78de79fcc16ef4c",
+      "statement": "main declares six modules and delegates entirely to cli::run, which owns argument parsing, mirror resolution, archive acquisition, thread spawning, and output.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L273-L308",
+          "version": "repo-lines-v1:sha256:da3ada1e44b7c4e07651e661a53859fc6f5cb991dda20f5a19bf1f0b23b6d745:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YTQ3MDBkMzEyMmE3ZGIyZjIxMGVlZjRlOTMxNmQyZDVmZmQwNDkzMjhlZTllMDYyMTk4ZTJjOTkxNzgyNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmNzZkYzZhNTNiMjlmOWYxYjFmYTBmNTAxODU3OGZhNDBkZGY1ODlkMTc0ZmYwMTNhMzI3OGRhZmFiYWMyMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhMWEwNDI1NDA5YWJiZmQ2NjEwMDZmYjFiNzNlZTRiYjAwNmU0Y2FlZmYxM2FjM2M5ZDU5ZTczZTg2Mzg1YmIifQ"
+        },
+        {
+          "resource": "repo://src/main.rs#L21-L34",
+          "version": "repo-lines-v1:sha256:317c27d3631e12dea0558d105e011e991719e1b9b760f1ecfb187e5c01024235:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZGVjOWE0NTk4ODExNzhkY2I0NGE5ODY1NzU4Mjc2ODEyNmJmOWQyNzNhN2JmYmQyY2RiNWRlZmUxMmU5OWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5MDZkMTU1MGI2MzI1OTg0YTFiMDA0Yzc1MzNkMTk4NWU1MDIzODYwNGZkNTg2MGQzMDViMzAxNjQxNzQzYTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdiYzk4ZDZiMGRjNDkyYzUwMTZkZjEwODA1YTNhNTRlYjljMTg0YTVhNjEzN2U3ZjRiZWNmYTBjMjIwNTUwZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_887052a5675b4700aade6129ebc4dfeb",
+      "statement": "Both pipeline hops use crossbeam bounded channels of 2048 items, so at most 2048 XML buffers or parsed records are in flight and neither the archive nor the output set is ever fully resident.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L310-L312",
+          "version": "repo-lines-v1:sha256:24c2c131b5b1f6a180d53c3a2ce7d6ed181cd8b0e0fd42d8fad632a69e8e98b0:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTgwM2QxMTI0YjRhM2MyZWE4NWRhMDFjOTk3MDFmZjg2OTRmNzFjZjU4N2E3YmZhYTc3OTg2YzhkNWExMjcwOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTE0MTdkZDQ5OTJkYTc4MWJjODgwZWNlM2Y0MWM2MzM1N2IyODA1ZGQyYTgwNjdjYjEwZWEzNzg5NTI4YzU2OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGMzOTk3Y2ZiZTkyYWIzZGJhZTBkZDlmMDE5NjRiZjc3NTQxZTliYWI2NWRlZTA3MmM1YzY1OTUyMzEyM2I3NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjNhZjYxNDUyM2M1MDIzMTY0NDM3NjAzNzJjNWY5MGVmYzcwMDlkMzU5MmQ4MzY1NDkyNTJhNzI0OWYyYmY4ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c658ea7e6f5b4f5bb9eb2acc0be70e04",
+      "statement": "A single producer thread streams the bz2 tar archive, reading only entries whose names end in .xml or .rdf and buffering each fully into memory before sending it.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L314-L334",
+          "version": "repo-lines-v1:sha256:1662e9873df52afbc0c07acf5c1a2461a4795d8afb38875d68544e57364d741d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkMWJiYjg5YzIwMTEzODUyYjdhNTZkMGQwN2QyNDA3ZGZhM2QwMTY4OTVmNDVmZDEwNjIwYTIyMzdjY2E1YzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyZDExY2FmNDNlOTdlZjM2OWU2YmVlZDFhMjY4YmQwNTgzOGYyOWI5ZGQyNTRiZjY5YmE2NDg4NDE0NzIzNGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzY2MyNjYyNTYwYjU3OWRkZWM0NTdhNWIwYWU1ZmU5YjY1MDE2ZDk1YjZjMGM0YzE0MjgxMDMyMTRhMmJiMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ0NGNmNTk1MzcxZTUwOTIyYzE5NWY4YzFmMmQ2MjY5MmViYzczZDdlZTZhY2U1OTMxNDVhOTI2MTgyMmJjMDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bc0aa0c98c924876afda7a4bfa32bc25",
+      "statement": "The worker pool size comes from available_parallelism with a fallback of 4, and each worker forwards only records process_rdf_xml accepted, exiting when its receiver closes or its send fails.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L337-L356",
+          "version": "repo-lines-v1:sha256:c6ff8aee8da5518c48c65933d35c0bc3189b2eee71c0221a8be4c9270a9ac1e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwMjFiN2VmN2VjZmE2YTZmZjY5NmY2YTNkN2RhZjIzMmI5M2JkNDhlNDQ1YjAyZGI4ZDBkNjg5YzhkNmM1MjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2YjhmYzY0NDI1MGE0MmFlNjA1ZTA1MWJlZDBkZjIzNGRmY2QyZWU2MzI2ZTFhOTNiZGJmNjRiZWEwMmNlM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjMTQwZTQ3NzdhMzM5MzExZTM2NTJiMGE0YWYyMTI5ZTliNWZjM2U1YjBkOGNjNTNjNmMwNjI4NzE5ZGYxYjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0b89bd40533a4332ae218a0653264474",
+      "statement": "run drops parsed_tx immediately after spawning workers so the last worker to exit closes the channel and the consumer's recv unblocks; retaining that sender would hang the run.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L357-L357",
+          "version": "repo-lines-v1:sha256:d3d23b0ed6c96e279514b3ddda8ab62f0e6561beeb53a3fb75ece48dc58a13d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDNkMjNiMGVkNmM5NmUyNzk1MTRiM2RkZGE4YWI2MmYwZTY1NjFiZWViNTNhM2ZiNzVlY2U0OGRjNThhMTNkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDNkMjNiMGVkNmM5NmUyNzk1MTRiM2RkZGE4YWI2MmYwZTY1NjFiZWViNTNhM2ZiNzVlY2U0OGRjNThhMTNkMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWM5YjE2NTM5MjVlZmI0NTZjYzM4YjZiMGNlMGMwYzA0MzdjYzdjMzE4YmM4MWYxMTNiYWM3ZjZkNDg0NDU3ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmQzMTA1NjAzMDdjMThkMGRkOWM4NDc2Y2M5NDgyMmI0ODczYTZmNjBlNzQ1MDQzYTgzNjA4Yzc3NmI5YTRiMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b1dac05145a452da1763eec60e4e106",
+      "statement": "Producer and worker thread handles are discarded, so --max-results ends the run by breaking the consumer loop and returning from main rather than by coordinated shutdown, dropping in-flight records.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L340-L356",
+          "version": "repo-lines-v1:sha256:909930cf159938368dc1c1d2ed84798d026f7bc783d5dc54f8a9ac49dd5945ba:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiZWVjZjYxZjhkMWIzMWRiMDFkYTBlNTY3MzJkMmRkNzJkODhlOTBmMWE4MGRkN2YwYzZiNDVlMzhjZDk1YTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY3ZmY4NmMyNjdkODhjMGEyNjM1ZjZiMmYzN2IwMTg5Y2JkZjM3ZmY0ZWU2YzE0ODgzMWM1N2MxOTE0YTdkODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjMTQwZTQ3NzdhMzM5MzExZTM2NTJiMGE0YWYyMTI5ZTliNWZjM2U1YjBkOGNjNTNjNmMwNjI4NzE5ZGYxYjUifQ"
+        },
+        {
+          "resource": "repo://src/cli.rs#L383-L387",
+          "version": "repo-lines-v1:sha256:67ff09caafd7b275acfb83c28f46a241ad261bfca60a9a23996e9bec12d5a16f:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTAwMzEwMzJlMWRiYTFiOGJiYjE1YWFmM2UyMmJjMWQ5NjNjOGY2MzBiNDRhYTU0ZmYyM2NjNDNhM2MxZDZkZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZiMDQ0OTE0Njk3MjJlODM2M2E5NGU0MDQ0NTM4ZTAxM2EyYTIxN2UzNmIxZTU2OGJhNjBhY2I3YjRjOGYyZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGE5Zjg2ZDI4ZTc4NGY5ZmQzMWZiNzJkMTVmNjBjYmNlYWFmZGQ2NjljYmQ1YjZkYTc4ODhhMDIzMzIxZWJiOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzI1ZWU0MmI3M2MwZTA3ZDcxYjdhZTg0NGJlMWI3ZDBiMjM1YTJmZjg3YjRiNTkyNzljODQ3ZWYyZmZlMzNiYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_301cde3c421046438d8db1d8b977c4ff",
+      "statement": "Opening the archive in the producer and writing a chunk in the consumer both use expect, so infrastructure failures panic the process while per-record failures are skipped.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L317-L317",
+          "version": "repo-lines-v1:sha256:3e54c5baf06b8dd4958a745fd7a824eea95fc5820868991adecf126cff200530:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2U1NGM1YmFmMDZiOGRkNDk1OGE3NDVmZDdhODI0ZWVhOTVmYzU4MjA4Njg5OTFhZGVjZjEyNmNmZjIwMDUzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2U1NGM1YmFmMDZiOGRkNDk1OGE3NDVmZDdhODI0ZWVhOTVmYzU4MjA4Njg5OTFhZGVjZjEyNmNmZjIwMDUzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTZjZjViMjNiNzcwNjE2MzUyZDQ3MTkyNGEzOWFkODQ1NmIzYjY1YWRmOWM4NjhiMjBkNGMzNmNjNTcwNjBmOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzUyMjhiYzRmYjE3M2NhNjcyZGJlYTllYTc2MGFiOGE0OGJhZGJiNzU3NjlhZTkxOTVjZDA3YzI1YWRkNTU5ZiJ9"
+        },
+        {
+          "resource": "repo://src/cli.rs#L371-L371",
+          "version": "repo-lines-v1:sha256:19c6657a69681091bfa4e7065348311296fd375e9c3c053cf1146217cffe130b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTljNjY1N2E2OTY4MTA5MWJmYTRlNzA2NTM0ODMxMTI5NmZkMzc1ZTljM2MwNTNjZjExNDYyMTdjZmZlMTMwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTljNjY1N2E2OTY4MTA5MWJmYTRlNzA2NTM0ODMxMTI5NmZkMzc1ZTljM2MwNTNjZjExNDYyMTdjZmZlMTMwYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGM4YjhjOTA2N2NjMzRjOTE4N2Y3ZTk5MDBiNjM0MzQxMjYwMzU1OTMzM2VjMjA1MjcyNzc0ZGFiM2FlZmY0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2RkMTc0YjlmMzA4OTU4NDc0YmQxMGVhMDMwNGNmYWEyZmMwMzUyMmRmNTdiMzBjOGM1ZDczMjNiN2UzMzM3NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_14849cddb2294259a36597012a896db5",
+      "statement": "With --download the NamedTempFile handle is retained for the whole run so the temporary archive stays alive until parsing completes.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L282-L291",
+          "version": "repo-lines-v1:sha256:0657692aff5a6109fe3e91c4061b3d3fd1e7f5884807f652c31583b738927387:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiZjRjNzI5M2U1YTlhYjE2OGE1MTBhMDQzNTc1NTgwMzk5ODJkOGRkNmM4M2Q4ZGYzNDU2YTc5ZDBlMjBjYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOWUxMjU0NjQyNTU3NmQzZGVhZThjOWI5ZGJmMTI4ZDVkNmRkYWY1ZDdmZTg1NzkzNDkyN2RlZmZhM2I5ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwYzM5Y2QzOTJmMjM1NTZhMDM2MzNiZDQyNjQxNDg2MDcyN2I3OGEwZjlmNzdjMWNiNzVmM2JlMDFkYTVjOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkNDVmYTVmZDhmYmUwYmQ4ZDljYzM4ZGViOTQ0OTEzOTQ4ZThmYjJhYmE2MmY1N2QwNWU0MzE0Nzc4MzNkMDIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

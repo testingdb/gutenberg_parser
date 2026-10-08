@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4c28672a5dcaf18cb98b2f77db0e5651ec738cd658ea276c5ee17d1b052c9187",
+  "claims": [
+    {
+      "id": "claim_c68f934101624a749e10c138721ce1d6",
+      "statement": "process_rdf_xml is a pure function of (buffer, mirror_base, include_licensed, wiki_images) returning Result<Ebook, &'static str>, which makes it safe to call concurrently from every worker thread.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L347-L355",
+          "version": "repo-lines-v1:sha256:006790c94cec058faab9e984de5dd9a0296a87e31144350bb0afb49746746b81:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU3MTRiNmU4MDI5ZGEzYzQ0YzczNTEyMmE1MzM3ZDdmZWE2MzE4MDc0NmEyNGY4MDQ4YzRhNDgzMDlhYzA2MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTljMTM1OTA2NjU2MzIzZDFjNWVhNDE2NTRlZTY2YWZiNTg1YWNkY2ZhZWFjYTEyMWQ1ZTMwYmYxOTNlZWRkNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTZmNjI5NDFiMTIwNGE4ZmI1ZDZlNWFkMmJkMDZlMjE5YzYxYjI0MTMzYTg0MWRjNWEyYzk5NWEzODdmNzljZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGVlYTcwZGNjYjkwYjhmMTA4YTI5ODI5ZWUwOGUwNTE5YmFjOGQxMWViNmU4YzZiM2IxOGUzNzE0NDU0NTY1ZSJ9"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L157-L377",
+          "version": "repo-lines-v1:sha256:a9ef3eccf4ed7bf6be3d9e428365423c1a193510daca27d119122c94514511d7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhZGNmNGRhZWFhNGRjOTg0YjJlOWEwMTRmZTU5MmFhYjgwMmNiOGI2YTdiYWNmODQzYjdlNTMwZjUzNTNmZWIwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyMzNmNDYyY2RiNTYzYzE5OTQ3M2M0NzA5ZTE0OWI3N2EwNDZkMzhjMDBhNWMxN2M4ZTRhOGY2NzQ3YTJjZDAzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmOWEzMGYzOTRjNzBlMTkwODYwMGVjNmNkODA1YTA5MDBiYTJjYmQ5NGVjMzc0ZDQ2N2YzNDNlOWJhMTAyOWM3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7a495fbbb4e4eb8a6866b9b638e03ca",
+      "statement": "Acceptance filters run in a fixed order (utf8, parse, ebook element, type=text, title, language, license, required formats, creator) and the first failure returns its specific code; audio and video releases are excluded by the type check and both text/html and application/epub+zip formats are mandatory.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L178-L189",
+          "version": "repo-lines-v1:sha256:91cbf7960141d9d07202c3f4e6a73eb404576ebcd4a78094786a68b88e786e59:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YTMzMzM0Y2NmOGFjZjI1MjFiYWQ4Yjk2ZWM0ZWE3YzYwNDgzYmQ1YTg5MWJhNjhiY2EyZGEyZTUwMDIxOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJmMWRiYzE4ODc2ZmI2NDNkNDM0N2JiYjc4NjIwOTFhOTZiNjllNTVmNjU2ZTQzZGRkNjc3MjY1Y2U4NWJhZTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhNWJiYzk2OTVkZmZhZjhkNGIxZjk4Nzg5ODdhNDNlNDVkODI0YWJmM2ExMGY3YTUxNDhmM2Y5NzA2ZTk4NjIifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L211-L220",
+          "version": "repo-lines-v1:sha256:73be3b059ffeb684a065355db6c3d2d7d40b05354db7775f743dad36cbf0092d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlODEwM2RlOTBjM2FiMTMzNGNjNTM1NzFhNWM2MTlkNGQ5M2FlNjg1YzM1MDNjMzI4YmYwZjA4OTBiMzA3ZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhNDQ0MzQ1MTJlNDY5OGI4MmFmOTRhMTVlODA3YWIxYzhlY2I3ODZlOTMyMDg2OGM5ZTMyYjk0NzAxMjU3MTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwM2M1YTM1YWI4NjdiMzkwZWRmYTQ3NTBjMGE5YzI3NmYwNmUxNzk1YjQ3MjM1MjUxMDkxZWVkYTQ2ZjIzN2UifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L270-L273",
+          "version": "repo-lines-v1:sha256:c26f37b584288e863ac9c6ad0c52103cb85389a4170723a8c81f80388514f9c8:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDczMTU4ZTQ1ZGMxNjQzYjJhZWY3YzU2ODQ5YWFmZGQwZDY2ODU2MDYwNGJkODU0NWQ0NzgxZjdlNmQ1YTIzOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTk5YmRlZmVlYWNhNjM0MGUwMjkwZGM4NmU4ODljODlkNWUxODlhYTViYTQ0YjU4NWIzYjcwNzM0ZjRhNjJkOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWY1MWQ1YmVhMmQ1Mjg3MmFkZDFmMWVlN2Y1NmEyYzIxNmIzMTIwMjNmZmJjZTRmM2FjMGNkZGMzZGZjMmUyMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1a309b6ac01d4d6ea98e87046757784f",
+      "statement": "A missing rights node defaults to the public-domain text 'Public domain in the USA.', so absent license metadata is permissive rather than disqualifying unless include_licensed is false.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L211-L220",
+          "version": "repo-lines-v1:sha256:73be3b059ffeb684a065355db6c3d2d7d40b05354db7775f743dad36cbf0092d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlODEwM2RlOTBjM2FiMTMzNGNjNTM1NzFhNWM2MTlkNGQ5M2FlNjg1YzM1MDNjMzI4YmYwZjA4OTBiMzA3ZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhNDQ0MzQ1MTJlNDY5OGI4MmFmOTRhMTVlODA3YWIxYzhlY2I3ODZlOTMyMDg2OGM5ZTMyYjk0NzAxMjU3MTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwM2M1YTM1YWI4NjdiMzkwZWRmYTQ3NTBjMGE5YzI3NmYwNmUxNzk1YjQ3MjM1MjUxMDkxZWVkYTQ2ZjIzN2UifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L28-L31",
+          "version": "repo-lines-v1:sha256:ccc1f0e1a40965e42e6b5bf97cee95a6616cb1652f0796e27819654d0faad9d1:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzdjYzU1MDc0ZmI3ZmE2MTNkMzMxYjdmMTNlOTAzMmIxYzNjMmEzY2MzODBjMGVkNTVlNjU0YTJmODQxNWViNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjc5Y2RkMzU5MWFiZmFjOTlmN2MzMzE0NmUyNzI0OWZiZWZhYmQ4N2Q5ZjE2MWFjNTVlNWExYjQ0ZWExMmEwOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmQ5ZGY4MzRkNzcxYjdjNGYwNjYwOTc2YmRhZmYwMzQ2MDYxNjJkZTY3YmNlNjNiM2FhMjFjMTM3MjgyODYxYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmY2Zjc1OTIwYWE5MDIzOWRmOTE0NzEzMTgxNjJlNWI3NTJiYmU2MjQwMDI3NjVkNjgzZDNjNTVmOTlmYzBmMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5504457294034d2299b59ff90c35c44a",
+      "statement": "Agent roles map creator to author, trl to translator, aui to introduction_author, ill to illustrator, and edt to editor, with aut read as an author fallback only when no creator produced one.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L275-L300",
+          "version": "repo-lines-v1:sha256:ca39720c36c5c6559861a9d5562f4db714423f335068e1b55d59b131b96261e8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmNmZmYTdjNjYzMWQ5ODdjNzBmMDAyNDY1Mjc0Mjk2MmNkYTc3OTk3NTA2M2UyZGEyMmE1OWU1Yjc0MWZiNmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhNjM3ZDkxMGFjOWUyMjQ4MDA5NTAzNjcxN2RlMTRhOWQ4NThlNmZlN2I2OGQ2Mzk0MTNhNDhlNjlkYzFkMzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlMDI0ZTAzZDg5ODA3ZTQzNGI4OTY4NjY2N2QwZTJkN2FiMTFiYzBhNmU1MWQzN2Q5MGY2ZDQ4ZDNlODcyZjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4b8b2c98b6f44f21bd1d5e6d3612c16b",
+      "statement": "Formats are inferred from hasFormat file nodes by value text or transformed URL extension, deduplicated per MIME type by a HashSet that also gates the mandatory-format check, and the cover image URL is synthesized from the ebook id and passed through transform_url rather than read from the feed.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L226-L268",
+          "version": "repo-lines-v1:sha256:35cbf1d06564c585a3f64a7989115575725627ec8db905137094e712d43f5b87:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZTUxMTY1ZmMxN2UxNTJmNDVjNWQ1NTkyNzdmNDAzYjcxZTZlOWM5ZGYxNzM1YmVlY2U0MGU0ZTdkNmRmMzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzZTI0NWM0NzUxMzgxM2RhYjBlOTcyZmE2MWQxZWQzNDI5NTczMzkwOWE0MzkyNTJmZjBkZGYwZjc4MzdhYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1OGU2MzE1MWJhMmI1MDdkYjY0ZDE4MTI4MDkyZjk4MDM0NTJkYzBkNjFjYmY2NTQ5NmI1NmQ3M2VhMWMzNTQifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L302-L311",
+          "version": "repo-lines-v1:sha256:303b386f8659b4cc09614dbde73850c79c10e7edb61722bf7354e750ebbd0ba2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlYjQ4ZjkyODFmMjkzNTM2Mzk2ZDBmN2RmNzU2ZTRmYjVlODJhZTczNTgyYTBkNjdmOGNkOWJkYjYyZWIwZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1MjQxYzRmYmQyMWQ3MGM2YjQyZDRiNjU2NDVmYzU4Y2Y5YjUxYTZhYzRhNGM4NzNhMThhZGNiYjVhMmUwYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0YmVmMDljZTY2Nzg4OTViNGE1NGVkOWY3MjhlMDc2NjI5YTkwYjUxMmJmYTM0MjRmMzQyNDZhMzkyNjA1MGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiODRkNWY1ZTlkYTIyNjUzMzY2OGViNTRmNDY3MzFhYjRkYjEwYmQxOGNkMTRiNGUyZjU2MzFlYjg3NDU0NjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8847a8a87acf4473a01b9b26a4d09c5d",
+      "statement": "description reads the first of marc520, marc500, or description; downloads parses the downloads node as u64 defaulting to 0; alternative titles come from MARC-cleaned alternative children; and raw subject/bookshelf values are passed to the taxonomy engine.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L313-L342",
+          "version": "repo-lines-v1:sha256:3a9e549c54b3e35988c45675eb81205b4f9014596da1984f3dccf12127b22c10:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMmVhMjc1MzBjNzhmNWM4MDgxY2Q1Yjc4ZjJkZGIwMWQ1YTE4MmQwMjhmZTRhM2M0NmYwZDc5MjQ4YWJhNDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlOWIwNzY0ZDc2NGViOGFiYWM0ZmRjZThlZGY5NGYwNjYyMWNiNTdmZGUzMTFhNzNmY2ZkNzk4NmY1MThjYzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlMGI3Nzk5OWZlNjhlNDNlOThhZjg5NGI0N2YwZDYyMTI3ODY5M2U5NWExOTZhYThjMjFjNWIwZDdiOGEzOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5MTlhMWU4NGFhMDEwMWU0ODkzMmZlOTNiYzg4OTU1MWQzYTlmZmZhY2JhMjcwZTYwNjAyMmQ4YTBhYzUxMDEifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L344-L361",
+          "version": "repo-lines-v1:sha256:9500616b0a72f0baed9b1db5e6a69a90a0fd0617be4eb2453d47186b573a18a1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4MWU5NzY3ODM4MGY5YTQxZTA3MzUxN2M2YmU3M2Q1ZjA1Y2NkN2Q5ZmU2NmQ0OGFiYTIyMzRhZWYwZTU1ZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3MzkyZjBmZGQzNzliNDE1N2M5MGU3NzUxMGEwOGE1YjZjMGJlMTY5OWI4ZWViMTkzN2Q5YzRiNmRhNjA1NGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5OTEzYzhmYjUzOWE3ZDFhZjIzYTY4YTU4OGMwOGM2ZjNmOTk0ZDhhMjE0MTljYmQyNTQxN2Q0NjJmYjdmNzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2MGY3YmRlMTQzNTVkMjFiOWE3ZmQwNDBkNTUzZDRjZmU3ZmFmNGFiYWZmYzYzMDQ1MjE1NmUzYmY2ZWNmMTIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

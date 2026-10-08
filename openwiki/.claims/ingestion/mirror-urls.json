@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:fab48bbbe62abc4367d49aefbc566dc48fd11a23f4ba0c4fd4fd0b79e9ff390a",
+  "claims": [
+    {
+      "id": "claim_01a65b7c6218464cadf2a950f78a69c0",
+      "statement": "The --mirror key is resolved against the GUTENBERG_MIRRORS table and an unrecognized key is used verbatim as a base URL, so custom mirrors need no code change.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L277-L280",
+          "version": "repo-lines-v1:sha256:d4e1ab3697f5e8482e1444ee245f6c7411702633d59dfee5c294eba7cc9cb249:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWFjNDNmMTViNDhiYmI0NzIxMzdjMzJmZjA4MzBjYmY3ZDk4MWMwMjdmMzBhMjgwNTJlYjE5YWU2Mjg3YWEzYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGZiYTM3ZGQ5NGFiMGRmM2UwNjlmMzlhZGFlMjBmNDkzZDEwNmE4YmRjNDI4MmRjMWU1M2U4YTIwMWU1YTQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzY5MWZmNTBlYzUyYmNmYTU4Y2YyZTZhZGZhOTFlZDlmMjJmMTVlYzQ5ZDk4NzBjZjg4ZmRhOTViZmM1NDliZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTdiNzBkYTkzYzFlMzM4OGQ5MWY1ZWE3MDJlZWI4ZTQzM2Y2MzM3ZjBlMmE0ZmQ4MDZhM2VhZGI5ZDM0YTZhYyJ9"
+        },
+        {
+          "resource": "repo://src/config.rs#L52-L64",
+          "version": "repo-lines-v1:sha256:492f043bdf53db745f7cb7f618bf76758143b272314c91a51365e33db974c772:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZTcwN2IwMTQyNmNiYzZjYjFlMzU1MDEyYTczYjhmZjk5MmNlY2Y5YjI0ZjFlYWE3NDM1ZTRhZmI1MGJiMDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0ZTMyOGNkNjQzNDgwZWU1NTU5M2Y5ZTM5M2Q5N2IyMWUyZTgyNzMxODEzYjk1ODVkMDFiNGVmNzQzNDE1NmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJlNjE5Y2QxN2I5NmI5YTVhODY2YmNkOGQzN2U0ZTk2MjQyZWMzZmNhYWVjZDM2MTg0ODU5MWEzYWQ5ZjQxZjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a5ecdceb43704fcabb68f275410a74e6",
+      "statement": "transform_url is a pure, ordered branch chain: empty-input passthrough, identity for the canonical gutenberg.org base, digit-path precomputation, files/dirs rebuild guarded by an ebook-id equality check, prefix strip with ebooks/ remap to cache/epub, a pglaf-only epub exception, and pass-through for unrecognized URLs.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L79-L132",
+          "version": "repo-lines-v1:sha256:3dee011041aee15a7a84155b11b1bdb6d032aa90953b255f60548fca4014e95e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiNTE5MTlhMjQ4ZDliZGY4NDRhZTY3YWI2ODdmM2E4MmFhNzEwZGE5ZTBhMjM5NzAwYjE4YzlkZjY5ZmUxM2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhZTEzYjk0OWViYjU3Y2NjMDFhNWYwMDMzOGIxMWZlMDg0OGNlMmUyZTczZTBlYTEwYTIwY2I0OGYxZDJiY2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmZDdjMzYyOGY2ZWM3NTAxNzdkYjllZDQ2NmI2OTIyYzI0NWFiMTc2ZTE2OWIyOTZhYjYwM2JiYWUxZjAwNWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0854da93686f4b968151e6a0e3cd959f",
+      "statement": "For an all-numeric multi-digit ebook id, transform_url splits every leading digit into its own path segment so ebook 1342 is addressed as 1/3/4/1342 on a mirror.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L91-L98",
+          "version": "repo-lines-v1:sha256:5417e08c249112645aa5fb2e5b60ab3a5842f9dc4ca96f04c09af80748af80dc:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWY1ZWJjNWU1MGE2YTBmMmZhMzUxYTAwYTYzNTMyZmJiZTgwMGZiMzJmZGYwYWM4Njk0NjVlMjkxNWQ2ODM2OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWQ5ZTEyNTQ2NDI1NTc2ZDNkZWFlOGM5YjlkYmYxMjhkNWQ2ZGRhZjVkN2ZlODU3OTM0OTI3ZGVmZmEzYjlkZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWQ5ZTc5YjQxMTRkY2U1NTFkMDBkM2U4MzJlZWFjNjM0MWRlNTcyMDYwMjkyZTM5MDdkN2Y4MzlhZmI4MGM2YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzg1NmZlZGJiZDMwNjEzN2I3NjAzZjY2ODhhZTJlY2VhOGZjNWVlZjg5NGUyOGQxYzczMDZhYTg3YTlkZGQ0OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_793ece8726814823b48020439d29974d",
+      "statement": "When the mirror string contains pglaf and the path mentions epub, the URL is replaced with {mirror}cache/epub/{id}/pg{id}-images.epub because pglaf publishes only the -images flavor.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L119-L126",
+          "version": "repo-lines-v1:sha256:d8d05eaf6919ff442d1c5d4ec871c531f10bc6cdbf20d2ac323074cf0f369294:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGI0NTgwZjIzYTE4Y2VkZjlmYzRkMWIyNGU2NDc0NWNlMDRjODFiYzk2MGRlYzlkZjcwZGMzNmYzYjg4YjRiZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTUyMmM0MmNkMTljNmQwM2Q4MDhjNDUyNzIwNTUyODI1YjdlYTFjNWI0OTFiMjE4NTExY2FjNzQxNWNmOWQ5YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTM2MjI1MzA4MWYyMjliOWEyYmRhNjM2YzM3MzZiZDAzZTIwZjY2MDBlOWQ4YjQ2MDVlMDY5NzQ4NmM4MGVlYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDRhMzQyMjNkY2JmMjQzMDQ1YjM4ZWZlMTUzMDZhM2QzNmY3ZDYyM2IwYjYyY2E5OGU2NmNmYThkNDhiMzE3MSJ9"
+        },
+        {
+          "resource": "repo://src/utils.rs#L56-L59",
+          "version": "repo-lines-v1:sha256:6ba847a8b83cc61990a6376c42f03f5708f6e829c4fac0a7fdd115d61e802b03:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjUyNzM2YzRmZDZmYTk5NWMxMDlkN2JlNThlYjA5YTA3ZGZkNDc4YjNhMmFhYzhjNDk0ZDhkMzJlZWEzNTkwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDU4NDkxOGJjOTg2ZDZiMmQ3NDA1YTc3NzUyYjQxODNlMTUzMGE0MzhhYjk1NDQxYzA3MTVlODNkNzY3ZjNhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDM2NzljODVhZTdkMmVhNGVmYjUyNjIxNzg2Yjk3YzNlY2Y1YzQ2MmU3ZmZkYjhjMDJjOGQ3NmI0ODdmMGViMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a6f6a1ce03c44eb48552efa9c8806255",
+      "statement": "Format URLs, agent webpage resources, and the synthesized medium cover image are the three call sites that pass through transform_url, each using the record's own ebook id.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L247-L247",
+          "version": "repo-lines-v1:sha256:3160fb9d8fd76a23263b7b60c4bc8870f9af9b004f820c1a9a42c25f70ff38a5:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzE2MGZiOWQ4ZmQ3NmEyMzI2M2I3YjYwYzRiYzg4NzBmOWFmOWIwMDRmODIwYzFhOWE0MmMyNWY3MGZmMzhhNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzE2MGZiOWQ4ZmQ3NmEyMzI2M2I3YjYwYzRiYzg4NzBmOWFmOWIwMDRmODIwYzFhOWE0MmMyNWY3MGZmMzhhNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzk5ODE0NDFjZTliMDFlMjYwOWM2Y2RmNDlkMDk2YTExMjVhZWM2NDUwMDgzNzM3MDFhNjY5MmNjZmUxNzIwOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTM4NTRhMzJiMTc2NWFkNzBkYTY0Yzc4NDYxZWU0MjEwZDY3MjY3OTcxZjgzMWFhOGUzMjAwMTBlMTg5NmI5NCJ9"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L303-L311",
+          "version": "repo-lines-v1:sha256:d444c5c8acd901d0877fe69316a6e687ac15050de3ead774c4646f6263d1d58c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQxNGIzZDM2MThmYzI3OGQwYWI0ODcyYzlmNmU0OWM0ZWFhNTRmMmM5ZGE2ZDlkMzNkYTQxZTU1ZWVhNTM3ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjUyNDFjNGZiZDIxZDcwYzZiNDJkNGI2NTY0NWZjNThjZjliNTFhNmFjNGE0Yzg3M2ExOGFkY2JiNWEyZTBhNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDYwMWVhMjMyN2FmMjAyMzBiNGQ5YjgwMmM0NTY0YmZhMjNjMTUxNWIwODBiNzFmNGU1NjdmMDQxYjY4Y2Q4NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGI4NGQ1ZjVlOWRhMjI2NTMzNjY4ZWI1NGY0NjczMWFiNGRiMTBiZDE4Y2QxNGI0ZTJmNTYzMWViODc0NTQ2NiJ9"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L93-L100",
+          "version": "repo-lines-v1:sha256:8a8523991b00d1a7d8903926dfabbe31e1b09b25d3d81e0604e284cdfe6097f3:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTBjMmI1ZTdiMzZhZjA1ZGU0NjZhYzM3ZTY2NTk4MzM4NTYxNWEyNWY4YjJhYWI4MDg0NDY0YmFhY2JmZGRmZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjA0NjVmY2Q4MTdjMzg4ZGVmMjZiNGUyMTIwZDM0YTllY2NiMjlmOGRjZGY4ZGQyYjA4NTIwYmNiZTg2ZTgwZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk1NWNjMDdmMGYxOTg5MTZiMzE1NDYzZGI3MTFjMDlkZDExYzI0MzFjNmMzOTZhZmFiMDJmZjQ2NmExY2Q0MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGNlNTZjYmI3YThkMGMyNjQ1ZDhiNDdhZjNiYTRjZDNiMGYxNjg4OGExZTM1NGM4NDYwMzcyZjFiYzA4NDMwMSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

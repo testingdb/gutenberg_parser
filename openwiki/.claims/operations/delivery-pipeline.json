@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0c72a10873d89bfdd7bedea6496f369d8bb9608bcb93a7ab8e2d86274f37bdcd",
+  "claims": [
+    {
+      "id": "claim_d67c032c276a4271919211c82338a87f",
+      "statement": "A dorny/paths-filter job gates the three-OS Rust quality matrix on src/**, the Cargo manifests, .rustfmt.toml, rust-toolchain files, and the gate workflow itself, so docs-only changes skip the Rust toolchains.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/pr-gate.yml#L18-L52",
+          "version": "repo-lines-v1:sha256:58da1a4b47ac846bdb434add19a9eea068ee7d2ac7e30c2b8385c9f536254907:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4ZjkyMDE5NDAxNmUwNmM2MzhhM2NkMWI4NDFlNjY4ODQ5ZWU2OTg0YjM0YWM2ZjU4NTBkYjczMDRhMzE3N2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmY2Y3NzVhOTIxOWYyZGNjMjdkYWZmODhmNTk5MTRmZWU1NGViODVjYzdkMGQzZjVlMzUxZDI0N2I0ZWU3NDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJjZGRhZTRlN2E2MzZjMjBmNTUwYWNiNmE1NGYyNzA5YWUyY2I0Y2RhNDE1ZDNhN2U1MjQxZTM3MTg1Njg5MjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxODc1Mzk1YWQyZWE2MTU4NDU1MjMyNmRjYWY1NDgyOTFlYjMwMzdkOTU2NTU0NTc5NWZmYzBlY2E5MzVhNTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8faf66300e5c400dada204f9273d29fa",
+      "statement": "Each PR gate matrix leg runs fmt --check, clippy with -D warnings, cargo machete, a locked release build, tests, and cargo doc, making lint warnings and lockfile drift build-breaking.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/pr-gate.yml#L64-L86",
+          "version": "repo-lines-v1:sha256:519cf252ea32f08cd159d10b4591690ff1d676acedb9cb74d707d1c9278fe0db:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiMzJiOTg3MjYzZGYyMTYzZTcyNmQ0OGI5MmY2Zjk2NTE0OGNiNmI2ZDI4MzE3OTE1MTRjOTM5ZjgzN2ExNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4ZDZhMjBiOTllYzkyNjEyMzExMDBlM2I5NGQwNTQ4ZjgyODMyZjliNDc2YWU5NjRiMWE3MzFhNmJhMmRiNjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyY2ZlNDljOWMwYjE3YzU0OWY5ODUyMGIwOTQ5NjJiZTdjZjIwN2Y0YjU1YTFhMTRjODJmOTRhMDhiM2QxMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzM2MzNTU3ZGQzY2NiZDIyZDY0MmMzZWIzNzgwNTU2YzhjYTY5ZjE5MzUxMTU0NTg0MmU1ZWFjMWE2MTE5ZWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5ceef53e0e7542a49920ecd785a0d489",
+      "statement": "The SonarCloud job needs the quality gate and derives coverage from cargo llvm-cov with the llvm-tools-preview component, requiring the SONAR_TOKEN secret.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/pr-gate.yml#L88-L127",
+          "version": "repo-lines-v1:sha256:98afc0a5afa7b1ba747160f3cf3626ddc498bdd1ef5d6cc6a6ec59a86d7373d0:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjM2U1NDc0YmVlMGMzOTA2NzI5MWU1YzQzODk2ZGU1YmM3NzNlYWViN2ViYTU5YjI2NjQ0NmYzODY4MjQ1NDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyOThkNDYyNzEwZTg3MDkxODBkZGY0YjBkNmZiY2Q1YWE5MWY5ZWQ5MzdjY2EwYzM0OWMxMzczZjJhNTQzMWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhMzY3ZDI5YTZlNTg0MzA2OGEyODQ5NWIyNmRmOWJjZThlNjQwZWE4NGRlNzlhNGJkNWFhYWQ2Y2U4ZTRiMmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d3f5c50800f477f82bba327e96ff530",
+      "statement": "Dependency auditing runs on a weekly Monday schedule with cargo-audit plus cargo-deny bans, licenses, and sources checks, governed by deny.toml, and never on pushes.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/audit.yml#L4-L41",
+          "version": "repo-lines-v1:sha256:36a4fa413de4501f6cef6c4f60798e4b045a734346dd31b3edc5a1810b54a6f8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyODg0MGE2YjdlNjAzMDNkODdiZTRkNGQ4MmE1MGIzMzI4NDI5MGRlYzRlMzQyOGQ0N2Q5M2ZiZWZkMWM1OTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExZTQxMjQ2MzMzYTcwZDVkNGZkYTQ4ZWMxZjAxY2I0NTMyNDU1MWZmMTYwYzIyZjUxZTBlYTMwODk3MTQ3MzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlOWUzZmRkMjg3MWM2OTU3NTZhMTY1OTBjNWNmNjRiMTkyY2JlNDMwOTNkNjEzMzE0N2U2ZTEwYTA5NTNiZjUifQ"
+        },
+        {
+          "resource": "repo://deny.toml#L1-L1",
+          "version": "repo-lines-v1:sha256:06b01d87a63c95bf1f4dfc021f9125fcd0ca90d34aaa09fdc49031dd27e36a10:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDZiMDFkODdhNjNjOTViZjFmNGRmYzAyMWY5MTI1ZmNkMGNhOTBkMzRhYWEwOWZkYzQ5MDMxZGQyN2UzNmExMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDZiMDFkODdhNjNjOTViZjFmNGRmYzAyMWY5MTI1ZmNkMGNhOTBkMzRhYWEwOWZkYzQ5MDMxZGQyN2UzNmExMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTdhM2Y0ZGFlMmQxMGI4ZTU1OWU2Nzg1MjQ2NjFhN2RmNWRmNjEyYjE5Y2MyMmMwMTM3N2E0NjEwNWMyZThhNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c405e6c03d4a422ab8cc4d597bf84839",
+      "statement": "The dependency-review job is conditioned on the pull_request event, so it is skipped on the schedule and on manual dispatch of the audit workflow.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/audit.yml#L42-L54",
+          "version": "repo-lines-v1:sha256:df2f5efffb85f3edbce65563836db0a5edb5013c66feefc9fb3e0e14993c8d43:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxZDk4YjE1ZDY4OTQxNzdlZTdjNWRhOWM5ZDg5ZWJkMGY0NGQ0OGJhY2I4YWM0NzIzN2YxODY2Zjc4NGQ3YjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwNGIzNGVhOTU1YjA0MWNmM2E2ZjQ3OWE5ZGQwYjg3ZGYyNDZhYjQxNjBmN2UzNjk3MTlkODFhMWU5YzU0YTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMGE1MmU5MjlhNjZmN2UxZmMyMmE5YWRjYWM1NDMwNDUwZTlmMDAyYTI4M2ExMjc1NDFjMzMzZTU3NTQ4YWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b46f8db2f5e0423ea7e99ee9725db048",
+      "statement": "Every release job needs the build job, and that build job only runs when the event is a tag push or the repository owner dispatches it manually, so a skipped build gates publication of artifacts.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yml#L15-L26",
+          "version": "repo-lines-v1:sha256:275a6094a73bf76a56c8255d478179e4685e1030345bacb11eaf481bbcd95053:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlZTNjNjBkYjI1M2NiY2VhNzI0YWFkZDkxOGViOTQ2NjRmN2M2N2U3ODRmNzk2Zjc4NGNmMTAyMjA3ZDI2YmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhNjAzMjllZjMzNzY4NjEzMzY2ZDc4MTk1NGFhMmE2NjYwYzJmMGI1NjU3ZTlkYmY2OGVkMTYzNWY2MzQzZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhZGFlNGZlYWJjMzk4ZTA1OTJjYzJkY2Q4NzczN2I5NGFiZWI0OGI4YzY4MGVjZjljMzVmMzllZDNkYTE3YmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4NmRmMWU2ZWVjYmMzOTBhMjQzMmUxN2JmZDBhYWNlYmYxZTlkMzljY2Q0ZmIxNDk4ODk3MDkzNWUxMGYxZjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_727c37c23d324a0db7dd2c2e8e1585bb",
+      "statement": "A tag push fails the release build unless the pushed tag equals v followed by the version in Cargo.toml, keeping artifacts and crate version aligned.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yml#L52-L63",
+          "version": "repo-lines-v1:sha256:b356e5861fd7bc7e4e4f17aadfe16066b2b33b718d492c7fc488016481be40a1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmZGYwNWYzNzUwNGNlZDdlNjFiN2MyN2E4MDJkYWNlMzhmMjYxYmNhMmY4MDdjNTM4MTJiYzNmYTg5MzhiYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNTU5NzljZTczMDIwMzNlNmIyZmQ3ZDg4ZjUzN2EzYjhlMDkxZWEzMDVjODExZmZhMTI3NGJmNTc2NGVhNWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5ZmY1MGZkY2E3ZmI3Y2NhOTM1ZTFjZWRjMjM2Y2U3M2IzOGEzOTZmYjk2MTc3ZTVkZjUzYTJhZjg3Mzk5YzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhYmM5NzVjMDQ5MjEwMzhmYTlhZmMwMGU5YjdkZTUyOThkNDg1ZmVhMDM5MmQyMTVlNTdjOWY1NGE2ZjI4ZDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2dbf159d84034fcdb9e5242eb382c30e",
+      "statement": "Release cross-compiles four targets including x86_64-apple-darwin on macos-15-intel and packages Windows as zip, then publishes SHA256SUMS.txt and the artifacts through a GitHub Release created with softprops/action-gh-release.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yml#L28-L85",
+          "version": "repo-lines-v1:sha256:1c02a685d0d7f0af1cc62818dd7e633c1ecfcbcfd23a176b397f0ffabe01373d:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyNmUyODI2MTY2YjJlMDA2MjRmOWMxNjRlODdkZDgwOWZiNGM3ZTU1ZTJkNTg0YWM2ZDU1N2YyMmY0OGNjODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiYjAwMTk0OTA1MDMxYjBlMGIxYTQ5N2I2MzBiNzQ2YTYzODc5MzZkOTViZDA0YjZiNGIzYzQ0OWJhYTEyYTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUxOTgzZjRjMjExYTFiNDZhZjk5YjlkNmViMmMyYTA1ODhjNTEyOGEwYmQyMmNiZTJhMzQ1N2Q4ODFiZjYwYjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0YzIwZDg1MzZlZmE5YzI5MWVmNzk3MjQ5NmIxYmEwYjAwNjVkOWE3MDZmODMwZGQyZTgzYzVmMzY5MGVhY2UifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/release.yml#L87-L158",
+          "version": "repo-lines-v1:sha256:2487b7359f07d0cad1be3da094d10d3827bcb6409c8dfe51ed1679854750c674:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3MzQ0YjE0YmE1M2VmOTAzOWNjZjdiMTdmMjc3ZDIyYzUwMmM0ZDhmOTJmNzYzNjk5YmRkMzM4M2Y5YWQ1ZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyZDYxZWQwNzg3MzRlMzM2ZGIyYWU5YjIyYTY4ZjNmOTZlNGUxMTQ3MDE3YmQxZDZlNzg5NDAwOTYwYzc3OTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlYzg2MzU4NTUxNDNmNDFjYzllOWE0ZDVhNTQwNjFiMWQwNjdkMTYzNmU3NGUwODBjMTQzNjFiNDEwZDgwNWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8ffc7ec4c2343539e704c99aef2119c",
+      "statement": "The OpenWiki Pages workflow renders the committed openwiki tree with the pinned openwiki@0.7.0 CLI, asserts the export is non-empty, and deploys only when the event is not a pull request.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/openwiki-page.yml#L32-L64",
+          "version": "repo-lines-v1:sha256:4a487b382bc1c11775363ad3f8b5602cfdfb7356bc95dd9021f5f8ce181438cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5ZDgwMTU0ZWQ0MmZjNWM3NzliMTMzMTU3OGI1OGI4OWM4MDFlYWNlNzRmMjRjZDQ4ZWI0YTIzNTc5NDBhOTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5OTk1ZmI5OTQ3MWMxNTY4YzhjYWUxZjdjYzJlODA0NDgxMGQzNmE2YWY3NDVjOTUwZWEyMzgzYmJkNTkxYTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkMzkzMDRjOGVmZDg3MzUwNWViMTk1MjMyYTUzMjA2ZDhmYzZhNWQwYWEwMTkzYzMzZDUzZjM0NjA3NzZiMzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQxNmU2NmY1ZjVkYjNlYzcyZmZjODFhMDE1ZjdkZjBmOGQ2NjA5YjAzOGNiZGY4NjIyYTBhNGQ5ZDU1MGVhYzcifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/openwiki-page.yml#L55-L84",
+          "version": "repo-lines-v1:sha256:f70e4f8c3cba726c1593030eaf5684ed70e97779f7fb19a4bd7f7e77d2368769:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5NDJhZmRkZDMyMDQ2OTkzNDlhNTNjMDA1Y2VlMmU2YWE3NjdiYjNlODlkOWJkOTZmMTcyNWM2ODNhOTM1Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNjJjYWIyZjM1MDI4MGIyNzI1MDAwODdhZjBmZTlkYjIwYWE0ZDE4OGM1NzQwZmJlZGYwMjc1NmI5OGQzMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0M2FmNDYyYmRlODRjYWMzNzlhOTA5YzRmYWIwZTE3YzI5ZmNkY2Y2MTEyZDA5NDk1YTYzOGI4ZWRmYzQzMDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

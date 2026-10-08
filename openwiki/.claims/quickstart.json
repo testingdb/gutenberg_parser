@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:6849e0de7ff985cb3b4dd7e5a06e4a992fb48a811fb866646ced5e2cc67854bf",
+  "pageVersion": "sha256:2c7e3ba5cd9de204f27369badc44e44b522d4009def383b3d98daf5e1b08257e",
   "claims": [
     {
       "id": "claim_dd97961c80e1420782b57a995424dcfa",
@@ -11,10 +11,20 @@
           "version": "repo-file-v1:sha256:385af9c45e8bb521f78d84ad0c90ed927d7539931055f00c1dedad9160b092ab"
         }
       ]
+    },
+    {
+      "id": "claim_a00246e674fc49b2991085ba9a996144",
+      "statement": "gutenberg_parser is a multi-threaded Rust CLI that parses Project Gutenberg RDF/XML archives into JSON.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L1-L40",
+          "version": "repo-lines-v1:sha256:16b563032cd02e2b489cdd1c672754f102eaa2ba45aa4fa1ab374e846b26b183:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3MTdiZjE2MGZmMGY3M2E0YWE1YWY3ZjQ3NmM4NzhhZjEzYzlhODYyYWE0ZTIyOWViNmYwYTFiZTEyNDY3ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI3ODQ5NzQ5YTA0MjZjMzc3Njg2NzJkYTY1MWIwOGZmZjhjMmUzOGZmNTQ3MjgyMTY1NjNmM2FlMmRiMzk1OTEifQ"
+        }
+      ]
     }
   ],
   "verification": {
-    "by": "openwiki/0.7.0",
-    "at": "2026-10-08T08:19:49.366Z"
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
   }
 }

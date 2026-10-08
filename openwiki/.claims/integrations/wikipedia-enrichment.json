@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3de3eed4bf717f84b081c30a300c3c22c8366d5084a19c550c3663c3b503f8f6",
+  "claims": [
+    {
+      "id": "claim_56f6c32d0dc142ffab7bfdbfbff205e7",
+      "statement": "The --wiki-images enrichment is gated twice: parse_agent only calls agent_wikipedia_image when the flag is set, and agent_wikipedia_image requires a Wikipedia article URL among the agent's webpages.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L312-L321",
+          "version": "repo-lines-v1:sha256:5aa67000d0c2f7ce0ceb26401006ab16a76151cad872aecaaeb4dc414cf5bf2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3NWJiYmUxNzQyMGQxNWZkYTc3NGYxYjBkYzRhM2ExOWFhNjI3MzZkOGM0ZDVkZjNmNGMzMzRkZGVkNWYxZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4NzQyZjQzZDU1MjI2MWU4Nzk1ZDI0NDM1ZWI4MjVmNmI3ZTYzMDVkYzkzNzFmNmNiOGU0MzY3ZGE5YjRiYzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5YTMwZjM5NGM3MGUxOTA4NjAwZWM2Y2Q4MDVhMDkwMGJhMmNiZDk0ZWMzNzRkNDY3ZjM0M2U5YmExMDI5YzcifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L115-L120",
+          "version": "repo-lines-v1:sha256:231884f311f97ccecb61636867891f2dc4877da0d889bfa1c3192cab280c48a4:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODRlNTRkZmVlM2UyYjM3NWUyNzZjNzc5NzcwNjkxZDVjOTdlNjlhYzZjMTEzZTA1ZGZlODgxMDFhZGNhMzVkOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWQ5ZTEyNTQ2NDI1NTc2ZDNkZWFlOGM5YjlkYmYxMjhkNWQ2ZGRhZjVkN2ZlODU3OTM0OTI3ZGVmZmEzYjlkZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmRjOTlmMWFhNGFiMzYzOTJlZjI4MmMyNjMyZWVlOGU0NTRhZDBhOTM5OGNiYTRkYzBlOTMxZmFkMjQ4MmNiYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGNlMDIyOTdkZWZlMTVlZjk3NzA1MGY1Y2VjZGZjY2I1NDhiZDgyOGZiNjk0NTg5NGYzMWM0YzUzNDljYjE0MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e4947799573d473ab194c8f073f26d7c",
+      "statement": "A Wikipedia article URL is identified by RE_WIKIPEDIA_URL, which accepts an optional scheme and extra subdomains but requires a /wiki/ path, and the page name is the substring after the last slash.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L623-L629",
+          "version": "repo-lines-v1:sha256:d64aa488d632b0fd4f54e91000f0c11880ab106c1f58aa191a13924c1095e9a2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWQ1NmI3NWExYzc5MDNiNGFmNjhlNThmNzEwNzJjYjE1ZjZlMDMwNWVkMDBmNDlhZTRhNTM0NjcwOTYwNGNkYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNkODcxNjU3YmU1Y2M4OTE2OTFhMzIwZTRjYzc4YWRjMDRkM2Q4ZTllZTg1YzJhNWU2YjhlZWQ1MTM3MDQ3NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODJlNTMzMDRiOWI2OWIzM2JkMzRmMmMxMWU0ODI2OTJjMjUwOTA4YWRjNzdlZTJhMTZlNjkxOTE1OGFlNTRhYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjlhMzBmMzk0YzcwZTE5MDg2MDBlYzZjZDgwNWEwOTAwYmEyY2JkOTRlYzM3NGQ0NjdmMzQzZTliYTEwMjljNyJ9"
+        },
+        {
+          "resource": "repo://src/utils.rs#L228-L231",
+          "version": "repo-lines-v1:sha256:c8831fc8c129d2e51d29a8916be7060850c2658548b7db23722c26ece2f1b833:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDRiMmM5NGE5MWFjN2ZmMzQxYTVmMmExMmFmNThjNjY5MTJlNTRhNGFiMDY0N2IwMzYwMzgzOGU2ZjVkYjdjMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGQzMjc5Y2YyNzBmZTYwMjU2YzBkN2EwYTEwZmJhZjAzNjY0NzI1NTI2YWUzZDk5MGUxMGU0Y2EzZmNhZDczZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjVjMDhiZGY2OWU2YzMxNDkwM2NjZjAzOTRhMzZhOWFkNTQ3ZjVmZmRhMWNhMjA5ZjJjMGNjODExMDk5NTA5YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a8e589b8bde44b10bd0a0c19b7878212",
+      "statement": "Wikipedia request pacing is process-wide rather than per-thread: a single Instant behind a Mutex enforces a 100ms minimum interval across all worker threads, so concurrency multiplies in-flight lookups but not request rate.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L190-L192",
+          "version": "repo-lines-v1:sha256:f6d8873121681755eb06aace2a6ee6c01a476f5c1588b1e431e04d4d56ec95b9:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjNiOTg4Y2NmMzBjNzc1MzNhYzU0YzZjYTg3MjRkYzVkYjk3ZWJjYzU3MzhlOWE2YmY0MGUwODUyMzA0ZjNhNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODIzOWQ4N2E3YzgwNjljNmJiNTQ2ZWRjOWY0MWMzMTUxNzA2OThjZDRlZmQyZDk3NzBiZTk3NTljYjBiMmJhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzQ4MWRlYmM0YzNjZWEwNzM4ZjBjYWZjODc3ZjNhNWMzYTM4MGRhMjZiYjU0YmE5Y2Y2NjAzYTA4OTE5NTUyYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDIxMzE0NDQwOWY5MjI2NWFhNDY3NzI4YTQzNjhmNWQyYmJhOTgzYzkyMDJjZGZlNmY5MzFhM2RlNmVhZmE1YSJ9"
+        },
+        {
+          "resource": "repo://src/utils.rs#L247-L255",
+          "version": "repo-lines-v1:sha256:f381ce61c1c328cce696c987f40282296ac77d4027e557ed8e7414fed620945c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2EyNGMwN2JjMTc1MDU5MWYwYjIzYzllNTNjNWVhNjNlODYzNzEyYTUxZTc3OGM3ZDZmZmEyMzk5NDNlMzkxNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2QyZDIzMjljY2MwMTZjMjYwMmYwNWQ2MTU0MmEyNjg2Y2FmNmM5MzZlY2U0NDY4NmEzZTE4YzQwMjRhMGM2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzc3ZDg1NGJjYzI4MTU4MTMzNWNjMjgyNmYyNzgzMDA5ODE0N2JhMWI5YjQ3NzlkNzMwZjJhNjkzMTc1YTY5YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0503a4a751864cdbbfb938e6ef67f20b",
+      "statement": "Thumbnail requests retry at most twice, sleeping 500ms after a transport error or an HTTP 429/503, and any other non-200 or second failure returns None so enrichment never fails a record.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L268-L299",
+          "version": "repo-lines-v1:sha256:91fed87106777ebfc648276515755e377f38773bb1e0a5ac44e04a0a454b146c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhZDAwNzg3M2I5MTZiYWYxZGEyMWY3MTcwN2UyNDFkYzE4MmYyYzc3MWE5OTNkOGQ1Y2I1NjYwNDUyYzkzNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzZjBjZmVjOGJhMDE5M2ZjMzQ0N2U0NDUzZmVlZTZiMzEwMzVhNjkzNzhlNzliZjE5OWM4MzU4NzlkZTRmODAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyMGQ3ODJjYmJkYjIwODk0MjNkNWIwODY0NTNmNTIyYjNhN2U4NzNlOGZmOWM3ZTRhM2YyNTI0ZThiY2ExYWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5bf759c8ba8b400493ec0fcd07933207",
+      "statement": "The Wikipedia lookup cache stores hits and misses per article URL, so agents recurring across many ebooks cost no further requests.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L207-L219",
+          "version": "repo-lines-v1:sha256:5e5fd069a757ea1b9de17295f274cc7ca2432c464995ddd943de20e1d4f18d29:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2ZDM4M2RjMWEwM2RhZDM0MWUyMDk4YTRmYWRhN2YzMDA0MDhlOGJjNWE3YmI1ZGZlNjE0NTFkNzAxZGEyM2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3NjZjYjVmYmI4OGU5NDUxMDQ0NDk0NTNiMjVjYzY5MTYxOTYxYmVkYzQ4NTExNTY5MTU4MjZjYTIyOGYwYjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3NmQ1YTYxM2RmYTMzYjM2ZTBlZTc0MjkxZDFkNjNkNTcwZjQ3ZTQwYjE4MjAxNzdmMWJkZTZiNTA2ZTMxNGYifQ"
+        },
+        {
+          "resource": "repo://src/utils.rs#L247-L248",
+          "version": "repo-lines-v1:sha256:4abc602dbd653cd41babf32594d8365d0c6745c3de24c77e67b337900ce9712a:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2EyNGMwN2JjMTc1MDU5MWYwYjIzYzllNTNjNWVhNjNlODYzNzEyYTUxZTc3OGM3ZDZmZmEyMzk5NDNlMzkxNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmRkZjMwZDdjOTZiY2NkYzQ2YWI0YWNlMWQyNTM5ZmIwNWQxNDcxMDE5ZDI3MDY5MGJiYzI1YjYxZTI2NWM3NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2QyZDIzMjljY2MwMTZjMjYwMmYwNWQ2MTU0MmEyNjg2Y2FmNmM5MzZlY2U0NDY4NmEzZTE4YzQwMjRhMGM2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDExMGE2NzdkNzhkZDhhMzg3MzVhOGQyZjRkZjVlMzRkZGE2MWJiZmZkMjE2MTNiZDIwNjUwZWJiOTgyZjY2OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e77b70521497499f82fc36e5364a9ce8",
+      "statement": "Both Wikipedia-related mutexes recover from poisoning via unwrap_or_else into_inner so a single failed lookup cannot panic every subsequent worker.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L217-L219",
+          "version": "repo-lines-v1:sha256:9180991c84d76f3cc76dd38a3824e234d1354ee2398a446506b734602ee745c2:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjViYWNkZTE3ZTkyMjIxNDU2MTlkNDRiOGViY2RjZjJhMmFmYjUwODc1ZWRlZTRiYjNmODM5ZGZmODAwZjMzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTliMjNmYWJiZDJmY2E4YjRhYTQyMjY2ODhiNmQ4ZTY2NGI5YjAyZmNhOGYyZjE1OGE4NzJjYmE3Mzc5YjdhYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTc2ZDVhNjEzZGZhMzNiMzZlMGVlNzQyOTFkMWQ2M2Q1NzBmNDdlNDBiMTgyMDE3N2YxYmRlNmI1MDZlMzE0ZiJ9"
+        },
+        {
+          "resource": "repo://src/utils.rs#L248-L248",
+          "version": "repo-lines-v1:sha256:bddf30d7c96bccdc46ab4ace1d2539fb05d1471019d270690bbc25b61e265c76:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmRkZjMwZDdjOTZiY2NkYzQ2YWI0YWNlMWQyNTM5ZmIwNWQxNDcxMDE5ZDI3MDY5MGJiYzI1YjYxZTI2NWM3NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmRkZjMwZDdjOTZiY2NkYzQ2YWI0YWNlMWQyNTM5ZmIwNWQxNDcxMDE5ZDI3MDY5MGJiYzI1YjYxZTI2NWM3NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTJmNjRlZWJjZTQ1ZDgxNzk4ZjYyNTdlYjZhZjkwZTdmODM5ZjI2ZTdjMzUzYWZhOWU0MDNiYjU3OGIzMDhiMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDExMGE2NzdkNzhkZDhhMzg3MzVhOGQyZjRkZjVlMzRkZGE2MWJiZmZkMjE2MTNiZDIwNjUwZWJiOTgyZjY2OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e448cc34d60f48dc9e24a374abaa18cd",
+      "statement": "The shared ureq agent carries a User-Agent assembled at compile time from CARGO_PKG_VERSION because the Wikimedia REST API rejects generic clients, and a 10s global timeout prevents a stalled lookup from pinning a worker thread.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L76-L85",
+          "version": "repo-lines-v1:sha256:21928002f6bcefae414f546c7f89ae77285e13517e05f372f28538a7a437691e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2YTU3MjhmZTZlMGYzZWJjODM5MGY1NDBkMjk5NjdmZjFiYTM1MGE3YjVhYzZmMjM0YzYyNTVlZjM5MjcyYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5OTY3ZWMxZWQzODM2ZjhlYjE3YWZmMTcyYjViZmVmN2RlNjA0ODVhNDM5YzZjYTExYzU5MWUxNzU1NzM5YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkMjZhNTU1MjYxMjQ4ZjcyMDE0MzM5MTcxZTJlOWRkMjQzMDM2MTFkNjdhNDlkZDY3MTkxYThiMGJmMjg2YzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4MGYzMjkyZWIyOWUxMzA1ODdhZmMzNWYzMWM0YTliYWVjMGEzM2ZjZDNhOGJkYjdmNGQ0OTIzM2QzMWY0ZjEifQ"
+        },
+        {
+          "resource": "repo://src/utils.rs#L182-L183",
+          "version": "repo-lines-v1:sha256:b3b3a74af9eff0aa54a656199437aaee27187bbd05bace5c6937bcfcf2593508:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDUxNGUwNjQyN2QzOWIxYTM5OTczZTc4OWFhYzE2YWY4OTljNzFjMTJkOWYwNjNhNWVmMDFlZWQwNTIyMWE1NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODYyOTZiNDI4MGJmNDZkYjI4YjBkZTYyMzRhNjVkMWJmZWYxYThhYzMwZjMzODYyMTAyMDQ2Y2E4Nzk5ODEwNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODUxN2M4ZjM4ZDk3Yjc5ZjViNjExODRlNDJkNTM4YTc3OTE3ZDQ3NWVmOTZkNGRlYmQzNzdkZTkwOGNjOWJkNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzNmYzE0NGU5ZGVkOWYyNzRjNTk0MGY4ZTgxMTkwZjEwODNlNzk3MjJjMTMwMDZmNjE4MDBlZWY0M2U2NDk0ZSJ9"
+        },
+        {
+          "resource": "repo://src/utils.rs#L199-L205",
+          "version": "repo-lines-v1:sha256:35b3daa28d48c6a043b22abc96bc5f4c4caa7a895066f7aa874b2ce7002679f9:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmNmNTU5NzMzMGU1YmYwZjFlZDEwNzYwYWMyYTg3YjU2NDBmN2ZkZWJmOTYxZGIwZDcxNmM3MmZkYmE5YWMxNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjZmNWI0MGIxNTg0NTdkMTc4NjRmMjE3OTA3ODZkZDVhMmVjZGI2NGI2NmE2NTFmNzg4ZDRlMjVjZDMzMDNkMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjNmMjY2N2YwYjI4NWNiNjk5M2M4NjU5NTZlMWIwOGI5NzVlZjJiOGM2MGMxMDdkOWFkNmQ3NDU1Y2UyNjgzNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzEzMTY2MTU4ZTZmMGRiM2NjMzdmYzMwYjE1MGNlZjRkOGM2MGJiZWE0NTQ3N2NiNWEwOTY5Zjk1NDBmNTdhNyJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

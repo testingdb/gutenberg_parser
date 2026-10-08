@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:cd67b8689ea14ddadf80932d79c4ce94ad52178d270bc701871ffb80c3e90bb6",
+  "claims": [
+    {
+      "id": "claim_6390de2413b64639a69c08835e25c751",
+      "statement": "config.rs contains only immutable data and compiled patterns, every table initialized lazily via LazyLock so a run that never touches taxonomy does not build the large lookup maps.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L37-L46",
+          "version": "repo-lines-v1:sha256:b51bc6dff0339baf2e4d17a040f653c1cfeb31b230a22763d20068e7e18c1cb0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5ZjhhZmMwMWI2MTU2NDA0OGYxZWU2ZTlhMWIxOWQ3OGJjYThlNjIzZjFiZWU0NTE4YWEzMWM4NjM4NjU1NDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgyNmU1YTk0Y2E5MDIzYTI0YTAzMWE1NmRhZjg0NDNjYjhjMzQ5OWE5ZjRhNTU4MjdmYzQxOTI5ZjJlODgzMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgwY2YwNDEzMWEzZDI4OWEzZGFkODc3OWRkZmU0ZDMwNjZlMzAzNDc5NjViNTI3MmM5YzkxMWI4NDgzNjFlZWQifQ"
+        },
+        {
+          "resource": "repo://src/config.rs#L400-L459",
+          "version": "repo-lines-v1:sha256:b283526a277d6f3f4ac18f21e608b5ebc47619214d0fbd54865a6824458271b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3MGViMmIxOTdjZjNkZWNlMDAwZGRhZDJiNzMxYWY5ZDU3MTRlMTJkZjYzMmIzMGZiNTUxYjNkYmM5MDBjMWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2MjRmYjVmNzRkODJiODgwMWQ0MTFkYzBmZWQwYTZlYmMxNjZhNzg4MDA3NzBjMDdjYjQ3MzQzOTM2N2M1MTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzMjFlOTVhYmY3OGYzZTAyZjQ4ZmZjODFjMGI0ODg2N2FlMzlhZjBiZTljMDJhYzNmNmIwMzFjN2I4Njk1MmQifQ"
+        },
+        {
+          "resource": "repo://src/config.rs#L465-L535",
+          "version": "repo-lines-v1:sha256:50bb5b6e071424d883b1f2e1a374fd043121bcc08bb4e3fd7b167e8f08f13985:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0MDZlNmU3MjMzNzkxMzAxZGY1MWRlOWNiMWE5YTRlOTFlZDMwMzkxM2JjZWNmOWM5MTc2NGIxM2RkZTA5YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4OWQwM2Q3YzBhZTYwMWRmMzlmYjA4MTA5MGZiNDYyZTE0MmY0MDI3NzEwODliZGNkNzcxMWMzYzRkOTg3ZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxYjM0NGU4YmE3ZWIwMmJkMjI3Mzg5ZjA4NzA1ZTkwNTkzZWQwMmEwZmQ3Y2QxNmU3NDg2OTYxNGQzNjFkODcifQ"
+        },
+        {
+          "resource": "repo://src/config.rs#L52-L64",
+          "version": "repo-lines-v1:sha256:492f043bdf53db745f7cb7f618bf76758143b272314c91a51365e33db974c772:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZTcwN2IwMTQyNmNiYzZjYjFlMzU1MDEyYTczYjhmZjk5MmNlY2Y5YjI0ZjFlYWE3NDM1ZTRhZmI1MGJiMDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0ZTMyOGNkNjQzNDgwZWU1NTU5M2Y5ZTM5M2Q5N2IyMWUyZTgyNzMxODEzYjk1ODVkMDFiNGVmNzQzNDE1NmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJlNjE5Y2QxN2I5NmI5YTVhODY2YmNkOGQzN2U0ZTk2MjQyZWMzZmNhYWVjZDM2MTg0ODU5MWEzYWQ5ZjQxZjEifQ"
+        },
+        {
+          "resource": "repo://src/config.rs#L540-L598",
+          "version": "repo-lines-v1:sha256:cd8bafaebbb513bc37132c1d82054f148d201044c319d8151fcb4ac75553871f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkN2VlNWU4MTk3MjBkNTZkYmNkMDYxNmJhMjkxY2ZiYmZmZTQwZTQxMmVlODUyNWI4NjQ3MzYxNDk2YjcxMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxNWQxNGUxMzQ5ODdkZDE4ZGNjZGQ2ZmNlMTM3NzFkMzMwM2Q3NjQwZDVlNzE5YTRmOTYwYzJmMGRhYjVmNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlNGNmYjU0OWQ5MmFiNGFmNTFlMmJhNTJlMTJmMmEwMjM2NTg0ZjAxZWJkMWQyZTcyNzY4Y2JhYzgyOGY1MTYifQ"
+        },
+        {
+          "resource": "repo://src/config.rs#L95-L390",
+          "version": "repo-lines-v1:sha256:7ea5d0ef5d7ae287657c341e8208abbfabe80fca3440d5f62257c804566e0b34:eyJzZWxlY3RlZExpbmVDb3VudCI6Mjk2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2OTZhYWM4YzM0YWVlNzBiMTYwOTNmNzQwYTYyZDAxMzgyZGEyYWI3MWRjZDY1ZjE2MzJiMDQ4MWFiYWY1ZjBjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhZDhhNjQ4NjBkMDhjOGU2NTA5NTgzOGM3ZTY4OTY5ZWIzMmE4YWY1MzYyYThmODRlNjk0MzNjYmQ0ZmI0MzA1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlMTY2NDkwODUyYmIwN2NhZTJiZjE0OTYxMDVkODhjOTJkMjFmOGVlMTY4YzhiMDQzYjdjMjEyNzY1Y2I4MmY4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_e76ef6015a804f98a14d2a647fb219e0",
+      "statement": "LC_MAP holds roughly 266 classification codes mapped to (Domain, Sub-description) pairs and is the sole source of the 18-domain vocabulary that Taxonomy.domain can take from LC evidence.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L95-L390",
+          "version": "repo-lines-v1:sha256:7ea5d0ef5d7ae287657c341e8208abbfabe80fca3440d5f62257c804566e0b34:eyJzZWxlY3RlZExpbmVDb3VudCI6Mjk2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2OTZhYWM4YzM0YWVlNzBiMTYwOTNmNzQwYTYyZDAxMzgyZGEyYWI3MWRjZDY1ZjE2MzJiMDQ4MWFiYWY1ZjBjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhZDhhNjQ4NjBkMDhjOGU2NTA5NTgzOGM3ZTY4OTY5ZWIzMmE4YWY1MzYyYThmODRlNjk0MzNjYmQ0ZmI0MzA1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlMTY2NDkwODUyYmIwN2NhZTJiZjE0OTYxMDVkODhjOTJkMjFmOGVlMTY4YzhiMDQzYjdjMjEyNzY1Y2I4MmY4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_de56883e105c4ce1a46aaaec3cd8ba12",
+      "statement": "BOOKSHELF_MAP is ordered but every matching regex applies: extract_taxonomy iterates the whole vector and inserts each match into a HashSet, so one shelf label can contribute several genres and no entry is shadowed.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L400-L459",
+          "version": "repo-lines-v1:sha256:b283526a277d6f3f4ac18f21e608b5ebc47619214d0fbd54865a6824458271b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3MGViMmIxOTdjZjNkZWNlMDAwZGRhZDJiNzMxYWY5ZDU3MTRlMTJkZjYzMmIzMGZiNTUxYjNkYmM5MDBjMWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2MjRmYjVmNzRkODJiODgwMWQ0MTFkYzBmZWQwYTZlYmMxNjZhNzg4MDA3NzBjMDdjYjQ3MzQzOTM2N2M1MTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzMjFlOTVhYmY3OGYzZTAyZjQ4ZmZjODFjMGI0ODg2N2FlMzlhZjBiZTljMDJhYzNmNmIwMzFjN2I4Njk1MmQifQ"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L221-L226",
+          "version": "repo-lines-v1:sha256:3873430854f9fe275d622162db86688e0e9953ed588acf86510980f8bfd776ac:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjI4NDQ3NmI5YTJmYTIzM2RkZWRiMDdkYWQwZjY3ODcxZDRiNDIwYzQ0MzE4MTc4NGJlZjc5NjNjNzBmNTJjYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWQwYmE1YWVlYzJiOTk3ZTFkNzk3YzY2MDE1MzIxZDZjMjMwZTZjNjFhNjcxZTg4OWUwOTFkYjlhN2MzOWUxMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDVhYTFkZWRmNDZkMjJjYWY0MWU5OThlNTA5ZjA2MzY0ZTNhOTUyNzcwYjY1NjViYzdjNDc3NDI3ODZjYmZmYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0e85d4c88c2a43d6942248b2897a0617",
+      "statement": "LCSH_FORM_GENRE_MAP holds 50 lowercase subject-heading keywords mapped to (Broad Domain, Narrow Genre) across only five domains: Bibliography & Library Science, General Works, History, Language & Literature, and Social sciences.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L465-L535",
+          "version": "repo-lines-v1:sha256:50bb5b6e071424d883b1f2e1a374fd043121bcc08bb4e3fd7b167e8f08f13985:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0MDZlNmU3MjMzNzkxMzAxZGY1MWRlOWNiMWE5YTRlOTFlZDMwMzkxM2JjZWNmOWM5MTc2NGIxM2RkZTA5YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4OWQwM2Q3YzBhZTYwMWRmMzlmYjA4MTA5MGZiNDYyZTE0MmY0MDI3NzEwODliZGNkNzcxMWMzYzRkOTg3ZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxYjM0NGU4YmE3ZWIwMmJkMjI3Mzg5ZjA4NzA1ZTkwNTkzZWQwMmEwZmQ3Y2QxNmU3NDg2OTYxNGQzNjFkODcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_45d3ae7faaf04293991f5264354c7744",
+      "statement": "GENRE_TO_DOMAIN_MAP maps 55 normalized genre labels back to a broad domain, letting a bookshelf-inferred genre still contribute a domain when no LC code was present.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L540-L598",
+          "version": "repo-lines-v1:sha256:cd8bafaebbb513bc37132c1d82054f148d201044c319d8151fcb4ac75553871f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkN2VlNWU4MTk3MjBkNTZkYmNkMDYxNmJhMjkxY2ZiYmZmZTQwZTQxMmVlODUyNWI4NjQ3MzYxNDk2YjcxMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxNWQxNGUxMzQ5ODdkZDE4ZGNjZGQ2ZmNlMTM3NzFkMzMwM2Q3NjQwZDVlNzE5YTRmOTYwYzJmMGRhYjVmNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlNGNmYjU0OWQ5MmFiNGFmNTFlMmJhNTJlMTJmMmEwMjM2NTg0ZjAxZWJkMWQyZTcyNzY4Y2JhYzgyOGY1MTYifQ"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L228-L233",
+          "version": "repo-lines-v1:sha256:c3c3baec0ab3e0968867a9e19c19baea181a88efca1c508c2a3f2965b347802f:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDRlZTg5NmRiYTc4NWNhMjZkMzY3ZjdlZWI3ZjEyN2YwZmZhMmU4OGEwZTc1NDdkNjczMzlmZDM0MTFkN2U1MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTk5YmRlZmVlYWNhNjM0MGUwMjkwZGM4NmU4ODljODlkNWUxODlhYTViYTQ0YjU4NWIzYjcwNzM0ZjRhNjJkOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTQ5NTYxNGE0NzA3ZjQwNTRhNWRmNjVkYjQwMDRkMTNhZDQ4YmJkZTYxMGJjNGU2MmRmMjE1NGQ3MjRjZjVlNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7104fe0564246e2894ef7f234694380",
+      "statement": "RE_MARC_SUBFIELD uses the pattern \\$[a-zA-Z]\\b, whose trailing word boundary is what preserves monetary amounts like $100 and word fragments like $billions during title cleaning.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L604-L629",
+          "version": "repo-lines-v1:sha256:2f9f0c725618db2d1428a137ee7fb8de3e65c2a4a63b6195f376a075063fefa1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1MjEzZDdmYTk3MmRjYjc1NDc1OGM0ZTZiYWI4YmU4NmYzZmFjYTA4N2RjZTljM2JkZGNmNmFjYzk0ZTczMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzZDg3MTY1N2JlNWNjODkxNjkxYTMyMGU0Y2M3OGFkYzA0ZDNkOGU5ZWU4NWMyYTVlNmI4ZWVkNTEzNzA0NzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU4MjVhMmVjN2RmMGEzYTUwNTg5OTZlODFlZTFjY2JjYTI0M2RiMzJmMTJiOWRhYmViMzQzYTVjMzA0MmYxMjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5YTMwZjM5NGM3MGUxOTA4NjAwZWM2Y2Q4MDVhMDkwMGJhMmNiZDk0ZWMzNzRkNDY3ZjM0M2U5YmExMDI5YzcifQ"
+        },
+        {
+          "resource": "repo://src/main.rs#L88-L101",
+          "version": "repo-lines-v1:sha256:d1e57f68fe6f061d3824385a6a525179e28dfb89717172b281e3a9f6bcab1ab3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhMjlkZTQ4NDQ5OTNmNDRhNTE0MWJmNjQ5ZmU4N2U4MDgxNTVlMzI5ZmZkOTIwZTBjOTgzOTdmMDU2NmJhYjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmYzExZWNhOGE1NjViNzJhNTE2ZmJiZTA0NzE0NDA0NGU0OTdiZjk0YTRhNTkyOTA2M2I4NzQ3MmM5ODBiMzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyZDgyOGEwMzdhYzFjODE1MzViMWQ1NTAwODMyMzIzYmZiYjg2NmEzYTNmODdlN2E2OGMxM2EyYmFlNTZmZmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2ZTdkYmVlZGNlZTcwN2E0ZDFlNmRkYjhmZGJhMDc1ZDBiZTk2NjBmMGUwZGQyZWVlOGI3MmY2MWFkNTJmZjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8749c50bb18d4ae7a5e3d865cbee198f",
+      "statement": "RE_WIKIPEDIA_URL tolerates an optional scheme and any number of wikipedia.org subdomains but requires a /wiki/ path, so feed URLs in several forms are recognized while bare hosts and non-article paths are excluded.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L623-L629",
+          "version": "repo-lines-v1:sha256:d64aa488d632b0fd4f54e91000f0c11880ab106c1f58aa191a13924c1095e9a2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWQ1NmI3NWExYzc5MDNiNGFmNjhlNThmNzEwNzJjYjE1ZjZlMDMwNWVkMDBmNDlhZTRhNTM0NjcwOTYwNGNkYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNkODcxNjU3YmU1Y2M4OTE2OTFhMzIwZTRjYzc4YWRjMDRkM2Q4ZTllZTg1YzJhNWU2YjhlZWQ1MTM3MDQ3NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODJlNTMzMDRiOWI2OWIzM2JkMzRmMmMxMWU0ODI2OTJjMjUwOTA4YWRjNzdlZTJhMTZlNjkxOTE1OGFlNTRhYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjlhMzBmMzk0YzcwZTE5MDg2MDBlYzZjZDgwNWEwOTAwYmEyY2JkOTRlYzM3NGQ0NjdmMzQzZTliYTEwMjljNyJ9"
+        },
+        {
+          "resource": "repo://src/utils.rs#L389-L399",
+          "version": "repo-lines-v1:sha256:cd470c03db915b442637c40d8526e7f16f66aa99f7c75bf65a16ea306ec2ce00:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyYjVlZGY1OTQ5Y2ZlYTY3ODIyY2Y2OTExMzIzNjNkNjhkNmYxZTE2OWY1ZTBkNGY3YzE0ZTVmYTFlNmQ0ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyZWZjYzE3OTQwOTgyNTRmMjEzMjA0NTQwZjc4YzcyNmEwYWZkZmM0ZGMzMTBlMzI0YmEyNzY2M2Y2N2JlZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmODJjNjRiNGMzZTA3OWZhNDUwMmI3OTI1Yjk2MmNjMzRjNWNiMmQ5ODYyNDZjYzU3OTlhY2FlNTU1ZmYzZWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f0fb6c55b133431ea4a972ab75b0af0a",
+      "statement": "The Wikipedia User-Agent is assembled at compile time with concat! and env! CARGO_PKG_VERSION so the identity sent to the Wikimedia API always tracks the crate version.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L67-L85",
+          "version": "repo-lines-v1:sha256:bb87c75c511fc315d6ef4b1479e0d2c54767f658c22dc24e843ca48bc780ae1a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZWRlYzExNDkzMzlmMGU1ZmRmNTkxYjQ3ZWIyYWYyYzU0MTUzNDc2MDg1N2ZiZDdmMzkwNTAwMjE4MTBjZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5OTY3ZWMxZWQzODM2ZjhlYjE3YWZmMTcyYjViZmVmN2RlNjA0ODVhNDM5YzZjYTExYzU5MWUxNzU1NzM5YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI5MDE0NDRkMjhiZmQ1MTZmZWMxNGNkZDg4ZTVkNzliMDBmOGE1NWQxOWQ0OTZlMTE2ZDA4ZDJhMjMxZWExYTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4MGYzMjkyZWIyOWUxMzA1ODdhZmMzNWYzMWM0YTliYWVjMGEzM2ZjZDNhOGJkYjdmNGQ0OTIzM2QzMWY0ZjEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

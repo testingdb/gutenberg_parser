@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f7b1d2d0855bd320aefc9df076ab3c900c2f78c66dcdf276376cf3da01c4c0fd",
+  "claims": [
+    {
+      "id": "claim_4df50d25088543e88e3dec55d0c748cc",
+      "statement": "--download streams rdf-files.tar.bz2 into a temporary file created in the current working directory with two-second progress logging, deletes it when the run ends, and exits with status 1 on any download failure.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L187-L258",
+          "version": "repo-lines-v1:sha256:059e52910f0f24f578f69b3bac1a200843e8328f220e39be758cb073984c5654:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwMGFkOGY4YzRkNzg4NWE4NjMzNWE1M2UwZWFhZGY1ZDM0M2QyNTQzYmE1ZjlhOGFkMDk3ZjEwN2M4OTExZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMxN2ZiMDc3MWJmYzUyMTkxNDc1OWYzNGZiMGViYmVmOGMwZmEyNmRlYTNjYWY4YjU5NWNiYzc3ZTQzZWE4ZmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyMzc4ZmYzZGIyMWE4Y2Q4ZjAwYzU1ZGYxZDJkOTg5Zjg0YmRjMGZjM2U2MmZiMjUzMTI2ZjJhZjE4ZDc2OGIifQ"
+        },
+        {
+          "resource": "repo://src/cli.rs#L282-L291",
+          "version": "repo-lines-v1:sha256:0657692aff5a6109fe3e91c4061b3d3fd1e7f5884807f652c31583b738927387:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiZjRjNzI5M2U1YTlhYjE2OGE1MTBhMDQzNTc1NTgwMzk5ODJkOGRkNmM4M2Q4ZGYzNDU2YTc5ZDBlMjBjYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOWUxMjU0NjQyNTU3NmQzZGVhZThjOWI5ZGJmMTI4ZDVkNmRkYWY1ZDdmZTg1NzkzNDkyN2RlZmZhM2I5ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwYzM5Y2QzOTJmMjM1NTZhMDM2MzNiZDQyNjQxNDg2MDcyN2I3OGEwZjlmNzdjMWNiNzVmM2JlMDFkYTVjOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkNDVmYTVmZDhmYmUwYmQ4ZDljYzM4ZGViOTQ0OTEzOTQ4ZThmYjJhYmE2MmY1N2QwNWU0MzE0Nzc4MzNkMDIifQ"
+        },
+        {
+          "resource": "repo://src/cli.rs#L412-L414",
+          "version": "repo-lines-v1:sha256:18603a32e317bd86d7fd1d75154374aee45d195f7060821ef2b007cd13fbc599:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmY4ZjBhYjk4ZGVhYWIxY2FiNTQyMjM1ZDE4OTM1NzViOTYwY2EyYjMxOTQ2OTFmMTMyYWViOWY0NWZmYjFjZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODdlNjBlY2U4MzA0Yjg4OWI4YTA3YWM0Y2ZjMWE2N2I5MzFlZGMxN2Y0YzQ1ZDZiOTJiYWE1NjRkMGI0NGI1NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTUyMTYwNGIzNWZjNDBhZjAwY2JhNGVlYTJmZDVlMmMzYWYxODYzYjM5MTE4NWQ3YmY0YmIwOWU3MmQwYzhiMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7dddcd561365491da1ef9311adabc991",
+      "statement": "clap enforces that archive_path and --download are mutually exclusive and exactly one is required, so a missing archive is rejected as a usage error before any work starts.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L49-L56",
+          "version": "repo-lines-v1:sha256:1a036568a18e77e8d1c6c0a4817d6c9fb3053322aed77ab18317a40f3f524865:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTYyMjI4OTBhYjFmMGNhNDE3ZjIyODhiOTcwMTQyOGIxOGUwMzUxMDVjOTZiMDgyZDIzYTQzYmY4YWMxNDEyOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWY1MTc4YmIxOGFmZjczZTMxY2FmNmU0MTNhOTFiZTRhYTNhMWRhMDJhYjRkMzE3YWY4MjViMmQ4MDIwYTg3MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjI3MjEzNjA0YjVlZmJlMjFjNGZhZjA4N2RhMmM3MTUyMmRjYjgyNGM5NDJjOTY5YjE3NDIwYzE1NGVlMDMzNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTgyYWYzYmJmYTk3MDA0ZDRmNDgzYzNkNjMwZjJmMDI2ODc1MjE5NDQ1ZDQyMTM4YzBkOTdkNjc2YjgxZTg3YyJ9"
+        },
+        {
+          "resource": "repo://src/cli.rs#L96-L101",
+          "version": "repo-lines-v1:sha256:3caab73029c5d5ad973f66f6d14632e21bfc36b58f85c8c5f6f2948dc755b9ee:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWMzMzhiOTViYWU3YjFhNzVjNjFiYTJiYzhkZmFmM2ZjZDJkMTdjOTUwYThlOGJkYjhlNDNjYjY2OGJhMThmNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTVlMGIzMWZiMWM3MDk4OTAyNzEwMTEzNzc5YjM0MTJiMjY2YjA4OTBmYjA2YTViYjg3MDI5ZWE3NzI4MDlkNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2U0OGQ1OTk5Y2Q1YmQzNmExMTlmZmU5MTlmNjkxNTI1YTJhNGQ5OWFiZDBhNjhjOGVhMzI2YTAyNTcxY2FhZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjY5YjljZTgzNzQ1NmZjNWY0MjNhNjkzYmFlZDgzODU1MTVmODVmMzMyNDVkMWE2ZGM2NWFkNzQwNzQ0MzlkZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7be39a2991b2449eb2de31a533859664",
+      "statement": "Public-domain-only filtering is the default; --include-licensed must be passed to retain copyrighted or otherwise licensed records, which changes the represented population.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L211-L220",
+          "version": "repo-lines-v1:sha256:73be3b059ffeb684a065355db6c3d2d7d40b05354db7775f743dad36cbf0092d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlODEwM2RlOTBjM2FiMTMzNGNjNTM1NzFhNWM2MTlkNGQ5M2FlNjg1YzM1MDNjMzI4YmYwZjA4OTBiMzA3ZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhNDQ0MzQ1MTJlNDY5OGI4MmFmOTRhMTVlODA3YWIxYzhlY2I3ODZlOTMyMDg2OGM5ZTMyYjk0NzAxMjU3MTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwM2M1YTM1YWI4NjdiMzkwZWRmYTQ3NTBjMGE5YzI3NmYwNmUxNzk1YjQ3MjM1MjUxMDkxZWVkYTQ2ZjIzN2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_364563e530b94d779f952a2346c8943e",
+      "statement": "Without --chunk-size the entire matched set is buffered and written once at the end; with it, each chunk is flushed at the threshold, bounding peak memory at the cost of multiple output files.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L360-L404",
+          "version": "repo-lines-v1:sha256:6b6d5de53d25764edff00e61ca3e1d037163872ef5efd7d0373ac7c0fdf4d52a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwNTJiNGY4NzM5NTBiZTZkOGRhY2ExZGU2OTdkM2QwMGI0YjM0YWJhNGYzMjE0NTgzOTZmNmY0MTg4YmIzZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjMTQwZTQ3NzdhMzM5MzExZTM2NTJiMGE0YWYyMTI5ZTliNWZjM2U1YjBkOGNjNTNjNmMwNjI4NzE5ZGYxYjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyMzIzOTI2NjZmOWVlMTdlMjRjYTY2YjQwYWI4MzM5ZTBmOWM4ZTBlMjc4ZmYwMGE5MGNhZWVlYTBiYTdlMWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8b0297edb55049a8ac4ef5e094047404",
+      "statement": "--max-results truncates rather than samples: the consumer loop breaks once the count is reached, so surviving records depend on worker scheduling order even though each written chunk is sorted by numeric ebook id.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L115-L117",
+          "version": "repo-lines-v1:sha256:d3bcea3e8625abe0622a831789aac180e707c2c75656bd12e5a7ffec537adb67:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDE0NWRkYTEwZDAwYzlmMjU0OTZhNjdiOTg1OGVjNzRkOGZlY2IwNGVhMGFmOGNiMzZlYWJjNjk1MWY5ZGIzZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTBhYjNhZWRiMWY2Y2Y2YzliMTMxMGYwMmQ0NGFiZjYwOWFlNjMwNjMyYjYzNjJmYTg2ZDk5MTAwOTNhODcwZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTg5ZmY2MGNhNDhhNzg2NWM0NmRmNzk3NGE1ZmJkMGJjY2Q3YzU3NTAwZGYxNzVhM2EyY2JkOGJlY2Q0YjU4YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjJjYWQ4ZjdmNTJkMzNhZWViZjZkNDNlOTQ5OGM3MWE1NGI2NDVkYzlhYTg4NTYyNDMxZDQxODY0MjZjMzM4MiJ9"
+        },
+        {
+          "resource": "repo://src/cli.rs#L383-L388",
+          "version": "repo-lines-v1:sha256:59630153a60ca901bbf0aa7a7a8f694e1daee60331337c6673938a4f017ba8c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTAwMzEwMzJlMWRiYTFiOGJiYjE1YWFmM2UyMmJjMWQ5NjNjOGY2MzBiNDRhYTU0ZmYyM2NjNDNhM2MxZDZkZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGE5Zjg2ZDI4ZTc4NGY5ZmQzMWZiNzJkMTVmNjBjYmNlYWFmZGQ2NjljYmQ1YjZkYTc4ODhhMDIzMzIxZWJiOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2NkYjIwNjE5OTBmMjdmNzQzMmUyNmVmMWFkZDA3Nzg1ODZmNzQ3ODc5MDJkNDIyOWZkNmFlZTYyMGVkMTlhYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2c96a3e1d7d34784af25dcd2b9780dd3",
+      "statement": "--bridge changes only serialization: each record is converted through BridgeEbook::from at write time and ebook_id is re-parsed as an integer that falls back to 0.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L123-L140",
+          "version": "repo-lines-v1:sha256:38ea23409ddaa832818cb5bbc8bd50c0af2c37ec65c43772a02c61a94d04ae57:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0OTliOWM5M2QxNmNlODRiY2IzODRkMzc4OGQ1NjUxMjVhOWQzNWVlYjMyOWU3ZmM3ZDFlMGY1YTRiMmJlZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOWUxMjU0NjQyNTU3NmQzZGVhZThjOWI5ZGJmMTI4ZDVkNmRkYWY1ZDdmZTg1NzkzNDkyN2RlZmZhM2I5ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI1OTNhZTcxNGU3OTAyZDMzMGNiZjg2Zjc3M2U1NzNkZWI2NjkwN2FmYzgwYjllN2ZiNmUwOTZhNjc2OWMwMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkOWNkMzFlNWJkZWVkZjI5Mzk5NzU5MGQ1Mjk3ZmY1MGIwZjY3ODNhZjQ3Y2UxMDFkNzZjNDQyYzYwNWVmNjYifQ"
+        },
+        {
+          "resource": "repo://src/models.rs#L301-L319",
+          "version": "repo-lines-v1:sha256:0886bcb440af1e4148263641c6ab9f79b173cd93d40453a6f57bc55ec0b8ea19:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2OTgyZDg1NWJjMTU5OGZlZWZhNjQ3Y2FkNWFiZjk5YjdkYjdhZDY5YmM0OWZkMDRjZTZkZDlmOTJkMjk5ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhMmJmNDgwMjU1M2ZmYmU2ZTNjZDlhOTgxYTdkY2Y0MjM2ODE1NzZlNTNlNzY1MDBjMTgxN2U4MmZlZDMzMGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a7e88ef69bc741ae9e6e7b887fa853f6",
+      "statement": "The pipeline is fail-soft per record but fail-fast for the run: individual entries are dropped by the worker, while an unreadable archive or a failed chunk write panics the process via expect.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L317-L317",
+          "version": "repo-lines-v1:sha256:3e54c5baf06b8dd4958a745fd7a824eea95fc5820868991adecf126cff200530:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2U1NGM1YmFmMDZiOGRkNDk1OGE3NDVmZDdhODI0ZWVhOTVmYzU4MjA4Njg5OTFhZGVjZjEyNmNmZjIwMDUzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2U1NGM1YmFmMDZiOGRkNDk1OGE3NDVmZDdhODI0ZWVhOTVmYzU4MjA4Njg5OTFhZGVjZjEyNmNmZjIwMDUzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTZjZjViMjNiNzcwNjE2MzUyZDQ3MTkyNGEzOWFkODQ1NmIzYjY1YWRmOWM4NjhiMjBkNGMzNmNjNTcwNjBmOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzUyMjhiYzRmYjE3M2NhNjcyZGJlYTllYTc2MGFiOGE0OGJhZGJiNzU3NjlhZTkxOTVjZDA3YzI1YWRkNTU5ZiJ9"
+        },
+        {
+          "resource": "repo://src/cli.rs#L371-L371",
+          "version": "repo-lines-v1:sha256:19c6657a69681091bfa4e7065348311296fd375e9c3c053cf1146217cffe130b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTljNjY1N2E2OTY4MTA5MWJmYTRlNzA2NTM0ODMxMTI5NmZkMzc1ZTljM2MwNTNjZjExNDYyMTdjZmZlMTMwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTljNjY1N2E2OTY4MTA5MWJmYTRlNzA2NTM0ODMxMTI5NmZkMzc1ZTljM2MwNTNjZjExNDYyMTdjZmZlMTMwYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGM4YjhjOTA2N2NjMzRjOTE4N2Y3ZTk5MDBiNjM0MzQxMjYwMzU1OTMzM2VjMjA1MjcyNzc0ZGFiM2FlZmY0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2RkMTc0YjlmMzA4OTU4NDc0YmQxMGVhMDMwNGNmYWEyZmMwMzUyMmRmNTdiMzBjOGM1ZDczMjNiN2UzMzM3NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

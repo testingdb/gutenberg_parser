@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:8dfdf26fbf7826027ab0e71ad7a00e12ff96afd45b3750c5173027fd953ba509",
+  "claims": [
+    {
+      "id": "claim_d3f4c49e4385403d9060a214325b9129",
+      "statement": "write_chunk sorts each batch by ebook_id parsed as u64 with u64::MAX fallback, so numeric IDs sort numerically and non-numeric IDs group at the end in an order that is not deterministic because records arrive from concurrent workers.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L115-L117",
+          "version": "repo-lines-v1:sha256:d3bcea3e8625abe0622a831789aac180e707c2c75656bd12e5a7ffec537adb67:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDE0NWRkYTEwZDAwYzlmMjU0OTZhNjdiOTg1OGVjNzRkOGZlY2IwNGVhMGFmOGNiMzZlYWJjNjk1MWY5ZGIzZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTBhYjNhZWRiMWY2Y2Y2YzliMTMxMGYwMmQ0NGFiZjYwOWFlNjMwNjMyYjYzNjJmYTg2ZDk5MTAwOTNhODcwZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTg5ZmY2MGNhNDhhNzg2NWM0NmRmNzk3NGE1ZmJkMGJjY2Q3YzU3NTAwZGYxNzVhM2EyY2JkOGJlY2Q0YjU4YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjJjYWQ4ZjdmNTJkMzNhZWViZjZkNDNlOTQ5OGM3MWE1NGI2NDVkYzlhYTg4NTYyNDMxZDQxODY0MjZjMzM4MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_da943a7fa23f4755b78e3c5a7505017a",
+      "statement": "The JSON array framing is hand-written with a separator emitted before each trailing newline so output stays valid without a trailing comma, and the framing is identical in parser and bridge mode.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L123-L140",
+          "version": "repo-lines-v1:sha256:38ea23409ddaa832818cb5bbc8bd50c0af2c37ec65c43772a02c61a94d04ae57:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0OTliOWM5M2QxNmNlODRiY2IzODRkMzc4OGQ1NjUxMjVhOWQzNWVlYjMyOWU3ZmM3ZDFlMGY1YTRiMmJlZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOWUxMjU0NjQyNTU3NmQzZGVhZThjOWI5ZGJmMTI4ZDVkNmRkYWY1ZDdmZTg1NzkzNDkyN2RlZmZhM2I5ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI1OTNhZTcxNGU3OTAyZDMzMGNiZjg2Zjc3M2U1NzNkZWI2NjkwN2FmYzgwYjllN2ZiNmUwOTZhNjc2OWMwMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkOWNkMzFlNWJkZWVkZjI5Mzk5NzU5MGQ1Mjk3ZmY1MGIwZjY3ODNhZjQ3Y2UxMDFkNzZjNDQyYzYwNWVmNjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5edf05e860b54dd4acc7cc40933889dc",
+      "statement": "Bridge mode substitutes the serialized type per record at write time via BridgeEbook::from, so the flag affects only field renaming and no parsing decision.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L126-L131",
+          "version": "repo-lines-v1:sha256:a93b7770fba3b14fb0d07e1a588aaffb4b3be5f0504181dbbb05bdab1a2b94a4:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWJlYWRmODZjYmM4NTI2YjgxZDVhOThkMGM4NDlmZWMxYjdhODc4ZDI5ZTI3MjU4NDRkOWFmZTI0MTUzODUyOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTUyMmM0MmNkMTljNmQwM2Q4MDhjNDUyNzIwNTUyODI1YjdlYTFjNWI0OTFiMjE4NTExY2FjNzQxNWNmOWQ5YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWQ0MDUxODYzNGRhN2RjY2U1N2ZiMzI0YzA2MWRhY2Q4ZmNlNmRiMDg1YTAwODZhNzIzOGFlODQxYjE1ZTNjMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjk0NjBhYzcyMmI4YjViYzNmMzM2ZTgyZWIzY2FkMjlkN2UyMDY2YTAzYmMyNmUyODdiNjRkMjJmZTc0YmYyNyJ9"
+        },
+        {
+          "resource": "repo://src/models.rs#L301-L319",
+          "version": "repo-lines-v1:sha256:0886bcb440af1e4148263641c6ab9f79b173cd93d40453a6f57bc55ec0b8ea19:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2OTgyZDg1NWJjMTU5OGZlZWZhNjQ3Y2FkNWFiZjk5YjdkYjdhZDY5YmM0OWZkMDRjZTZkZDlmOTJkMjk5ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhMmJmNDgwMjU1M2ZmYmU2ZTNjZDlhOTgxYTdkY2Y0MjM2ODE1NzZlNTNlNzY1MDBjMTgxN2U4MmZlZDMzMGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b85f6f146d6a4e7c877a554766c9c0c6",
+      "statement": "Gzip output is selected solely by the output path ending in .gz, which routes the array through a GzEncoder instead of a BufWriter.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L142-L149",
+          "version": "repo-lines-v1:sha256:8a939b7c0d2ff79ae580ac174ecf08ef8a4dfb024a510253b3de990a03f154b5:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmRlZjA4YTkwNWJkY2JhZTI2MDgzZjk0YWZlNTVjNjE5ZGYyMTBkNTU4YmJhYWJhMjk4MGU4MGZiYmY4ZDc3OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWM2OTg5ZGQ4YTk1OWViNmUwZTc4ZTA4ZjkyNTQ4YTg3MGYyNTcxZDA2ZDNlMzRhNmRhZDVlNzU4MDI1NDYwYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzVmNmY0NjZlNTljZmMzMDcwM2M0NWY3MmFmNjVkZTU0YWMzNjNkMzU0Y2MxYTMzMzAzNTBhY2Q0NTI0MzRjNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0a4b6162d5814e04a5485fd4c45de320",
+      "statement": "get_chunk_path special-cases the .json.gz suffix before falling back to inserting the chunk index before the extension while preserving the parent directory, and chunk numbering starts at 1.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L157-L175",
+          "version": "repo-lines-v1:sha256:b66380bcf35f11dce8ad2f5e0829fede8d138aaa3a954d59570aadd3ad3899d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhMWQ3Njg3NmE3MDg5NzcxMTg2NTNlZmNmMWVlNjM2MDZjNWJhNjFmYmIxOGFhYTQyOTljNTFiNjVmNjgzZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2ZjNhY2QyNmJkNGY2NDQyOTNmOTgxNDA0YWRlY2VlYWE3NzJiNDJlNjcyMWU5M2VmMjcxMTExNjg3ODQ5Y2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkMjE1NzU0MDYzZjYzY2U5ZjMyNzJlZDhiYjU0M2QwM2RmMTk5ZmNjMzk0NTczNjVlZGEzMzk3NGRmNzE5ZjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_04970f22e2524a8694d8e8723a378c1d",
+      "statement": "With --chunk-size a non-multiple total yields a short trailing chunk, and because the size test precedes the max_results test a record that fills the final chunk leaves an empty buffer so no empty file is written; without chunking the whole set is written once to the output path.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L360-L404",
+          "version": "repo-lines-v1:sha256:6b6d5de53d25764edff00e61ca3e1d037163872ef5efd7d0373ac7c0fdf4d52a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwNTJiNGY4NzM5NTBiZTZkOGRhY2ExZGU2OTdkM2QwMGI0YjM0YWJhNGYzMjE0NTgzOTZmNmY0MTg4YmIzZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjMTQwZTQ3NzdhMzM5MzExZTM2NTJiMGE0YWYyMTI5ZTliNWZjM2U1YjBkOGNjNTNjNmMwNjI4NzE5ZGYxYjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyMzIzOTI2NjZmOWVlMTdlMjRjYTY2YjQwYWI4MzM5ZTBmOWM4ZTBlMjc4ZmYwMGE5MGNhZWVlYTBiYTdlMWUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:8d6cbc09ec50b6be5d4ef58088b90b47368d9565214f160fe1a9f23dfef32e6a",
+  "claims": [
+    {
+      "id": "claim_5cae61713dbe48138ac244570b4a8831",
+      "statement": "JSON presence follows three classes: Vec fields marked serde default are always serialized as empty arrays, Option fields marked skip_serializing_if are omitted entirely when None, and required fields such as title, language, formats, taxonomy.domain, downloads, ebook_id, cover_image, and license are always present and non-null.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L112-L117",
+          "version": "repo-lines-v1:sha256:f78e21e9c74408123ecddb104ad7e05a0123d40e42419e2d432ffa9d535f1176:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzljMmQyZmZkNjM2NzZiZTc4NzY3MGU3MzJhZGEyZjQ3YTQ1ZTgwNWNhN2E3ZjMwOTJlMWI1MzdmYzJhZTE4MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjRiYmQzOWVlM2ExODVjYzAyYmVlYzFjOGIxOTE5MjYwMWIwYzFiNzQ0NjQ2YzI3YTAwOTQ4ODlmZGRjN2Q5MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGU5OTZmOTQ0YjI4ODVjNTg5MmM1OWZlMTQ5ZTc1MWZhZDAyZjM1NzNkMTM3NTYzNGFkYzI5YmM5MjAzZTJiZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmEyYmY0ODAyNTUzZmZiZTZlM2NkOWE5ODFhN2RjZjQyMzY4MTU3NmU1M2U3NjUwMGMxODE3ZTgyZmVkMzMwZSJ9"
+        },
+        {
+          "resource": "repo://src/models.rs#L44-L51",
+          "version": "repo-lines-v1:sha256:5ca5f318f072e3b42bd96b372d9165e34e2ab12f8df18602b2a06eea54843792:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzk1M2QzNjRhMGM4NzEyNjVkOWQ3NDIzZWVlYzdkNzAzYTFjMzNlMGJjOThhNzhmOGU5ZWVmZjQ5OWI5ZmJiMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjZmZDE2OTJiODA4NDgwMTlhMTRlZTgyZmNiYzIwNDIxN2NhMzlkNzlhODM5YjFmNDFkM2M3Zjc0MWNmM2NmOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTE4MTc2YTBlMDcwOTNlZjVhMDMxMzA1MzgxOGM1MzExNGU2ZmFjNmI1ZjY4NjU1YmQzYzM4ZTU0ODk1NmFmOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2I2YjQ3MDVjNzc0ZmE2ZTIxYzIwZjVkYWM4Y2QzNGRkODE2YjFkNDYxZGM0ZjAyNTRhODc5MWZiZDllOWJlZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_df01f701d4354542ba81760fa7d79e15",
+      "statement": "Agent.agent_type and Format.mime_type both serialize as the JSON key type in parser mode, but bridge mode reverses this for formats (mime_type) while agents use role.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L183-L186",
+          "version": "repo-lines-v1:sha256:599d9be3326b875208f51b7b638e1b462f421a6ecc76bb522e4bd6b5e1396428:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGQzZDg3M2RmZmE4NzcxZTNmNDI3ZmE5ZDNhNjk5MTQ1NDZkNjYxMWI1YjIzMDc2OGE1OGM0NTg2YzE1YmYzNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDhkZGY3ZjA5YjlkMGNmOTQ1MjBlZDJiYTBkNTgyODI5MzAwYzczMzk3ZmVkZTVmZmJiMzliOGUzN2IwNzY2OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmI5ZTYyM2M2NTliMTE4NDM0MzkwYTlmZjg0MzQ1MmE1NzllMGZlNzk4ZTM1ZDQ5NDA4MGQ0YjY4MjUxNzYyYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2EzOGI5OWYyOWUxMjgyZjcwN2VhNTNjNmY4NjcxODY3YWFiNWNiMTJiZjUyNmU0ZjZjZjY5ZDM2YjdlZmZhMSJ9"
+        },
+        {
+          "resource": "repo://src/models.rs#L216-L218",
+          "version": "repo-lines-v1:sha256:8f640b6087ff75aec32abeb7af1419d3b11a9f7ce14f7b842c8bf105abab4570:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGZmMzkzOTk3ODRlNWVkYTgwOWU4NGE4YmY1Njc5NzIwMjdjM2Q3NDhjM2E2YTI0NTY3YWJmZTEwYjRmODNmOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGQwYTc2ZDgyMTJjNzUwMDRmY2M4ZTkwY2U2Y2EyMDA2MWU2OWJhZmQwM2NkYWJiODNjNjMyMTY4YzY0NTQ3YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzUwNDMwNmZjODk0YjdlMWEzMTE4Y2JjMzNmNzgxNTIyZGZlODBiMmUwMjcyNDczYjhjN2Q3NWNhN2M0MTIzYSJ9"
+        },
+        {
+          "resource": "repo://src/models.rs#L33-L34",
+          "version": "repo-lines-v1:sha256:168ff5744091f0372ccc83f52f5745a773120aa76214af851753f2b55df5cccb:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzZkMDAzY2ZjMmZiYTVlYTJjNzVlMjJhYTFjYTBlMGQwMDNhNzkxM2Y2YjhlMTY1ZGRmZTdiZmE4OTc5MmVmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBjY2U4ODBjNThmZjI5NmJkMTg1MzdiMTM3YzNjNzFlOWQ4Y2UyNWNjZDIxMGMyYzUwY2E2ZGYyNzcyMzRkYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWYwMzMxMzRjYTNmODZlN2U1YTQ1YmVkZmE0NDZlOGFkYzk1NDU1YzNhZmU1YmY4YzIwYmUyZDY2Yzk4N2JiYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzg0OWE0ZGUwMjdkNDIwZTFkOThhNWU1ODE2OWFjMTcyZDg0ZTNlODkxMDVkY2U3OTc0OTY4MmNjNjc0MTg1ZSJ9"
+        },
+        {
+          "resource": "repo://src/models.rs#L77-L78",
+          "version": "repo-lines-v1:sha256:9ab4cdd4e79ccd284cf15349132a6020314422c16d8d00b8aafb73c858a0580d:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTkxZWY0ZWZlZDhmOWUwNDBjODVjNzM2YzEwMTQ5MTRiMTAwMDBkZjYwOWEyODkxNjI0MjUxYjYzYzAxZmUxNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmUyZGQ1MDY3ZTk1ZWE3OWQ0NzQ0ZjQwNmNmYzU3NTEwZjg2OGI1YjY4NGNhYWE4ODQxZDcxYWE0ODVkMTBlZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDRlNGUwODgzMTJjOWVjNGU1NmQzODA4NzcxYjc5N2Y1YjU1NDJjNzAyYmRlOTgzZTE3MDk1ZGIzNTYwZTY3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWYzZTg1NjllODk3ODIxMTZhNDRmNzA5ODI0YTA2NWI1MWFhNDc3NjAyZGJmZjIzMTM0NTBlZWM4ZmM1NGJjMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_881e474baad8495fb8d5bf3825d53b05",
+      "statement": "BridgeEbook::from is the only lossy conversion in the codebase: ebook_id is re-parsed into the numeric pg_id field and silently becomes 0 when parsing fails.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L301-L319",
+          "version": "repo-lines-v1:sha256:0886bcb440af1e4148263641c6ab9f79b173cd93d40453a6f57bc55ec0b8ea19:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2OTgyZDg1NWJjMTU5OGZlZWZhNjQ3Y2FkNWFiZjk5YjdkYjdhZDY5YmM0OWZkMDRjZTZkZDlmOTJkMjk5ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhMmJmNDgwMjU1M2ZmYmU2ZTNjZDlhOTgxYTdkY2Y0MjM2ODE1NzZlNTNlNzY1MDBjMTgxN2U4MmZlZDMzMGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_05ed76e45b0d418da3516e58a3d878d6",
+      "statement": "Bridge mode renames language to lang_code, downloads to pg_download_count, cover_image to md_cover_image_url, license to license_statement, agent webpages to external_urls, and agent type to role, while passing taxonomy through unchanged.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L301-L319",
+          "version": "repo-lines-v1:sha256:0886bcb440af1e4148263641c6ab9f79b173cd93d40453a6f57bc55ec0b8ea19:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2OTgyZDg1NWJjMTU5OGZlZWZhNjQ3Y2FkNWFiZjk5YjdkYjdhZDY5YmM0OWZkMDRjZTZkZDlmOTJkMjk5ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhMmJmNDgwMjU1M2ZmYmU2ZTNjZDlhOTgxYTdkY2Y0MjM2ODE1NzZlNTNlNzY1MDBjMTgxN2U4MmZlZDMzMGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4ee4e27a6e694352bab75715fd1fc678",
+      "statement": "Bridge types repeat the same serde presence attributes as parser-mode types, so array, optional-scalar, and required-field semantics are identical in both modes and the agent image carries through under its original name.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L181-L211",
+          "version": "repo-lines-v1:sha256:b4b9b421a314aad778f5f8c57def059e4dbbe99968b95efdf5deae17d52d39d8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3NmZhN2EyMDJmNmVhZTM4ODQ2ZDJkY2RjODg1MzIzN2UzZDU1YTUxZGZjN2Q3NjBjNjMyNTljMWQzMmRlZjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5MWI4MWQ5MWUwMzhmZGZlZjQxOTMxZjlkYjdmMzBiOTM2ZjkyN2QwYzI3MmVkYjIwY2U3MjA1OTJlYjk1MDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmZWUxODg2NmZmNDBmOTAwZjcwNDVkYTRmMmNmNzIzMTY3YTI5NTc1YTc0NzgwYTgxNjI2OWI3ZGJlZjExNGEifQ"
+        },
+        {
+          "resource": "repo://src/models.rs#L60-L65",
+          "version": "repo-lines-v1:sha256:5a07befd75724e020cb79bc0018cfd087237feffe1c7a1ff2de3732f3f7a06f3:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjEwNjFiY2I1NjU5ZjhkOGY2NWI2YjE0NTgyYjJmZjJmNTYyNzYzMzI3NTE0Mzk3Y2NkN2EyNThjZmY1ZjQ0MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWIxNDY1YTdjNzY1MmEyOGUzNDJjMWFiY2MzOGZjMGE3NDBiOGViMjdkMTRmYWE1NzNkYjc4YjM0OGIwMjYwNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmEyYmY0ODAyNTUzZmZiZTZlM2NkOWE5ODFhN2RjZjQyMzY4MTU3NmU1M2U3NjUwMGMxODE3ZTgyZmVkMzMwZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ef556864c4e3435cb7f0969aeb2cf7d8",
+      "statement": "ebook_id is carried as a String end to end in parser mode while downloads is a u64 defaulting to 0 when the RDF node is missing or unparseable.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L143-L144",
+          "version": "repo-lines-v1:sha256:ffb68a8365a7ae8a9aa34a7d21dc1a6f1570c5b277d32d4d3377faaff543c023:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzljMmQyZmZkNjM2NzZiZTc4NzY3MGU3MzJhZGEyZjQ3YTQ1ZTgwNWNhN2E3ZjMwOTJlMWI1MzdmYzJhZTE4MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTQ3NWExZmU2YTViYTJmNmZjMTdlNzA1YzExYzk5MTgyZjJlZGQ2ZTliMmM2NWI4ZDM1MDRmNDMxOTc4NmMyMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWYwYmFjMWZkMWMzMGUyNjJlNDhlZDNhMGJlOTkxYTM5ZDg5YTkyYmU1NWYzYzlmM2U1MWNhMTM4OTg3ODc0OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmNmNDA5ZTVhODAyMGVlMjY1MzNmYjIzNGIyOGE5NzQ2ZGM3YWVkMTFkZDgxNThlYTJlNWFiMmJkYzNmMmNiOCJ9"
+        },
+        {
+          "resource": "repo://src/models.rs#L160-L166",
+          "version": "repo-lines-v1:sha256:2c6600b04d1460d7a4d6bbeac06d8210f86fc3d8318dd88309949c76e0cf2bd2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzlkZjlhZWFiNmQ2NzVlOGNmYjg5MjRkNGMyODA2OGJhNjFjYzc3MzNiYTE5ZTI4OGZkMTdkYTcxNzE5N2MwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQ4NjRhYTMzMzYyZWNhM2I2MGY4YjZiM2M1ZGRmZjhmMjFmZTIwODU0NWExNmNkNjEzOWY2ZGJiYmJhZTUwZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTYwNzFiYjRmZWQxYjlhYzE2NjBjMDBjOTBmMmFjYWEyMWYyOGZjZjVlNzUwZjdmNzI5YWY1MzYxZmIwNjM3NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTE1N2RhYTY4MjdmN2Q1YWEyNmFlMWY1YWY3MWM0ZmRkM2EyMmMyZWU1ZGI3NmVjZTc0OWVhZTlkMTZmZjQ3ZSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

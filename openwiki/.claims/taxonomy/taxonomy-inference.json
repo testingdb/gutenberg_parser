@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:13aaaca70bce491509168bbe5e94692209355bc676dff6959c6338c6acf967ad",
+  "claims": [
+    {
+      "id": "claim_a1bead3b392b440e990ba4316a4b7e38",
+      "statement": "Each subject string routes to either the Library of Congress code branch (parse_lc_code succeeds) or the ' -- ' subject-heading split, and the routing decides whether the string yields domain evidence, a genre, or a topic.",
+      "evidence": [
+        {
+          "resource": "repo://src/taxonomy.rs#L154-L209",
+          "version": "repo-lines-v1:sha256:90224477fc53c360614ee68b485b21b7abc2739caf4af4b72ebe6c74a127d20a:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmNzA5MDAyNDc1OWE5OThkOTFlMDAyZDk5NWM1NmIxZDEwMDMzYjY4Y2I0NzFhYjgzZGJhOWMzMTFhN2RkNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU1YzUxM2UzZDhkN2E1ZjcwMzc3MjJhZjA3MDA2YjM0YTQ5MzUzYzdkNjU1Y2ViNDczMTRhY2ZjMDdmOGE3OGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhN2QzYzY2ZGFmY2NmNDIzMjNmY2Y2Njg1NzAwMjNkNGZjMmVjZTdlYmY2MDY5NmRkZjYxNWFlZGY5MGZmNWUifQ"
+        },
+        {
+          "resource": "repo://src/utils.rs#L147-L176",
+          "version": "repo-lines-v1:sha256:addeb7bdd061e2d7a41434aec264fcf590c03e235c075e699deff16c648c4fe2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiZGUzZjFhYTZjODhmZWIzMTE1OGY5ZGU5YmI4NjM4Zjg4NTdkOWM0NzhmZjdhMDVlNzA0NTk4NTFlMGRmYjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlOTIyYjdhYzllNWUxNGM2MGY0NDJlZTA1M2Y2NWNhZmQwZTFjMzg4N2M1YjIyNTJlNTNkODMyZDQ2MzMwZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2ZTIzNWQ3MzRiZmZmOTFkMzgwNzUwNWUyMjJjZmQ0NDI0OGY1ZDc2YzZkMTI0MzQxMzI2ZDg2YjFjYjlkYTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_abb62a9872ba42d2acedfb8840327746",
+      "statement": "In the LC branch the sub-description is routed by is_genre_keyword: genre-like descriptions become genres (CT to Biography) and others become topics under the domain heading (D501 to History with subtopic World War I).",
+      "evidence": [
+        {
+          "resource": "repo://src/taxonomy.rs#L160-L170",
+          "version": "repo-lines-v1:sha256:7376602813a414bfcc761ce6f9887c95870fa06127ddc4ba28d2a8a285d41fc3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2Nzc2MTllZWQ4OTYwN2RiMjI0OGMwOGMyMmUxM2U2MmUxYzU5NTJkZGQyYWI1NDQzYWY4Nzk4MjY4ZmI2ZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MjJjNDJjZDE5YzZkMDNkODA4YzQ1MjcyMDU1MjgyNWI3ZWExYzViNDkxYjIxODUxMWNhYzc0MTVjZjlkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkMGJhNWFlZWMyYjk5N2UxZDc5N2M2NjAxNTMyMWQ2YzIzMGU2YzYxYTY3MWU4ODllMDkxZGI5YTdjMzllMTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1YTVhZTlhYzYwNjg4NzM2YzRkMzc2NjkzMWI3MWQzOWM3NWYwMmNjN2FjNWUxY2Q1YTU3ZTJkMDBiNzQyMWMifQ"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L353-L371",
+          "version": "repo-lines-v1:sha256:f4e3fa500785ba0c9d619186673813e72e65cdb44904a3302b58b0b2c6384fad:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhZjdjNjFiZWFiNjU2MGYyMmExMzRjMmIwM2E3MjFjYjExOWZhYTY5NmY1NjlkZWNiMjJjMWMzNTE0OGNiOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwMGRiMDQwZjI5MDliZjk3OGZmMGE5NTZhNTVlODNjNjUzNDE4ZGU2YmI2OGY4MDQxZGE5NzZmOGQzZDIyNzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdiMDZiMGNhZDVmNTc2MzZiMjhjNzQ3NDFjNTA3MTJiZWU1NzdkZTRkOGRiNDQ5OTAwYWMyYWU2MzVkMWEyODAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_55d63ad46e314a69b829daf623af6332",
+      "statement": "is_genre_keyword tries a direct LCSH map hit then scans a normalized substring form against GENRE_INDICATORS, replacing non-alphanumeric characters with spaces so trailing punctuation such as 'Memoirs,' still matches.",
+      "evidence": [
+        {
+          "resource": "repo://src/taxonomy.rs#L120-L136",
+          "version": "repo-lines-v1:sha256:c69ed58496b44eede7f2fc2fb6243db296166790b394ac6d0f5a5cadd419277a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwNTVjM2Y4NzAwZWM1MDIzZmM2MmQyYjlhZmQ5MmJmY2Q5OWQyMDlkNGE2YzZiNjM4MDhjMGY0MzZiNzgwN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyNjM5N2JjOTM5YjJhZWMyYWNhY2ZkYTc1ZTE1Njg4ZWJkZjRiYjAxNDM0NDkwYTJjNTgxMmI2NjdjNjliYTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJmOTU4OWI0OWY4OTUxYjM4YjJhY2ZmN2E2OGUyY2FlYzE3MWQyOWEzNGU3YjQzMjA2MTAwOGFjYzA4MGNhODcifQ"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L29-L107",
+          "version": "repo-lines-v1:sha256:267b4b69e6671cc14655fd30f4e2a23b77f76ffd8fb9daf5ec97894f5246c2ee:eyJzZWxlY3RlZExpbmVDb3VudCI6NzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4ZmU1NDQ4ZWNkNjA0ZDAzZTgwMzU0ZjkzNzBhMWFjYmM4MmZlNGU5ZGY5MTQ1YjY5NTZmZWQ5NWE2ZGY1ZTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2ODQ2YWVmOTIxOTdiOTY4YTExYmFlMzM4YjgxNWRmNzBmYjZmMzViYmViY2JkMTU4ODFiMzgzMmQzOTUyZjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5MmZlNTU0Y2MxMDE1MWViYjY2OGUwMDgyMGIxYTZhYWIwMTc5YWI2NGNhZGI4MTIxNmFlMzcwODIxMjcwNTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a957bddc780e408c93aa410a9763fbb9",
+      "statement": "In the heading branch, any part that hits LCSH_FORM_GENRE_MAP is diverted into genres and contributes inferred domain evidence instead of appearing in the topic's subtopic list.",
+      "evidence": [
+        {
+          "resource": "repo://src/taxonomy.rs#L171-L209",
+          "version": "repo-lines-v1:sha256:ddd9a0554c368c52edbf86e9fc7082210c17a11d0551d54bb407c6440afb187e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2OTgyNTE3OTI0ZmU4ZDNlMTU2NjcxMTViMWY1YTIwMThlMGQ1NWNlNWEwMDFiMWUyZDVlMzFiOGIyNDEyMmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwODQyZDEwYmEzM2Q0NGJmZmZiZGMzZDA5MGYxYWQzOTRiOTIyNGU4YzcxNDcxMWQxYjY1ZDE4YTk5YzFiMDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhN2QzYzY2ZGFmY2NmNDIzMjNmY2Y2Njg1NzAwMjNkNGZjMmVjZTdlYmY2MDY5NmRkZjYxNWFlZGY5MGZmNWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d6faa8611d574113ac1ba72f4efae668",
+      "statement": "Bookshelf labels have their 'Category:' prefix stripped, are tested against every BOOKSHELF_MAP regex, and the generic labels 'best books ever listings', 'novels', and 'general' are skipped; shelves never contribute topics.",
+      "evidence": [
+        {
+          "resource": "repo://src/taxonomy.rs#L212-L226",
+          "version": "repo-lines-v1:sha256:1d7628af4601f58e51527e4690825217cc38168e6942a3fc8ba64376e315eef9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzMWU0YjI3YTZkNzRlYWRjMDM0NmE1NjJlMmIwZmMwMjE5OTA2ZDZkZmZkNjY1OWI5OGZmZmNiYTBmMjk5YzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIwMjdhOTc3MDBmOTc3NDE2ZTg4MzE3ZmViZDgzNzliZDgyNzBlNmY0NTYxNWEyNmQxNDUzMWRhOTg0ZTViODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ1YWExZGVkZjQ2ZDIyY2FmNDFlOTk4ZTUwOWYwNjM2NGUzYTk1Mjc3MGI2NTY1YmM3YzQ3NzQyNzg2Y2JmZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ca96df0728a3446492b6ad9db18adfa2",
+      "statement": "Domain resolution prefers any LC-derived domain outright over inferred domains, then picks the most frequent candidate in the chosen pool with ties broken lexicographically, falling back to 'General & Uncategorized' when both pools are empty.",
+      "evidence": [
+        {
+          "resource": "repo://src/taxonomy.rs#L236-L255",
+          "version": "repo-lines-v1:sha256:b19fa30b404bcbce0a75e8727d5b5d2092969cb9bef3cde08baa4b4e9423fc7c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyNjE4MDY4MzRjOWNmZjU4M2RlNjM4ZTI0MDU5MmZkZDI2Nzk0NjdjNTQxMzliOGI3ZDg3MTA4MDQ0MDM2ZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOWUxMjU0NjQyNTU3NmQzZGVhZThjOWI5ZGJmMTI4ZDVkNmRkYWY1ZDdmZTg1NzkzNDkyN2RlZmZhM2I5ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwYzBlZmMzMTkzOGQ4NWI4OWI2MzlhMjE0ZWEzYjMyOWQ4MTBhYjgzMGQwZjJlN2Q2OGI0YjViMjVhNzczYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzYTI5NGIxN2U2YmZjNzRhNmJkZGRhNDE4MWNhMTA1OTRjMDlkM2M4YjZjYTFiYTMwNTcwNGJmNmZhZWU4NzQifQ"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L464-L472",
+          "version": "repo-lines-v1:sha256:aed319652c25111b45c65a92bad53c616ace15906291143abc8cfcd6436e52f9:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTJiNWVkZjU5NDljZmVhNjc4MjJjZjY5MTEzMjM2M2Q2OGQ2ZjFlMTY5ZjVlMGQ0ZjdjMTRlNWZhMWU2ZDRlNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODYzZjczNjQyZWMyY2Y5ZTM4NWNhNjIxYzZhNzM0MGFmNTJiZjgzNGNjNDc4NDAyNzA2NmU2N2YzMzg2M2ZjNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjcwMGE2MzU0MDFhN2I3MWQ2ZTZkOGFlYmVjZTAyN2VjN2Q1OWI3YmQzOGI5ZmYxOWQ0ZjQzNzAyMGFjMDdhMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bda42cd9e63f483fb37fe10b14b4a1a4",
+      "statement": "Topics are deduplicated by a key of lowercase heading plus sorted comma-joined subtopics, so repeated identical headings collapse while the same heading with different subtopics is preserved; genres are collected in a HashSet and sorted lexicographically for deterministic output.",
+      "evidence": [
+        {
+          "resource": "repo://src/taxonomy.rs#L258-L277",
+          "version": "repo-lines-v1:sha256:0d51272bd04f984ded092365ca5f7c812039ca6585bcb4abcefc3ac7d8f8cb19:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MWM0ZjYxZTJhNDFmNmNkNjhiOTlkNDcwYmQ5ZGU4NjE4NGEzZTU1NDcyNjA0OTdkNGMzMWMwM2ZiOTljMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2NzYzZDcyOGE2YjgwYjVlYmQ5NGNhOTc5OWZlNGY5M2Q3ZmI5ZjlkODVhOGEyMzMzZmZjNzBhNTg1NmQxZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2YjYyMDgyZjI2YzBiNzI3ODA2ZTdjNDU4NTJlMTBiYTI4OGQzYWE2OTU0YTM2OTNmOTEyYTAxNWRlMWFjNTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkNzc4ZWM2OThhMTI4ZDA0Y2VjN2Q4MjY0NDkwMDMxZmIwMmJjMWExMzFjMjI4MTgzY2U5OGJjMTI5MDAxMjkifQ"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L493-L503",
+          "version": "repo-lines-v1:sha256:6de7205eaf55ec71633e1da730c1178895ddca151b58121d4ee8ce4eb63f26a9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2ODk1Nzk3ZTNmOWFkZjdiNjM3YTA0MzVhY2RhNzU2MzNkMDI4YTU3NDFiMzM3MTQ5NjFmY2ExNGNjYWRlMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmYWM5NjRhYWExMWVlNTNjOTVjMmE3M2FhMTUzZTNlMGYxYmQ2MzM1ZjZkOGE5ZTIzYTUxMDllZTU4NDFiNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcwNGRhOWU1YzQ3YjBkNmUzODBiODNhZmVjZDAyY2I5MDY1MmMwOGUxMThhOWViMDg0NDg0ZWYxN2IxNzU3MDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_709a861c20154b23a06fbb650bce71f2",
+      "statement": "extract_taxonomy reads only static tables and keeps all intermediate state in locals, so it is pure and thread-safe and can be called concurrently from every worker.",
+      "evidence": [
+        {
+          "resource": "repo://src/taxonomy.rs#L147-L284",
+          "version": "repo-lines-v1:sha256:a9414ceab2debd66cb548f4ed6de151e4f9bf060c661cbd9feb889cdd7d93ad7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwZGE5YzJlMWJmYzIyNTVlM2Q4M2NmMWQzZDhkYjExZDE4MDJkYzVkYTgyOTZkZTQ1NjQ1OTE1M2EwZjg5ZDUwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0OGUwMjFmNDk2NmRhZTE2NTk1NTkyNzAyNGQ2YzQ3YjdlM2RlYmNjY2ZjNjgzOGFkYzdjNTFjMWIzNDlmOThkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmOWEzMGYzOTRjNzBlMTkwODYwMGVjNmNkODA1YTA5MDBiYTJjYmQ5NGVjMzc0ZDQ2N2YzNDNlOWJhMTAyOWM3In0"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L290-L318",
+          "version": "repo-lines-v1:sha256:c2284d0cf0023c847c9646eda2d6e4cd6baf50e1b3f62aa3be33a47691405ebf:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1Y2Y1ZmMyM2YyYTZkMjNjM2VhNTFlNzJmNWU4OTZjNzU1NWZiYWEwNWNkNWIxZWExODJiZjk2MThhOGU4MWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzNWQ4MDkzMTliMDBlOGE4MjcxMTYyZWJmYWVmMmNkNzViNDIyYzE0ODUyZTBhNzQ4YmY4ZDQ5NGE4YTVmNTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwN2RkNDUxZGNkNmRlZTNkMTU0NzU4Mzc1MzA2YzBjMzcwMmNiNTk5YTJhNjkwMjc3YmUxOTMzMGFiMTVlNDAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}

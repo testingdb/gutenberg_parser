@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9bd9862b7aaccfa2100f53aee1724a4d463db0f3d96a49df74c88bc1a9309169",
+  "claims": [
+    {
+      "id": "claim_70fa9d32b2ef42a1b5e2f4607b22fef2",
+      "statement": "Verification lives entirely in inline #[cfg(test)] modules at the bottom of each source file; there is no tests/ or benches/ directory, so tests are colocated with the code they constrain.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L417-L427",
+          "version": "repo-lines-v1:sha256:318eab6586008bbd141a7674475de6396b4e2b9801e9c4c2971cc715c5d8af98:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1Y2Y1ZmMyM2YyYTZkMjNjM2VhNTFlNzJmNWU4OTZjNzU1NWZiYWEwNWNkNWIxZWExODJiZjk2MThhOGU4MWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L290-L667",
+          "version": "repo-lines-v1:sha256:d59caa3d62b03d8d6f51996fa7ce9244a0c803933dac97ee0ef7838d3f42033a:eyJzZWxlY3RlZExpbmVDb3VudCI6Mzc4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyNWNmNWZjMjNmMmE2ZDIzYzNlYTUxZTcyZjVlODk2Yzc1NTVmYmFhMDVjZDViMWVhMTgyYmY5NjE4YThlODFiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmMzVkODA5MzE5YjAwZThhODI3MTE2MmViZmFlZjJjZDc1YjQyMmMxNDg1MmUwYTc0OGJmOGQ0OTRhOGE1ZjU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L383-L838",
+          "version": "repo-lines-v1:sha256:5e2d28fee714076912346296caf95b4471971d0686644030b40f096c538ae8ca:eyJzZWxlY3RlZExpbmVDb3VudCI6NDU2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyNWNmNWZjMjNmMmE2ZDIzYzNlYTUxZTcyZjVlODk2Yzc1NTVmYmFhMDVjZDViMWVhMTgyYmY5NjE4YThlODFiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmMzVkODA5MzE5YjAwZThhODI3MTE2MmViZmFlZjJjZDc1YjQyMmMxNDg1MmUwYTc0OGJmOGQ0OTRhOGE1ZjU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_5df705f287b9422cae684a94f5bb99c0",
+      "statement": "XML parser rejection tests use embedded string fixtures and assert the exact error code string returned by process_rdf_xml (filter_type, filter_title, filter_language, filter_license, filter_required_formats, filter_creator) rather than merely asserting failure.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L552-L691",
+          "version": "repo-lines-v1:sha256:a9b4957435cdab63b87b822c0d663d5d15685efdef9535aed54dec19d36c3b8f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0MGRkOTkwYmJiNzhhMDNjOWNjNzcyZDgwY2ZjY2EwZThkNTBhYzg0N2M5ZTcwN2FiZjA2MjEyOTFiNTBjZjI2IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ODkzZjQwZTM3ODFlYjg5NmM4MmQwNDZhMDgwNjdhMTFlMzVjZGYyZjFkZmFmMjZmZWE5MGI4ZGI2Njc2NDEzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmMmQ4MjhhMDM3YWMxYzgxNTM1YjFkNTUwMDgzMjMyM2JmYmI4NjZhM2EzZjg3ZTdhNjhjMTNhMmJhZTU2ZmZmIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0NWQwYzVhMjIwNGRjODVjMGU0YjQwOTY5YzdlYzc1Zjc5NGRhMDA4NWI3OTJkMWMzNGU2NjUxZjlkOWQ4YWUyIn0"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L697-L813",
+          "version": "repo-lines-v1:sha256:3f758d0f5bc1b0d903b56a1d731abf73c63250ff6f2cbf102c0c32a4bc8f95af:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlMmNiY2I5MmRhMDA3OWExMWU5MGJkYWQzN2ExODZhMGYxMDQzOWJiOGIzYTRlOGQ2ZTBmN2JjYzRlM2IyNjI1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ODkzZjQwZTM3ODFlYjg5NmM4MmQwNDZhMDgwNjdhMTFlMzVjZGYyZjFkZmFmMjZmZWE5MGI4ZGI2Njc2NDEzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyNDliMWNiZDQyYjM1NWMxYzAyMTdhMDRhMWI4ZTAwNDI4MmY3YTZmMGY0ZmM2MmVhZmY2ZjM3MzBiZTU0M2IzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzMGIyOTBmMTA5NGNlMzI2ZmE1ZmVhMDRhNjNlYTY2MjAzNmUwMzExOWEyNWQ2YTc5OGFkNjZmYTlmMjJkMDUyIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_630fc24580134283a737ac1e7eb303a2",
+      "statement": "The only #[ignore]d test is parse_agent_image_resolved_from_wikipedia, which requires network access to the Wikipedia REST API and is run via `cargo test -- --ignored`.",
+      "evidence": [
+        {
+          "resource": "repo://src/utils.rs#L218-L232",
+          "version": "repo-lines-v1:sha256:a34c40c85e4408bbb414278d3285c0dc432cec3f3ac1ee5c6a5ee67d60ace442:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1MWY2M2IzNDQ3NTZkMzY3MzU0ODYxZGZlZDVmNGM5NWQzNzAzMTQwMTJkNjJlMjdhZmRlMTA4ZjBlNTBhMjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVkNDFhMGRjOTk0MzYwOWRmMjM1ZDE5MGZiOTkxMWI1MWFmMTg0MTEzMDdmMjM3NjJlZWRiODJkY2IzZTVmM2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxZGQyNTE0Yjc4ZGI3NjEzNWQ0ODBhYjQ2MzExYzVhZDdlZmRlMzAyMjkxOGU4Y2U2NGRmNjkyMGE2MmQ0OWUifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L503-L521",
+          "version": "repo-lines-v1:sha256:82d958f782870407c928254c56a4c637b268e1e35aa9381c3000b70ad4a90798:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1NmVmN2VhY2Q5YmFjMjE5M2JjMTBkMTQ1Y2U5NzhhYzBiNTQ3NzYzZmI0OTU2MzAxOWFhM2QxZmZkOTUyNjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRhMWE1NGI1YTJiZDFlM2ZlMmY4MDc2OTI2ZDExMGQ5ZDA0MjcwMDMyMWRjODA4MmQ5MzcwNWIyMDY2NzhlZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhMDk0ZDE0ZWU5OTUyZWNiODZmMjFjZGU3MjBkYWU4YjU4ZjE4YjllMWRiODMwMGE2N2M1ZGRmZTZlMWVmNWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e60eefbc485a4a1ca9a0408206602d2c",
+      "statement": "The PR gate enforces fmt, clippy with -D warnings, cargo machete, a locked release build, tests, and cargo doc on three operating systems, with coverage produced separately by cargo llvm-cov for SonarCloud.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/pr-gate.yml#L116-L122",
+          "version": "repo-lines-v1:sha256:06b3b92e6d6f439518156b47c868dcc30e5734233a9750d26fbef6af6313c96a:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGY0NmQ0Y2MxOWEyMjY2YjNkYmUwYmVmZGE1YjExMGJmNzBjNTE0NDRjZTJiYzc3MmVjYjdkMTE3OTQ2MzFiOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGQ0OGUyNjUwZDQwMDMzMGI5ZjA5Nzk1MjZlOGI4MDMwZmNkMmE0OGY4M2UzMWZlNGU4NGViZjhkOTg1ZTM0NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjAyMTcyZDFmYmRjZDg0NjkxNjk5ZGUxMGU5ZTUxYjFlMzYyMjllOGFjY2Q0M2UzYzY4ZDY0ZjRjM2ZkMjEzMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmUyYTUyOTViM2RjYTQ4ZTdjMTU5YTJiN2VhMDExODY1NWVhZDBlY2Q4NTI2NWQwMDRjMzBhZWJkYjZlNzkwYiJ9"
+        },
+        {
+          "resource": "repo://.github/workflows/pr-gate.yml#L64-L86",
+          "version": "repo-lines-v1:sha256:519cf252ea32f08cd159d10b4591690ff1d676acedb9cb74d707d1c9278fe0db:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiMzJiOTg3MjYzZGYyMTYzZTcyNmQ0OGI5MmY2Zjk2NTE0OGNiNmI2ZDI4MzE3OTE1MTRjOTM5ZjgzN2ExNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4ZDZhMjBiOTllYzkyNjEyMzExMDBlM2I5NGQwNTQ4ZjgyODMyZjliNDc2YWU5NjRiMWE3MzFhNmJhMmRiNjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyY2ZlNDljOWMwYjE3YzU0OWY5ODUyMGIwOTQ5NjJiZTdjZjIwN2Y0YjU1YTFhMTRjODJmOTRhMDhiM2QxMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzM2MzNTU3ZGQzY2NiZDIyZDY0MmMzZWIzNzgwNTU2YzhjYTY5ZjE5MzUxMTU0NTg0MmU1ZWFjMWE2MTE5ZWMifQ"
+        },
+        {
+          "resource": "repo://.rustfmt.toml#L1-L1",
+          "version": "repo-lines-v1:sha256:e090969e99df9360705680cc0097cfaddae10c22dc2e01470592cf3b9787fd36:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTA5MDk2OWU5OWRmOTM2MDcwNTY4MGNjMDA5N2NmYWRkYWUxMGMyMmRjMmUwMTQ3MDU5MmNmM2I5Nzg3ZmQzNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTA5MDk2OWU5OWRmOTM2MDcwNTY4MGNjMDA5N2NmYWRkYWUxMGMyMmRjMmUwMTQ3MDU5MmNmM2I5Nzg3ZmQzNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:38:59.748Z"
+  }
+}
