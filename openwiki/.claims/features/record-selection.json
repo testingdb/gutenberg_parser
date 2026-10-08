@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:aed1db62f067f7740547a6a23f290e12d428a15fd0655d15446d8c2508ae027f",
+  "claims": [
+    {
+      "id": "claim_442efc1d70224f949d842ae079b97f7b",
+      "statement": "The default output is a curated corpus of text-typed, public-domain, dual-format, attributable records: audio and video are excluded, both text/html and application/epub+zip are mandatory, and at least one named agent is required.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L128-L152",
+          "version": "repo-lines-v1:sha256:9278852b4386ebbff34ca5f86aecd7fdaa3266bd51d6f98a400dfcca4273bb18:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5MWYyN2ZmZDkyNDg2OTZlYzYxMjYwYWE5YzAxNTFjODM1Y2M5MjJjMTkyOTNlOTVhNGY3ZGU4ODI4NjNjYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwOTg5Y2FlYTU4ZjIzOTg4NWYxZjk0NzliZjc0NzNlMTZhY2UyMjZmNGMwZGYwYzI0YTJmNTUzMDg1OWYxNjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlMTkyN2NkMDM0ZDA5ZDMzOTVlMWIzYmU2ZGJkNmRjM2Y2ZTA5Y2Y1N2VhNjAyNTM1ZmU2NDI0NzY3NmI5MDEifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L157-L300",
+          "version": "repo-lines-v1:sha256:bd01dcbd9eb6011aa5e7e64c5fc394bf3d6f433549320976273f4e7fffa5620e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhZGNmNGRhZWFhNGRjOTg0YjJlOWEwMTRmZTU5MmFhYjgwMmNiOGI2YTdiYWNmODQzYjdlNTMwZjUzNTNmZWIwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ODkzZjQwZTM3ODFlYjg5NmM4MmQwNDZhMDgwNjdhMTFlMzVjZGYyZjFkZmFmMjZmZWE5MGI4ZGI2Njc2NDEzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyMzNmNDYyY2RiNTYzYzE5OTQ3M2M0NzA5ZTE0OWI3N2EwNDZkMzhjMDBhNWMxN2M4ZTRhOGY2NzQ3YTJjZDAzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlZTAyNGUwM2Q4OTgwN2U0MzRiODk2ODY2NjdkMGUyZDdhYjExYmMwYTZlNTFkMzdkOTBmNmQ0OGQzZTg3MmY4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc559085ea4b4121afb5f36234ca73e6",
+      "statement": "An agent with an empty name is discarded before the agent count is taken, so a record whose only agents are nameless is rejected by filter_creator rather than emitted with an empty agents array.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L298-L300",
+          "version": "repo-lines-v1:sha256:b7a81b14d9b8b51c2b2c157c0933f8aaa847ee42271cb48afa2dd82b8726e695:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjZlMDliZjFkZmZiNzYwY2Q1NzI5YTJkMTA1YjdiYzkxYjM1MDZjNzhhYTk3NzZiM2RjMTE4YmE5MTk1OTEzYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTIzMzE4ZjM1NTM4OGM0MTZmMDY1NzllODQ0ODk5ZmFjNWNjNDk1MjJkOWZjMzExY2NhNzczOWY1Y2JlNzE5OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWUwMjRlMDNkODk4MDdlNDM0Yjg5Njg2NjY3ZDBlMmQ3YWIxMWJjMGE2ZTUxZDM3ZDkwZjZkNDhkM2U4NzJmOCJ9"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L80-L82",
+          "version": "repo-lines-v1:sha256:620667883988cebb1d9142a3a62b2b1d15d09664d3e6ca4420dcecdab2412051:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzVlNTg3NDU4Yzg4OTIzNzE4Yzc0MWU0MDZhOTUwZjg1NjQ2OTI4YjlkMTM1YmQ5ZWVlNmUwNjQ5ZGU5ZjhmNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDY5YjRkZjVhOWIzYzViNjI5ZjljYjRjYjZkMDEwMjQ3YjQ3YjFkYmQ3ZWRhYmQ1ZTcyZWY3ZGU5OWZlNTkzYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmRlYzBkODAwMmFkMWVkODQ4MzBjNWM4YjYzNzhhZjY1ZWNmNzVlOGNjODEzZWQ3YmQ1NTllMmJlYzdlNjkzNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b2f8efe293ae4099ad40f1f9b83507aa",
+      "statement": "Acceptance as a precondition guarantees that every emitted record has a non-empty agents array, a non-empty taxonomy.domain, a well-formed license string, and a synthesized cover_image.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L142-L144",
+          "version": "repo-lines-v1:sha256:96f1e0ba05f5f1856edb35f303777a9e89c26836296d835189a391f7b07b3d00:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDg4Nzk5ZWRjZjRhMDg4YjZiOTc2ODgwNjZlY2VkZmNkMjE1Y2FhYzhmMTk1ZGVjMDVmODliOWExYjFmMjUxZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTQ3NWExZmU2YTViYTJmNmZjMTdlNzA1YzExYzk5MTgyZjJlZGQ2ZTliMmM2NWI4ZDM1MDRmNDMxOTc4NmMyMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGE4Y2QyMzIwYTc4Nzk2ZmNlZmM1OTFjMjEyYTZlNDdkOTAwZGY5YmJiYWQxYTY5MWY1MmRhNjRjNjk5OGViOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmNmNDA5ZTVhODAyMGVlMjY1MzNmYjIzNGIyOGE5NzQ2ZGM3YWVkMTFkZDgxNThlYTJlNWFiMmJkYzNmMmNiOCJ9"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L239-L255",
+          "version": "repo-lines-v1:sha256:d2ce0362b740b0b9e8556ea9cecbd72ad89fcdc450ea8d61fd421e20af8c0b8d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyNTdhZjNlZTU4NjIyMmM5MDBiZmQ4ZjI2N2VkN2U2N2UwMDAxYjM1OGI1ZTNmYjIyNjM2Nzc2ZWMwZmY3MzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOWUxMjU0NjQyNTU3NmQzZGVhZThjOWI5ZGJmMTI4ZDVkNmRkYWY1ZDdmZTg1NzkzNDkyN2RlZmZhM2I5ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExYjE4MWZkOTQzNDcyNzNiNDYyYmIxZDI1N2Q5MGRiZjM3NmFhN2I3NTM3NWY1OGNmZDM4ODMzODQ4ZjcwZTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzYTI5NGIxN2U2YmZjNzRhNmJkZGRhNDE4MWNhMTA1OTRjMDlkM2M4YjZjYTFiYTMwNTcwNGJmNmZhZWU4NzQifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L298-L300",
+          "version": "repo-lines-v1:sha256:b7a81b14d9b8b51c2b2c157c0933f8aaa847ee42271cb48afa2dd82b8726e695:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjZlMDliZjFkZmZiNzYwY2Q1NzI5YTJkMTA1YjdiYzkxYjM1MDZjNzhhYTk3NzZiM2RjMTE4YmE5MTk1OTEzYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTIzMzE4ZjM1NTM4OGM0MTZmMDY1NzllODQ0ODk5ZmFjNWNjNDk1MjJkOWZjMzExY2NhNzczOWY1Y2JlNzE5OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWUwMjRlMDNkODk4MDdlNDM0Yjg5Njg2NjY3ZDBlMmQ3YWIxMWJjMGE2ZTUxZDM3ZDkwZjZkNDhkM2U4NzJmOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_480efb8ac3ab4ca4a50faeb9fad49081",
+      "statement": "cover_image is synthesized from the ebook id rather than read from the feed, so it is always present but its presence does not imply the image exists on the selected mirror.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L302-L311",
+          "version": "repo-lines-v1:sha256:303b386f8659b4cc09614dbde73850c79c10e7edb61722bf7354e750ebbd0ba2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlYjQ4ZjkyODFmMjkzNTM2Mzk2ZDBmN2RmNzU2ZTRmYjVlODJhZTczNTgyYTBkNjdmOGNkOWJkYjYyZWIwZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1MjQxYzRmYmQyMWQ3MGM2YjQyZDRiNjU2NDVmYzU4Y2Y5YjUxYTZhYzRhNGM4NzNhMThhZGNiYjVhMmUwYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0YmVmMDljZTY2Nzg4OTViNGE1NGVkOWY3MjhlMDc2NjI5YTkwYjUxMmJmYTM0MjRmMzQyNDZhMzkyNjA1MGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiODRkNWY1ZTlkYTIyNjUzMzY2OGViNTRmNDY3MzFhYjRkYjEwYmQxOGNkMTRiNGUyZjU2MzFlYjg3NDU0NjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e23b5fb9ad6341379d97129de3f1b180",
+      "statement": "A missing or unparseable downloads node defaults to 0 rather than rejecting the record, so a zero download count means unknown rather than never downloaded.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L337-L342",
+          "version": "repo-lines-v1:sha256:19cf1543450a7a5ec22c225c3a5d8f86f78a613f35d6660dd810600da7dc81a3:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTczMzA5OWU0ZGIzMWNlOGU0YzQ1N2UzOTNmYmE3ZGQzYTRlY2NiY2RhZDZhMTgzOTI5ZmQzMmNiMjE5MmE3YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGU5YjA3NjRkNzY0ZWI4YWJhYzRmZGNlOGVkZjk0ZjA2NjIxY2I1N2ZkZTMxMWE3M2ZjZmQ3OTg2ZjUxOGNjNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTVkZTI3MWU2NTJkMGU1YzQ5MTViNDMwMzZhNjQxNzJkNmJjZDg1ZjE2MTUxNjU4ZWQyMGFjMzI2M2M0MmEwOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTkxOWExZTg0YWEwMTAxZTQ4OTMyZmU5M2JjODg5NTUxZDNhOWZmZmFjYmEyNzBlNjA2MDIyZDhhMGFjNTEwMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_290d40c5c407407e926257496b77b032",
+      "statement": "--include-licensed relaxes only the rights check, so the resulting corpus is a strict superset of the default one and the rest of the guarantee set is unchanged.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L301-L305",
+          "version": "repo-lines-v1:sha256:2d681e395275631a2a8b7716abd98e7267e7b10bcfaa2c2f67b1c7c9712b55e1:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzhjYmIyNjcyNjNlMDYxMjRmYmExZWE1ZmVlZWJiYTJhNGU3NzBjOWIyMDMzNDE0NTU2NGRiZDBlNTEzYzI4YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmIxY2E4OTU1YTE3ZmVkNzcwY2Y3N2VjNTJmMWIxNmZiNDFjZTc3MTM5MTg1ZTkwNzBjODczYTRhOGI3NWQyZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2Q0ZmVhZDI0ZGNiZTE3MmM2MzI3YzdmNGE4YWJiY2M2ZDJmMTg1YzdlNTY5ODcyZjJhMzg2YWIzZDdhNDYzNiJ9"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L218-L220",
+          "version": "repo-lines-v1:sha256:9dde0a9a31c29ac3bc99f3218dca8d0f66f1ef1b498126e757c877c7afac00a7:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTVjZWIxZTZhMGM3NTY1YTAyZTUzOGQ4OWI0ZmQwMDAxODg1N2JmMmFiNGM0MTk0NWY2MWI1NTg3YTc1M2JhMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTczZTM3NzcwYjNkZDk2NDViZmM4NWQ3Mjk1YzA1MjI4Yzg3NzgwOTdmM2NkYTdkMzkyYzY4NTFlNDY5YzE1OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTAzYzVhMzVhYjg2N2IzOTBlZGZhNDc1MGMwYTljMjc2ZjA2ZTE3OTViNDcyMzUyNTEwOTFlZWRhNDZmMjM3ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e6bf06fe3f864c148490044cd04f982c",
+      "statement": "No output field records which filters were active, so corpora built with different flags or across a filter change are not directly comparable and the flags used must be tracked outside the data.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L46-L102",
+          "version": "repo-lines-v1:sha256:814737fce7e2bc72ead8711a56e81060db56ff540e67212755c2a92f5b55b8ea:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmOTAxMWMyY2JiOWQ5NDJmZTE3MjhiNDdlZmFkMTQ5MzU3YTgwM2Y1YmMzYzM4OWZiMzQ2ZjZlOTBmYjhhYzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdhYjk4NDlmYmVkMDAzOWI0MGMxNTgxZGU2ZDc2YTJhNGZjYmQ5OWI2ZmJlOWM3Y2I0MWM0ZmMyMGM4NWU0NGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhYWY0MDI3NjNiYjI0OGNiNDlkMWU3MzUyYWI5MmY5ZTdjN2Y3MjFhOTZlZGVkOWYwZmJkMTBjMmQxMzUxODMifQ"
+        },
+        {
+          "resource": "repo://src/models.rs#L124-L170",
+          "version": "repo-lines-v1:sha256:5f8730d1edea1e0541f204569029fe3bce8b68a56f5ba25d8863e923c9216cbf:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxMTcyZTAxYTg2ZGQ3MWEyMWQ1OWNlZTI3NTJjMzE1MDllM2I4M2Q0NTgyYTdjNzgyNzVmMDdkNGRjYmMyYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0NWFiMzU2NjUxNjFkZTRjYjQyMDNiMzg2MjFhOTNhMjljYjhhOTFhNTA0NjdhNzJjMjhhOWI5M2Y1MDI2ZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI5OWI4MWI3ZTA1ZDFiZjc4Y2RlYzI5NDkyZDA2N2QwZmRlZjY4YmFlOTI4YWVmOTU3MDM5OTQzOTJhZTczMjQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:57:55.085Z"
+  }
+}

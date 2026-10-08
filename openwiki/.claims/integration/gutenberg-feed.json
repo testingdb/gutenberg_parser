@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:bc9f7c795cbf82911ba0d47616b0f45bdc1b84305ff01f074138a2af41d21599",
+  "claims": [
+    {
+      "id": "claim_96bc15f208614f0a8bfba055ff7f069a",
+      "statement": "The upstream rdf-files.tar.bz2 feed is an unpinned external contract: a daily bzip2 tar of per-ebook RDF/XML files fetched from a single hardcoded RDF_FEED_URL with no version negotiation, and --mirror affects only output link rewriting, not where the feed is fetched.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L64-L72",
+          "version": "repo-lines-v1:sha256:02345b2562cdf35b758bc4a3f6198f7ce4bbd09abf79b6ca347d032ecdbe69af:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGFhYzljNTFhZmM5OTg2MWY0NDYwNDYyMWRkZDIzNmEzMWZkMzk5OTU4MzQzMWM5MmRkYmM0ZDBiMmY1NWQyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjEwNjIzZmJhMDg5YWQ5MTA2YTVhNzAzOGVjNDc2YWYyYTQxMzNhNzE2YmZiOGI4OTU1N2Y4MTA3YTE2ZjIyNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDAxZjJlYzE3NTkzYzEwNTRlYjQ2MzY3ZDg0NTNlZjI0YTE3M2NlOTZiNzExN2Q5MWY5YTY4ZDQ0ZmVmOGIwMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDAxZjJlYzE3NTkzYzEwNTRlYjQ2MzY3ZDg0NTNlZjI0YTE3M2NlOTZiNzExN2Q5MWY5YTY4ZDQ0ZmVmOGIwMSJ9"
+        },
+        {
+          "resource": "repo://src/cli.rs#L177-L258",
+          "version": "repo-lines-v1:sha256:c4d98c6cec908bd1e6b8af340d5287cbd59db35201462ffe51c5bf9a5927a171:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhN2UzOGRmMjFmMWY0NDZmZTIyOGYyNWNmMmQ3YTE4NGRiNDExMjBjZjgwZWExOGQwYTY5MjEwYjIzNjA3NjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyMzc4ZmYzZGIyMWE4Y2Q4ZjAwYzU1ZGYxZDJkOTg5Zjg0YmRjMGZjM2U2MmZiMjUzMTI2ZjJhZjE4ZDc2OGIifQ"
+        },
+        {
+          "resource": "repo://src/config.rs#L67-L67",
+          "version": "repo-lines-v1:sha256:50edec1149339f0e5fdf591b47eb2af2c541534760857fbd7f39050021810cd4:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTBlZGVjMTE0OTMzOWYwZTVmZGY1OTFiNDdlYjJhZjJjNTQxNTM0NzYwODU3ZmJkN2YzOTA1MDAyMTgxMGNkNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTBlZGVjMTE0OTMzOWYwZTVmZGY1OTFiNDdlYjJhZjJjNTQxNTM0NzYwODU3ZmJkN2YzOTA1MDAyMTgxMGNkNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjkwMTQ0NGQyOGJmZDUxNmZlYzE0Y2RkODhlNWQ3OWIwMGY4YTU1ZDE5ZDQ5NmUxMTZkMDhkMmEyMzFlYTFhOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTFhYTI1N2YxNzE0MmMxNzExZDM4MmVhYzg5NjgzNmNlYmI5N2VlMjRkYjQzMmE5NzU4Y2NkZGIwNjc5ZTU4NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_159a64e7c566401fbbad79ab6a42ead3",
+      "statement": "Six RDF namespaces are declared but only rdf and pgterms are actually read; the other four are unused declarations.",
+      "evidence": [
+        {
+          "resource": "repo://src/config.rs#L37-L46",
+          "version": "repo-lines-v1:sha256:b51bc6dff0339baf2e4d17a040f653c1cfeb31b230a22763d20068e7e18c1cb0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5ZjhhZmMwMWI2MTU2NDA0OGYxZWU2ZTlhMWIxOWQ3OGJjYThlNjIzZjFiZWU0NTE4YWEzMWM4NjM4NjU1NDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgyNmU1YTk0Y2E5MDIzYTI0YTAzMWE1NmRhZjg0NDNjYjhjMzQ5OWE5ZjRhNTU4MjdmYzQxOTI5ZjJlODgzMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgwY2YwNDEzMWEzZDI4OWEzZGFkODc3OWRkZmU0ZDMwNjZlMzAzNDc5NjViNTI3MmM5YzkxMWI4NDgzNjFlZWQifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L174-L175",
+          "version": "repo-lines-v1:sha256:9f1a16d3deaf1f14f61a5c954bd437b809ea069a36d4fbf09ba1a059eabb0531:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjliMzg4NjY4OGViZTI4NzBiNDljYTBlNzM1MjEzZWM5MmUxM2EwYmQ1NjVlYWY0MGQxMjY1ODEyZjRlYTJjOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmY2YzQ4NTNlYmQxOGQ1OWMzOTE1NjIyMDBjZjJiZTc4OTQyY2RlMTNjYWUyMTVkZjhhNDcwYzliOGQ1MmJmNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDZlMmY2NjBhMmVhM2MxMmFjNGVlYTA4NjA5Y2Y2MTg2YmViNmM5OTk2ZDRlM2U4MDg4ZjA2OGFkOWQyYTU2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTMxMmY0MGMxMTc4M2ZhZDQwMzczZGY4MTdjMGQ5NDA2N2VkMTMzYmMyOTFiOTE5OTliZjMxYjU0ODljZDk2NSJ9"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L57-L66",
+          "version": "repo-lines-v1:sha256:9cf27d0acb4eb3c0dd1fd8e9834e03961232cf124af57985fb97fcf20bc33232:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmQ1ODUyZTAwMzkyNmZmOTM1OWFjMTNiYzRiYWNhNDI1MmUwMzAxYjc1M2ZjMWVkMTdmNzQ4NDNkMTFlZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxMWE4NWFjMWMyYjNmNjE2NzIwMWZkMGJhMDE5ODNlZTljNDY5YjExNWVmODk3MDQ2OWVhMDc5M2Y3OGZmNzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwZWQ3N2NhOGNkOWQ1Y2IyOTdlNjNmYzg3NzgyMjQyM2NhMjY1MTMyYzAxMzllZWI0YTM4NjllNDIzOTNiNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRiOTNmNjZkOWM0ZWY5NzczZjhkMmIxOTg0M2ExM2NjODE0MjliMGE3MTVjNGYwMDhjZTVjODVhM2Y5MjgyYWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2092a46d93c34ecdadb6458907d4192e",
+      "statement": "Element lookups match on the local tag name with the namespace ignored, and only the rdf:about/resource attributes and the pgterms:agent check are namespace-qualified, so a feed-side tag rename degrades output silently rather than erroring.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L192-L208",
+          "version": "repo-lines-v1:sha256:b66932d1f2e7b8fea0f53af70d1cf4293183f01bbeb1a4e73e29a7cf13af7c8f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MmFjZTA0OGUyMDBkYTM5ZWQwZGM4MzVmNGEzZDJmOTQwNWNlNGZmOGY5NTFiNWU4MzViMTQwYWYzNTQ2YTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxOTExMWM1MzJiZjU4M2EzYWI3ZmQyZjc5MjdiNjFkMDAwMTQ2OTdhMWViMGI2YjhlNzAzOGRlM2VhMmZiMGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljYTgzOGVlMTUzYThmNmNiMDQxMDkwODM3YTY0NTliMmJiNGMyMWJjYjk3ZDRlY2NlMzUwYzIxYTE3MTI4YjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI5MTc2YWUwNGI0NTA3NDNjNjVmNWZhOWU0N2M4MThkZjFmMTM3YjNhMGQ1YzJmNzAxMmQ0MTdjNDAwMmY2NzQifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L344-L359",
+          "version": "repo-lines-v1:sha256:88396c2da61449c6b170e119b0685e9ed220f75d41c91ad3c2436838cdd1979d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4MWU5NzY3ODM4MGY5YTQxZTA3MzUxN2M2YmU3M2Q1ZjA1Y2NkN2Q5ZmU2NmQ0OGFiYTIyMzRhZWYwZTU1ZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwNDY1ZmNkODE3YzM4OGRlZjI2YjRlMjEyMGQzNGE5ZWNjYjI5ZjhkY2RmOGRkMmIwODUyMGJjYmU4NmU4MGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5OTEzYzhmYjUzOWE3ZDFhZjIzYTY4YTU4OGMwOGM2ZjNmOTk0ZDhhMjE0MTljYmQyNTQxN2Q0NjJmYjdmNzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjOWI5NjQzODQ1NzcyOTZhYmZkMTFlZjU4NDEwNDdhZGZkMWYwYTNlMzBjZWZjYTEzYTk4ZTNmODE3ZTY1MmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9748f1f6d3794cb4a6c56957d6d66c11",
+      "statement": "Optional feed nodes degrade to None or empty vectors and a missing downloads becomes 0, while a missing or wrong-typed type, title, language, required format, or agent rejects the whole record rather than emitting a partial one.",
+      "evidence": [
+        {
+          "resource": "repo://src/xml_parser.rs#L211-L216",
+          "version": "repo-lines-v1:sha256:656228607d56c731701ac280b88a2706e5d55ca4cb89feb1ffcda69699f08268:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWU4MTAzZGU5MGMzYWIxMzM0Y2M1MzU3MWE1YzYxOWQ0ZDkzYWU2ODVjMzUwM2MzMjhiZjBmMDg5MGIzMDdmZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmU1NDFkMjE2ZWM0ZDNhZTc1ZDI1ZDIzNWU4YjNjZmM3MTQ1NjUxOGZmNTk0MjFiMDU1M2YyZjEzNGYwNTBmZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWE0NDQzNDUxMmU0Njk4YjgyYWY5NGExNWU4MDdhYjFjOGVjYjc4NmU5MzIwODY4YzllMzJiOTQ3MDEyNTcxOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWE0Njc4ZjQyZjQ2YTdkNzg2YWMzMzRiYjVkMmIxOGMzNzEwNzJjMGNjZjZkMWY5ZGYxNjliZDgwMTUxZTE1NCJ9"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L313-L342",
+          "version": "repo-lines-v1:sha256:3a9e549c54b3e35988c45675eb81205b4f9014596da1984f3dccf12127b22c10:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMmVhMjc1MzBjNzhmNWM4MDgxY2Q1Yjc4ZjJkZGIwMWQ1YTE4MmQwMjhmZTRhM2M0NmYwZDc5MjQ4YWJhNDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlOWIwNzY0ZDc2NGViOGFiYWM0ZmRjZThlZGY5NGYwNjYyMWNiNTdmZGUzMTFhNzNmY2ZkNzk4NmY1MThjYzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlMGI3Nzk5OWZlNjhlNDNlOThhZjg5NGI0N2YwZDYyMTI3ODY5M2U5NWExOTZhYThjMjFjNWIwZDdiOGEzOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5MTlhMWU4NGFhMDEwMWU0ODkzMmZlOTNiYzg4OTU1MWQzYTlmZmZhY2JhMjcwZTYwNjAyMmQ4YTBhYzUxMDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_afa6c18d08c0443d9eab324b4ec738e9",
+      "statement": "Each archive entry is expected to hold one ebook element among the root's direct children, and entries are streamed so a single malformed file rejects exactly one record without affecting the rest of the run.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L322-L333",
+          "version": "repo-lines-v1:sha256:0e99aed41ff7fb6f250c50f8791d773f8ee2762538aa6022e91f5cf36d6c905f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2ODUxNDc1NDAzYjFhOGViNTY4NDQwNTI3MDEyNThmMDM1YzQxMTBjOTk0OTk0YjIxM2JlOTg4NmEzYmQ3NjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUxYzc3Yzg2NWUwNDlhY2EzYjA0NDM5NWE0ZDUzN2E3YmU2NTNiYTk2NmI4YWE4ZWRlMDBjYjhlMmEzMWMyYzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU2YjhmYzY0NDI1MGE0MmFlNjA1ZTA1MWJlZDBkZjIzNGRmY2QyZWU2MzI2ZTFhOTNiZGJmNjRiZWEwMmNlM2IifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L167-L171",
+          "version": "repo-lines-v1:sha256:fc0afae4a01f7f330ce98ed1b4327fa62344e597427afa0538210a4de730dfe6:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdjZGI3MTU4Nzc5YzllZGE2NWE2ZTU4NmQ5ZTY2Y2M0YWM3ZDZjNjJkMzhiNTcwYjYyNTU1MTUxYjI2ZTEzOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmE1YzI0ODI1NzU3MjczMzJhYTZjYjEwYmI0ZGU3YmVjNGUwZWZhZDQ2ZWZhZjA5M2MwMzQwYzJlNzg3MTI5YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGU4ZTQ5YzI3Y2NlYjRlZTQ3NjdiYWU4OGE1YTA3YTYyMDgwMTY0MWEyMDU1Yzg5N2IyZjE1ODk2ZjU3YWFiMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmUwMWUzZGEwNWZkOTlmNmVkZjdmMjgxMjcwYmI3Y2IwZDRmMjkyYTRiZGM1MDI5MGMxZTNhNDc0Zjc2NTQ2YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dedbb89d2a3b44bd84d9a1a486a526c1",
+      "statement": "A normal run reads a local archive and makes no feed request; --download is the only flag that makes the feed a live dependency, and it fetches only .xml and .rdf entries from the local copy.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L282-L291",
+          "version": "repo-lines-v1:sha256:0657692aff5a6109fe3e91c4061b3d3fd1e7f5884807f652c31583b738927387:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiZjRjNzI5M2U1YTlhYjE2OGE1MTBhMDQzNTc1NTgwMzk5ODJkOGRkNmM4M2Q4ZGYzNDU2YTc5ZDBlMjBjYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOWUxMjU0NjQyNTU3NmQzZGVhZThjOWI5ZGJmMTI4ZDVkNmRkYWY1ZDdmZTg1NzkzNDkyN2RlZmZhM2I5ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwYzM5Y2QzOTJmMjM1NTZhMDM2MzNiZDQyNjQxNDg2MDcyN2I3OGEwZjlmNzdjMWNiNzVmM2JlMDFkYTVjOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkNDVmYTVmZDhmYmUwYmQ4ZDljYzM4ZGViOTQ0OTEzOTQ4ZThmYjJhYmE2MmY1N2QwNWU0MzE0Nzc4MzNkMDIifQ"
+        },
+        {
+          "resource": "repo://src/cli.rs#L314-L334",
+          "version": "repo-lines-v1:sha256:1662e9873df52afbc0c07acf5c1a2461a4795d8afb38875d68544e57364d741d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkMWJiYjg5YzIwMTEzODUyYjdhNTZkMGQwN2QyNDA3ZGZhM2QwMTY4OTVmNDVmZDEwNjIwYTIyMzdjY2E1YzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyZDExY2FmNDNlOTdlZjM2OWU2YmVlZDFhMjY4YmQwNTgzOGYyOWI5ZGQyNTRiZjY5YmE2NDg4NDE0NzIzNGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzY2MyNjYyNTYwYjU3OWRkZWM0NTdhNWIwYWU1ZmU5YjY1MDE2ZDk1YjZjMGM0YzE0MjgxMDMyMTRhMmJiMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ0NGNmNTk1MzcxZTUwOTIyYzE5NWY4YzFmMmQ2MjY5MmViYzczZDdlZTZhY2U1OTMxNDVhOTI2MTgyMmJjMDUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:57:55.085Z"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a1923e376cd01e90fded49f90a5b696ddd753cd1a98249994ac9aaafcf4dcabd",
+  "claims": [
+    {
+      "id": "claim_98487cb187554c8bb0c506c0b0c12fd1",
+      "statement": "The module graph is an acyclic chain with two leaves: config and models depend on nothing internal, utils depends on config, taxonomy on config/models/utils, xml_parser on config/models/taxonomy/utils, cli on config/models/xml_parser, and main declares all six and calls cli::run.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L25-L39",
+          "version": "repo-lines-v1:sha256:93fc6b76a6850880195c72b74395ce9bf818c9e7dd74d3d0576cbe411a12e203:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMTY2Yzk0YjBlMzllOGVlZTBkMzhiMDczNDE3Mzk1YmUzZTBiZmZkZTgxYjAxNTdjMTBhNzU4YTcwOWNmY2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhOWIxODk4MDJiNGQ0NDFmNzRhZDlkYmIzYWUyYzVlOTU1MzJmYTJiNDBhOTZkYTMwNzIwYjdlMDdjNjFjYzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyYzUxMGJlZTk5NWU1NDM1OWJjMzhkMGFkOTgyN2RiY2VmNDFlNGRlMzQwYjYyZmY1MTFmZTNiNGM0MDhjMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY5ODQxMDlmODMwZDA3NTRkMjE1ZmJkZDhjNGQ2NWIyNWQzNTkyNjdlZmQ3OTM1MDVhNWFjYzM5OThmOThkZjMifQ"
+        },
+        {
+          "resource": "repo://src/main.rs#L21-L26",
+          "version": "repo-lines-v1:sha256:e9cc1b53d27896c5c8e6b3b468b7b06c3d98a1c8e4a446abaf0b4f615955f333:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDNkZWM5YTQ1OTg4MTE3OGRjYjQ0YTk4NjU3NTgyNzY4MTI2YmY5ZDI3M2E3YmZiZDJjZGI1ZGVmZTEyZTk5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjU2NTg0MTE1YmY2YmFhYmI0ZDk0ZTQyMzg4OTU5NWU1MDFlNGFmMDY1N2M4ODMzOGI1MTI1NDY4OWY4ZmMyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODkwNmQxNTUwYjYzMjU5ODRhMWIwMDRjNzUzM2QxOTg1ZTUwMjM4NjA0ZmQ1ODYwZDMwNWIzMDE2NDE3NDNhMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzU3OTczZWYzMGQwMDJiOTUyYTBmYTY0MDJlNzg5MWE5NTBjZDVhNGM0MWQ0YzdkODMyOTNhODNlOWI3OGZlZCJ9"
+        },
+        {
+          "resource": "repo://src/taxonomy.rs#L21-L25",
+          "version": "repo-lines-v1:sha256:fca7e9c774a2f121ad624b1b7a565bdfcfed39c8c4aedb2b619a98ba9544394d:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmYxNjZjOTRiMGUzOWU4ZWVlMGQzOGIwNzM0MTczOTViZTNlMGJmZmRlODFiMDE1N2MxMGE3NThhNzA5Y2ZjZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDQxYWJhNDBiMTJhZGQwZDA5ODQ0MmJlNjUwODQxN2M5NTUxYTdmMGQzZjE0YWYxZjFkMDM3M2FiNWE5YTM2ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWVmNzNkNDljODQ0YTdkYjUyOTAwNzU0YjI0ODc4ZTJiYzU1MzQ2NTNlNDg2OGQyZWI4NzYwYjcxZjk4M2Q5YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzY4NDZhZWY5MjE5N2I5NjhhMTFiYWUzMzhiODE1ZGY3MGZiNmYzNWJiZWJjYmQxNTg4MWIzODMyZDM5NTJmMSJ9"
+        },
+        {
+          "resource": "repo://src/utils.rs#L16-L18",
+          "version": "repo-lines-v1:sha256:339a384a8d071def0e80720bac58c7a0d896814d26e28ef65c093ee830a0db28:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmYxNjZjOTRiMGUzOWU4ZWVlMGQzOGIwNzM0MTczOTViZTNlMGJmZmRlODFiMDE1N2MxMGE3NThhNzA5Y2ZjZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzI1MjIwOTI2MGE1NzczYWU5YzZjNmY4MzhhNzcwYzFkZDU4NTYwYmE4OTBhNDQ2NGFkNjFmY2JjODZlNWIzNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzc5ZDYxMDQ4ZTc1MDY0ZjZhM2FhMTliMjJkYjRiNDM5MjAyZGFiODE4Y2YxN2VhNDIwZmY4YWE2MDk5NGU2MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTVjNTAzNGMwZjVhMWUzZjMwODIyNWRkOWY4NDk0OGY1ZjcyNmViMDQ0MzRjMTg1YWUxZjU2ODY0M2YzMDhmYyJ9"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L26-L31",
+          "version": "repo-lines-v1:sha256:5715835d7918569b65e6809e4a6b51113860a94b5f730fc9cff72b5fa16d9bfe:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmYxNjZjOTRiMGUzOWU4ZWVlMGQzOGIwNzM0MTczOTViZTNlMGJmZmRlODFiMDE1N2MxMGE3NThhNzA5Y2ZjZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjc5Y2RkMzU5MWFiZmFjOTlmN2MzMzE0NmUyNzI0OWZiZWZhYmQ4N2Q5ZjE2MWFjNTVlNWExYjQ0ZWExMmEwOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTg3YjNiOTMzNTAxODM5YTc0ZDc3YmEyNDY5Y2MxMmZhMzk2NWNlOWY2MzZkOWQ1ZGZkNzhmY2FmOWZjZGEzNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmY2Zjc1OTIwYWE5MDIzOWRmOTE0NzEzMTgxNjJlNWI3NTJiYmU2MjQwMDI3NjVkNjgzZDNjNTVmOTlmYzBmMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0d422c8870074eb7830f408715ee76b3",
+      "statement": "Every cross-module import is a glob import, so any pub item in config or models is in scope in every consumer and those two modules act as de facto shared libraries.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L25-L39",
+          "version": "repo-lines-v1:sha256:93fc6b76a6850880195c72b74395ce9bf818c9e7dd74d3d0576cbe411a12e203:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMTY2Yzk0YjBlMzllOGVlZTBkMzhiMDczNDE3Mzk1YmUzZTBiZmZkZTgxYjAxNTdjMTBhNzU4YTcwOWNmY2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhOWIxODk4MDJiNGQ0NDFmNzRhZDlkYmIzYWUyYzVlOTU1MzJmYTJiNDBhOTZkYTMwNzIwYjdlMDdjNjFjYzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyYzUxMGJlZTk5NWU1NDM1OWJjMzhkMGFkOTgyN2RiY2VmNDFlNGRlMzQwYjYyZmY1MTFmZTNiNGM0MDhjMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY5ODQxMDlmODMwZDA3NTRkMjE1ZmJkZDhjNGQ2NWIyNWQzNTkyNjdlZmQ3OTM1MDVhNWFjYzM5OThmOThkZjMifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L26-L31",
+          "version": "repo-lines-v1:sha256:5715835d7918569b65e6809e4a6b51113860a94b5f730fc9cff72b5fa16d9bfe:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmYxNjZjOTRiMGUzOWU4ZWVlMGQzOGIwNzM0MTczOTViZTNlMGJmZmRlODFiMDE1N2MxMGE3NThhNzA5Y2ZjZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjc5Y2RkMzU5MWFiZmFjOTlmN2MzMzE0NmUyNzI0OWZiZWZhYmQ4N2Q5ZjE2MWFjNTVlNWExYjQ0ZWExMmEwOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTg3YjNiOTMzNTAxODM5YTc0ZDc3YmEyNDY5Y2MxMmZhMzk2NWNlOWY2MzZkOWQ1ZGZkNzhmY2FmOWZjZGEzNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmY2Zjc1OTIwYWE5MDIzOWRmOTE0NzEzMTgxNjJlNWI3NTJiYmU2MjQwMDI3NjVkNjgzZDNjNTVmOTlmYzBmMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c66266a6ee2544fbb1aae1607a86508c",
+      "statement": "No single module owns the JSON output contract: serde presence attributes in models and the rejection filters in xml_parser together produce the guarantees, and neither asserts the other's half.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L30-L170",
+          "version": "repo-lines-v1:sha256:3130be8d1feb8b539aaad8115190e6327081fe36ff27e6c834f56bcad5dbcc1d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZGEwOTRjMTA5YWQwMGUyNTlkOTk1NGJiM2E3Nzg1ZTk4ZWM2YzU3ZDZmZGFjY2E5ZDBhMzYwZjhkYTY4YWJiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyZThlMjI5NmI0YTYxOWQ4NjRmM2U1MDQ5ZWZiOTQ3ZjQyYjRjYTRkNGZhYTUwYjNiMjAxZGI5ZTFjOGUxNGRlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJiOTliODFiN2UwNWQxYmY3OGNkZWMyOTQ5MmQwNjdkMGZkZWY2OGJhZTkyOGFlZjk1NzAzOTk0MzkyYWU3MzI0In0"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L157-L377",
+          "version": "repo-lines-v1:sha256:a9ef3eccf4ed7bf6be3d9e428365423c1a193510daca27d119122c94514511d7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhZGNmNGRhZWFhNGRjOTg0YjJlOWEwMTRmZTU5MmFhYjgwMmNiOGI2YTdiYWNmODQzYjdlNTMwZjUzNTNmZWIwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyMzNmNDYyY2RiNTYzYzE5OTQ3M2M0NzA5ZTE0OWI3N2EwNDZkMzhjMDBhNWMxN2M4ZTRhOGY2NzQ3YTJjZDAzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmOWEzMGYzOTRjNzBlMTkwODYwMGVjNmNkODA1YTA5MDBiYTJjYmQ5NGVjMzc0ZDQ2N2YzNDNlOWJhMTAyOWM3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_46f962070d3d45b2ab1c6323641dd203",
+      "statement": "The pipeline stages are inline closures and blocks in cli::run wired with concrete crossbeam channels, with no trait abstraction over a stage and no pluggable source or sink.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L310-L356",
+          "version": "repo-lines-v1:sha256:d99ae3f04c59fec8110feba9e2e2276a201f36c222c11d12b98f1915a2e19953:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MDNkMTEyNGI0YTNjMmVhODVkYTAxYzk5NzAxZmY4Njk0ZjcxY2Y1ODdhN2JmYWE3Nzk4NmM4ZDVhMTI3MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjMzk5N2NmYmU5MmFiM2RiYWUwZGQ5ZjAxOTY0YmY3NzU0MWU5YmFiNjVkZWUwNzJjNWM2NTk1MjMxMjNiNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjMTQwZTQ3NzdhMzM5MzExZTM2NTJiMGE0YWYyMTI5ZTliNWZjM2U1YjBkOGNjNTNjNmMwNjI4NzE5ZGYxYjUifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L157-L162",
+          "version": "repo-lines-v1:sha256:51b183dbee85eed9743845d055939c066acb77e09676c3a5de461168b7291030:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWRjZjRkYWVhYTRkYzk4NGIyZTlhMDE0ZmU1OTJhYWI4MDJjYjhiNmE3YmFjZjg0M2I3ZTUzMGY1MzUzZmViMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWExNDc0NTc3YzIyY2IzNmU1ZDNjNzA2YjEyN2ZlNTU2YzljYTc3NzBiZGFhZDRlYWI3ODNiNjA3NjRmNWM3ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjMzZjQ2MmNkYjU2M2MxOTk0NzNjNDcwOWUxNDliNzdhMDQ2ZDM4YzAwYTVjMTdjOGU0YThmNjc0N2EyY2QwMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWMzMmU1ZjJlOWIyMmUxYTVlNGMyMWYyNjU0ZGExZjdiNzJjMjYxNzk5NjcxMjc4MDBjN2Y3YjFkYmEwNWFkYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfd1a4963c984234b9d00ef97fa816e9",
+      "statement": "New enrichment sources are threaded as plain boolean parameters from cli through process_rdf_xml into utils rather than through a config struct, so a third source would add a fourth parameter to every call site and test.",
+      "evidence": [
+        {
+          "resource": "repo://src/cli.rs#L347-L349",
+          "version": "repo-lines-v1:sha256:abccf68e9bff41886bd07716a0eb9f6f56d700dc14c6d742a8d6efb0ccd8df14:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU3MTRiNmU4MDI5ZGEzYzQ0YzczNTEyMmE1MzM3ZDdmZWE2MzE4MDc0NmEyNGY4MDQ4YzRhNDgzMDlhYzA2MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODk4MmY1N2RjMTg5M2JjMmUyYzY4NGEzYjA1OGQyZDFiZjI3OTdmNmUwNjJhNDIyYTEzNDRmYWE2NmU3YzNiOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTZmNjI5NDFiMTIwNGE4ZmI1ZDZlNWFkMmJkMDZlMjE5YzYxYjI0MTMzYTg0MWRjNWEyYzk5NWEzODdmNzljZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjViYmE0ZDQxNzdjZGU4N2JkZTk0YTkyYzFiYWIyYTY2N2NiMTE0OGI5M2RlODU3NWE5ZGQxMzNiZDA0NjRhOCJ9"
+        },
+        {
+          "resource": "repo://src/utils.rs#L312-L321",
+          "version": "repo-lines-v1:sha256:5aa67000d0c2f7ce0ceb26401006ab16a76151cad872aecaaeb4dc414cf5bf2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3NWJiYmUxNzQyMGQxNWZkYTc3NGYxYjBkYzRhM2ExOWFhNjI3MzZkOGM0ZDVkZjNmNGMzMzRkZGVkNWYxZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4NzQyZjQzZDU1MjI2MWU4Nzk1ZDI0NDM1ZWI4MjVmNmI3ZTYzMDVkYzkzNzFmNmNiOGU0MzY3ZGE5YjRiYzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5YTMwZjM5NGM3MGUxOTA4NjAwZWM2Y2Q4MDVhMDkwMGJhMmNiZDk0ZWMzNzRkNDY3ZjM0M2U5YmExMDI5YzcifQ"
+        },
+        {
+          "resource": "repo://src/xml_parser.rs#L157-L162",
+          "version": "repo-lines-v1:sha256:51b183dbee85eed9743845d055939c066acb77e09676c3a5de461168b7291030:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWRjZjRkYWVhYTRkYzk4NGIyZTlhMDE0ZmU1OTJhYWI4MDJjYjhiNmE3YmFjZjg0M2I3ZTUzMGY1MzUzZmViMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWExNDc0NTc3YzIyY2IzNmU1ZDNjNzA2YjEyN2ZlNTU2YzljYTc3NzBiZGFhZDRlYWI3ODNiNjA3NjRmNWM3ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjMzZjQ2MmNkYjU2M2MxOTk0NzNjNDcwOWUxNDliNzdhMDQ2ZDM4YzAwYTVjMTdjOGU0YThmNjc0N2EyY2QwMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWMzMmU1ZjJlOWIyMmUxYTVlNGMyMWYyNjU0ZGExZjdiNzJjMjYxNzk5NjcxMjc4MDBjN2Y3YjFkYmEwNWFkYSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-08T08:57:55.085Z"
+  }
+}
