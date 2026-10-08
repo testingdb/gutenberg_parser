@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:907e05d1d07d50c531e384dbd848f0609d45d2e6f36ad0ee88d02c76304a0f50",
+  "claims": [
+    {
+      "id": "claim_6d8fd880a7a5402b9d947dd41e1dcbc9",
+      "statement": "Agent uses serde rename (`agent_type` -> `type`) and skip_serializing_if for optional fields (`agent_id`, `birth_date`, `death_date`, `image`), with aliases/webpages defaulting to empty vectors.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L13-L53",
+          "version": "repo-lines-v1:sha256:3454307b64130103f916d790543ea2ac9aa54c8f95c996e5e399bc6036394a7e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4ODhhZDRiZWI4ZjM4OGEyY2UzNDNiYTIwMjc5YzAwNGJkMWMwNjA5NTI0MWRhZWNlMTY2NmRkNzg4NGUxOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2YWI2NWVhNWFjMGJlNjEwOTY1MWQyZjFiYzM1NjM5ZDJkMzRhOGYxMjI0MmJjZGFmNzZhMGRkMDE5NTI2MTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4YWVjNDk3MDAwM2VlYzJhZmE4NzhmOWYxODQ3ODZlNGZjNjNmOWRkNWNiZTEzYjNhYzkxMTEzOWY4ZmEwOTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NjQ4Yzk2ZGNlYWZiMjM4NDE0NDg2ZDQ3MDFhOGIyZjA4ZGNlMmRiYWNiODQxMjU1Mjk4YzdiNTg2YWQzNDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8de7c1efbfc841b8acf7d0f1e82b095c",
+      "statement": "Ebook is the core record with title, agents, formats, taxonomy, downloads, ebook_id (numeric string), cover_image, and license, using skip_serializing_if for optional fields.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L97-L137",
+          "version": "repo-lines-v1:sha256:2724af137d3ea90ce92363101d06db0fde73d3d72e829f7e227373f8e03c7114:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5YzJkMmZmZDYzNjc2YmU3ODc2NzBlNzMyYWRhMmY0N2E0NWU4MDVjYTdhN2YzMDkyZTFiNTM3ZmMyYWUxODIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0YjU0ODg3NDcwZjRiMDdhNTY3M2YxNThiMGM3MTBkOGNiNzVjMzY5ZGM3NTkzNTQyODQ5ODM0YWE0ZGE0YTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVjMTM0N2JlMmJlZTBiOGVkNmVkZWZhYzdlZWUxODJlZWVlY2U5ZWEwNjNhOGMzNDZiNjljOGZmOTYyMTc4YjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f07b83018b564f6dbcf1f040cdabccc5",
+      "statement": "BridgeEbook converts Ebook to a target schema with renamed fields (`lang_code`, `pg_download_count`, `md_cover_image_url`, `license_statement`) and nested BridgeAgent/BridgeFormat mappings.",
+      "evidence": [
+        {
+          "resource": "repo://src/models.rs#L140-L266",
+          "version": "repo-lines-v1:sha256:e0115927dcefd1901f9b508d7a8adb543586ff02dedb861a0682bc100c92efb0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyZDQ5MTk0OWE5MjI0NjYxZDMzODMxYTVmODU0NDQ1ZGQ4YjQ2N2M3YzY3MTExNjY1NjhhYWU0NTI2OWRiYWFjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhNWU1ZWRmZWY3MDY1NTA3M2M0ODQ1ZGUzMmNjZTU3OTJmZTgzMmM2YmEyYjg4ZWI2NDNlYTA0NTdlYzU5ZTUyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwNGE2NWY1NzNjNDBkMDM4YzNiY2ZjNDdiZmUxNjE3Nzc2ZDIxZWU0MWRlMGIzOTllNGFhMGRiNTI2NDM5ZDBiIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhYWY1NjU5MzBhMjEwYzM0YzA1NzRhNTQwOWQzMjRiMjUzZDk4ZDM3OWE1NTAyZjZiYmY4NGQ1NDkwMWJjN2Y1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-08T08:19:49.366Z"
+  }
+}

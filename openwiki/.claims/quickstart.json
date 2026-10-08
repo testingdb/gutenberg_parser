@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6849e0de7ff985cb3b4dd7e5a06e4a992fb48a811fb866646ced5e2cc67854bf",
+  "claims": [
+    {
+      "id": "claim_dd97961c80e1420782b57a995424dcfa",
+      "statement": "This wiki covers the gutenberg_parser CLI: a multi-threaded Rust utility that parses Gutenberg RDF/XML archives into structured JSON output with taxonomy, filtering, and optional Wikipedia enrichment.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:385af9c45e8bb521f78d84ad0c90ed927d7539931055f00c1dedad9160b092ab"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-08T08:19:49.366Z"
+  }
+}
