@@ -3,9 +3,6 @@ type: operations-delivery
 title: CI Quality Gates, Dependency Audit, and Release
 description: The four GitHub Actions workflows that gate changes, audit dependencies on a schedule, publish multi-platform binaries, and deploy the documentation site.
 tags: [ci, github-actions, release, supply-chain, operations]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-08T08:38:59.748Z
 sources:
   - id: openwiki-source-207fa9d9092efa3fe808da7a
     resource: repo://.github/workflows/audit.yml
@@ -18,6 +15,9 @@ sources:
   - id: openwiki-source-845ef3fba7d5519c73daee5e
     resource: repo://deny.toml
 generated: { by: "opencode", at: "2026-10-08T08:38:59.748Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-13T22:23:44.450Z
 ---
 
 # CI Quality Gates, Dependency Audit, and Release

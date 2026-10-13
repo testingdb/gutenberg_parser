@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:0c72a10873d89bfdd7bedea6496f369d8bb9608bcb93a7ab8e2d86274f37bdcd",
+  "pageVersion": "sha256:f7813440ce218e9a7ee667b33ea95b28d9f8ad55bf8494839032a30439014172",
   "claims": [
     {
       "id": "claim_d67c032c276a4271919211c82338a87f",
@@ -95,18 +95,18 @@
       "statement": "The OpenWiki Pages workflow renders the committed openwiki tree with the pinned openwiki@0.7.0 CLI, asserts the export is non-empty, and deploys only when the event is not a pull request.",
       "evidence": [
         {
-          "resource": "repo://.github/workflows/openwiki-page.yml#L32-L64",
+          "resource": "repo://.github/workflows/openwiki-page.yml#L31-L63",
           "version": "repo-lines-v1:sha256:4a487b382bc1c11775363ad3f8b5602cfdfb7356bc95dd9021f5f8ce181438cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5ZDgwMTU0ZWQ0MmZjNWM3NzliMTMzMTU3OGI1OGI4OWM4MDFlYWNlNzRmMjRjZDQ4ZWI0YTIzNTc5NDBhOTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5OTk1ZmI5OTQ3MWMxNTY4YzhjYWUxZjdjYzJlODA0NDgxMGQzNmE2YWY3NDVjOTUwZWEyMzgzYmJkNTkxYTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkMzkzMDRjOGVmZDg3MzUwNWViMTk1MjMyYTUzMjA2ZDhmYzZhNWQwYWEwMTkzYzMzZDUzZjM0NjA3NzZiMzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQxNmU2NmY1ZjVkYjNlYzcyZmZjODFhMDE1ZjdkZjBmOGQ2NjA5YjAzOGNiZGY4NjIyYTBhNGQ5ZDU1MGVhYzcifQ"
         },
         {
-          "resource": "repo://.github/workflows/openwiki-page.yml#L55-L84",
-          "version": "repo-lines-v1:sha256:f70e4f8c3cba726c1593030eaf5684ed70e97779f7fb19a4bd7f7e77d2368769:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5NDJhZmRkZDMyMDQ2OTkzNDlhNTNjMDA1Y2VlMmU2YWE3NjdiYjNlODlkOWJkOTZmMTcyNWM2ODNhOTM1Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNjJjYWIyZjM1MDI4MGIyNzI1MDAwODdhZjBmZTlkYjIwYWE0ZDE4OGM1NzQwZmJlZGYwMjc1NmI5OGQzMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0M2FmNDYyYmRlODRjYWMzNzlhOTA5YzRmYWIwZTE3YzI5ZmNkY2Y2MTEyZDA5NDk1YTYzOGI4ZWRmYzQzMDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://.github/workflows/openwiki-page.yml#L54-L83",
+          "version": "repo-lines-v1:sha256:1951aaa992e901f4ae9ab6bd529256ba1f043963a064d94d31ad18242e73f1cf:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5NDJhZmRkZDMyMDQ2OTkzNDlhNTNjMDA1Y2VlMmU2YWE3NjdiYjNlODlkOWJkOTZmMTcyNWM2ODNhOTM1Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhNDc0OWUxYzMwNTYzOGZlM2M1NTQ3OWQ4YWI1YjQ1ZDFiNDkwMDc1YzY1Yjk0MmU5MzM0OTI2YmYzM2E2ZTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0M2FmNDYyYmRlODRjYWMzNzlhOTA5YzRmYWIwZTE3YzI5ZmNkY2Y2MTEyZDA5NDk1YTYzOGI4ZWRmYzQzMDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-08T08:38:59.748Z"
+    "at": "2026-10-13T22:23:44.450Z"
   }
 }

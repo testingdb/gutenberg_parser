@@ -2,15 +2,15 @@
 type: "Reference"
 title: "RDF/XML Record Extraction and Acceptance Filters"
 openwiki_generated: true
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-08T08:38:59.748Z
 sources:
   - id: openwiki-source-c38906bbfa9e9c69417b11b5
     resource: repo://src/cli.rs
   - id: openwiki-source-fdbf7e7124c50fb2a5a041fb
     resource: repo://src/xml_parser.rs
-generated: { by: "opencode", at: "2026-10-08T08:38:59.748Z" }
+generated: { by: "opencode", at: "2026-10-13T22:23:44.450Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-13T22:23:44.450Z
 ---
 
 
@@ -77,7 +77,7 @@ The cover image is not read from the feed at all: it is constructed as `https://
 
 The remaining optional fields each have a specific source, and none of their absence is an error:
 
-- `description` — the first of `marc520`, `marc500`, or `description` that appears.
+- `description` — searched explicitly by priority: `marc520` first, then `marc500`, then `description`. Document order is ignored. This prevents a generic `dcterms:description` (e.g., a Wikipedia link) that appears before `marc520` from overriding the actual summary.
 - `alternative_titles` — all `alternative` children, MARC-cleaned.
 - `issued_date` — `issued` text, unparsed.
 - `downloads` — `downloads` parsed as `u64`, defaulting to `0`.

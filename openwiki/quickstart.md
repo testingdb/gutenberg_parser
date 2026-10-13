@@ -7,7 +7,7 @@ sources:
 generated: { by: "opencode", at: "2026-10-08T08:57:55.085Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-08T08:57:55.085Z
+    at: 2026-10-13T22:23:44.450Z
 ---
 
 This repository (`gutenberg_parser`) is a multi-threaded Rust CLI for parsing Project Gutenberg RDF/XML archives.

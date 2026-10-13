@@ -3,9 +3,6 @@ type: reference-verification
 title: Test Suite Layout and Local Verification
 description: Where verification lives in this crate (inline per-module test modules), what the fixtures pin down, and which local commands reproduce the CI gates.
 tags: [testing, quality, ci, rust, coverage]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-08T08:38:59.748Z
 sources:
   - id: openwiki-source-c1a55afad9a61e65437aa93e
     resource: repo://.github/workflows/pr-gate.yml
@@ -20,6 +17,9 @@ sources:
   - id: openwiki-source-fdbf7e7124c50fb2a5a041fb
     resource: repo://src/xml_parser.rs
 generated: { by: "opencode", at: "2026-10-08T08:38:59.748Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-13T22:23:44.450Z
 ---
 
 # Test Suite Layout and Local Verification

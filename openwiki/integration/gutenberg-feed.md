@@ -2,9 +2,6 @@
 type: "Reference"
 title: "Project Gutenberg RDF Feed Contract"
 openwiki_generated: true
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-08T08:57:55.085Z
 sources:
   - id: openwiki-source-23775c3de52f3ab95a13cb8b
     resource: repo://README.md
@@ -15,6 +12,9 @@ sources:
   - id: openwiki-source-fdbf7e7124c50fb2a5a041fb
     resource: repo://src/xml_parser.rs
 generated: { by: "opencode", at: "2026-10-08T08:57:55.085Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-13T22:23:44.450Z
 ---
 
 
