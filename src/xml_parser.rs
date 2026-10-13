@@ -310,10 +310,15 @@ pub fn process_rdf_xml(
     )
     .unwrap();
 
-    // Read optional description from `marc520`, `marc500`, or `description`.
+    // Read optional description. Priority: marc520 > marc500 > description.
+    // The RDF feed puts a generic `dcterms:description` (e.g. Wikipedia link)
+    // before `marc520` (actual summary); `.find()` on an array picks document
+    // order, so we must search explicitly by priority.
     let description = ebook
         .children()
-        .find(|n| ["marc520", "marc500", "description"].contains(&n.tag_name().name()))
+        .find(|n| n.tag_name().name() == "marc520")
+        .or_else(|| ebook.children().find(|n| n.tag_name().name() == "marc500"))
+        .or_else(|| ebook.children().find(|n| n.tag_name().name() == "description"))
         .and_then(|n| n.text())
         .map(|t| t.trim().to_string());
 
@@ -834,5 +839,138 @@ mod tests {
         let ebook = res.unwrap();
         assert!(ebook.formats.iter().any(|f| f.mime_type == "application/epub+zip"));
         assert!(ebook.formats.iter().any(|f| f.mime_type == "text/html"));
+    }
+
+    // =======================================================================
+    // Description retrieval tests (regression: correct marc520/description,
+    // no generic Wikipedia-derived injection)
+    // =======================================================================
+
+    fn full_ebook_xml_with_description(desc_text: &str, desc_tag: &str) -> String {
+        format!(
+            r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
+<ebook rdf:about="ebooks/154" xmlns="http://www.gutenberg.org/2009/pgterms/">
+  <type><value>text</value></type>
+  <title>Shakespeare's Sonnets</title>
+  <language><value>en</value></language>
+  <rights>Public domain in the USA.</rights>
+  <{}>{}</{}>
+  <creator>
+    <agent rdf:about="http://www.gutenberg.org/ebooks/agents/1">
+      <name>William Shakespeare</name>
+    </agent>
+  </creator>
+  <hasFormat><file rdf:about="https://www.gutenberg.org/files/154/154-0.html"><value>text/html</value></file></hasFormat>
+  <hasFormat><file rdf:about="https://www.gutenberg.org/files/154/154.epub"><value>application/epub+zip</value></file></hasFormat>
+</ebook>
+</rdf:RDF>"#,
+            desc_tag, desc_text, desc_tag
+        )
+    }
+
+    /// Correct description from marc520 is retrieved and preserved exactly.
+    #[test]
+    fn process_rdf_description_from_marc520() {
+        let desc = "Shakespeare's Sonnets by William Shakespeare is a collection of poems published in 1609. The work includes 154 sonnets, with sonnets 127-152 addressing a mysterious figure known as the Dark Lady, described as having black wiry hair and dark skin. These poems contrast sharply with earlier sonnets through their overtly sexual nature. The Dark Lady's true identity remains one of literature's enduring mysteries, with scholars debating whether she was a real person or purely Shakespeare's artistic invention.";
+        let xml = full_ebook_xml_with_description(desc, "marc520");
+        let res = process_rdf_xml(xml.as_bytes(), "", false, false);
+        assert!(res.is_ok(), "Expected Ok, got {:?}", res);
+        let ebook = res.unwrap();
+        assert!(ebook.description.is_some());
+        assert_eq!(ebook.description.as_ref().unwrap(), desc);
+    }
+
+    /// Description node (`description`) is read when marc520 is absent.
+    #[test]
+    fn process_rdf_description_from_description_node() {
+        let desc = "A brief summary of the work.";
+        let xml = full_ebook_xml_with_description(desc, "description");
+        let res = process_rdf_xml(xml.as_bytes(), "", false, false);
+        assert!(res.is_ok());
+        let ebook = res.unwrap();
+        assert!(ebook.description.is_some());
+        assert_eq!(ebook.description.as_ref().unwrap(), desc);
+    }
+
+    /// When no description node is present, description is None (no injection).
+    #[test]
+    fn process_rdf_description_absent_when_no_description_node() {
+        let xml = r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
+<ebook rdf:about="ebooks/100" xmlns="http://www.gutenberg.org/2009/pgterms/">
+  <type><value>text</value></type>
+  <title>No Description Book</title>
+  <language><value>en</value></language>
+  <rights>Public domain in the USA.</rights>
+  <creator><agent rdf:about="http://www.gutenberg.org/ebooks/agents/1"><name>Author</name></agent></creator>
+  <hasFormat><file rdf:about="https://www.gutenberg.org/files/100/100-0.html"><value>text/html</value></file></hasFormat>
+  <hasFormat><file rdf:about="https://www.gutenberg.org/files/100/100.epub"><value>application/epub+zip</value></file></hasFormat>
+</ebook>
+</rdf:RDF>"#.to_string();
+        let res = process_rdf_xml(xml.as_bytes(), "", false, false);
+        assert!(res.is_ok());
+        let ebook = res.unwrap();
+        assert!(
+            ebook.description.is_none(),
+            "Description must be absent when no description node exists; got {:?}",
+            ebook.description
+        );
+    }
+
+    /// Replicates real archive behaviour (pg1041.rdf): `dcterms:description`
+    /// (wrong/generic Wikipedia link) appears before `marc520` (correct).
+    /// Parser must prefer `marc520` over document order.
+    #[test]
+    fn process_rdf_description_prefers_marc520_over_wrong_description() {
+        let xml = r#"<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:pgterms="http://www.gutenberg.org/2009/pgterms/">
+<ebook rdf:about="ebooks/1041" xmlns="http://www.gutenberg.org/2009/pgterms/">
+  <type><value>text</value></type>
+  <title>Shakespeare's Sonnets</title>
+  <language><value>en</value></language>
+  <rights>Public domain in the USA.</rights>
+  <dcterms:description>Wikipedia page about this book: https://en.wikipedia.org/wiki/Dark_Lady_(Shakespeare)</dcterms:description>
+  <pgterms:marc520>"Shakespeare's Sonnets" by William Shakespeare is a collection of poems published in 1609. The work includes 154 sonnets, with sonnets 127-152 addressing a mysterious figure known as the Dark Lady.</pgterms:marc520>
+  <creator>
+    <agent rdf:about="http://www.gutenberg.org/ebooks/agents/65"><name>Shakespeare, William</name></agent>
+  </creator>
+  <hasFormat><file rdf:about="https://www.gutenberg.org/files/1041/1041-0.html"><value>text/html</value></file></hasFormat>
+  <hasFormat><file rdf:about="https://www.gutenberg.org/files/1041/1041.epub"><value>application/epub+zip</value></file></hasFormat>
+</ebook>
+</rdf:RDF>"#.to_string();
+        let res = process_rdf_xml(xml.as_bytes(), "", false, false);
+        assert!(res.is_ok(), "Expected Ok for real archive pattern, got {:?}", res);
+        let ebook = res.unwrap();
+        assert!(
+            ebook.description.is_some(),
+            "Description must be retrieved from marc520"
+        );
+        let d = ebook.description.as_ref().unwrap();
+        assert!(
+            d.contains("Shakespeare's Sonnets"),
+            "Expected marc520 content, got: {}",
+            d
+        );
+        assert!(
+            !d.contains("Dark_Lady_(Shakespeare)"),
+            "Parser must prefer marc520 over generic dcterms:description (Wikipedia link); got: {}",
+            d
+        );
+    }
+
+    /// Regression: generic Wikipedia-derived descriptions must not replace the
+    /// actual marc520/description text. If the XML provides a specific
+    /// description, the parsed value must match the XML, not a generic reference.
+    #[test]
+    fn process_rdf_description_no_generic_wikipedia_injection() {
+        // Use the exact correct description text; ensure no substitution.
+        let desc = "Shakespeare's Sonnets by William Shakespeare is a collection of poems published in 1609. The work includes 154 sonnets, with sonnets 127-152 addressing a mysterious figure known as the Dark Lady, described as having black wiry hair and dark skin. These poems contrast sharply with earlier sonnets through their overtly sexual nature. The Dark Lady's true identity remains one of literature's enduring mysteries, with scholars debating whether she was a real person or purely Shakespeare's artistic invention.";
+        let xml = full_ebook_xml_with_description(desc, "marc520");
+        let res = process_rdf_xml(xml.as_bytes(), "", false, false);
+        assert!(res.is_ok());
+        let ebook = res.unwrap();
+        assert!(ebook.description.as_ref().unwrap().contains("Shakespeare's Sonnets"));
+        assert!(
+            !ebook.description.as_ref().unwrap().starts_with("Dark Lady"),
+            "Generic Wikipedia-derived description must not override marc520 content"
+        );
     }
 }
