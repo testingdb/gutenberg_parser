@@ -63,7 +63,7 @@ jobs:
           fi
 
       - name: Build Release Binary
-        run: cargo build --release
+        run: cargo build --release --target ${{ matrix.target }}
 
       - name: Package Artifact
         shell: bash
