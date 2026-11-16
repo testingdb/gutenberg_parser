@@ -63,7 +63,7 @@ jobs:
           fi
 
       - name: Build Release Binary
-        run: cargo build --release --locked --target ${{ matrix.target }}
+        run: cargo build --release --offline --target ${{ matrix.target }}
 
       - name: Package Artifact
         shell: bash
