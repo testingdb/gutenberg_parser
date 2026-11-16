@@ -174,7 +174,7 @@ pub fn get_chunk_path(base_path: &str, chunk_index: usize) -> String {
     }
 }
 
-/// Downloads the RDF feed archive from the Gutenberg mirror.
+/// Downloads the RDF feed archive from the given mirror URL.
 ///
 /// Streams the response to a temporary `.tar.bz2` file with progress
 /// reporting every 2 seconds. Returns the `NamedTempFile` handle, which
@@ -184,11 +184,11 @@ pub fn get_chunk_path(base_path: &str, chunk_index: usize) -> String {
 /// # Errors
 /// Returns `Err(String)` for network failures, non-200 HTTP status,
 /// or temporary-file I/O errors.
-pub fn download_rdf_archive() -> Result<NamedTempFile, String> {
+pub fn download_rdf_archive(url: &str) -> Result<NamedTempFile, String> {
     let start = Instant::now();
-    println!("[INFO] Downloading rdf-files.tar.bz2 from {}", RDF_FEED_URL);
+    println!("[INFO] Downloading rdf-files.tar.bz2 from {}", url);
 
-    let mut response = ureq::get(RDF_FEED_URL)
+    let mut response = ureq::get(url)
         .call()
         .map_err(|e| format!("Failed to download archive: {}", e))?;
 
@@ -196,7 +196,7 @@ pub fn download_rdf_archive() -> Result<NamedTempFile, String> {
         return Err(format!(
             "Failed to download archive: HTTP {} from {}",
             response.status(),
-            RDF_FEED_URL
+            url
         ));
     }
 
@@ -279,8 +279,15 @@ pub fn run() {
         .unwrap_or(&args.mirror.as_str())
         .to_string();
 
+    // Use the canonical RDF feed URL when the default Gutenberg mirror is selected;
+    // for custom mirrors, construct the URL from the mirror base.
+    let rdf_url = if args.mirror.to_lowercase() == "gutenberg" {
+        RDF_FEED_URL.to_string()
+    } else {
+        format!("{}cache/epub/feeds/rdf-files.tar.bz2", mirror_base)
+    };
     let (_downloaded_archive, archive_path) = if args.download {
-        let temp = download_rdf_archive().unwrap_or_else(|e| {
+        let temp = download_rdf_archive(&rdf_url).unwrap_or_else(|e| {
             eprintln!("[ERROR] {}", e);
             std::process::exit(1);
         });
