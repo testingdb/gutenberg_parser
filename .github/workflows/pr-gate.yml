@@ -68,7 +68,7 @@ jobs:
         run: cargo fmt --all -- --check
 
       - name: Lint (Clippy)
-        run: cargo clippy --all-targets --all-features --offline -- -D warnings
+        run: cargo clippy --all-targets --all-features --locked -- -D warnings
 
       - name: Install Machete
         uses: taiki-e/install-action@cargo-machete
@@ -77,7 +77,7 @@ jobs:
         run: cargo machete
 
       - name: Build Release Binary
-        run: cargo build --release --offline
+        run: cargo build --release --locked
 
       - name: Run Tests
         run: cargo test --all-features --locked
