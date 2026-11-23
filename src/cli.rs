@@ -431,4 +431,58 @@ mod tests {
     fn chunk_path_generates_suffix() {
         assert!(get_chunk_path("out.json", 1).contains("_1"));
     }
+
+    /// `--bridge` serialization uses `external_cover_url`, while the default
+    /// output keeps `cover_image`.
+    #[test]
+    fn write_chunk_cover_key_depends_on_bridge_mode() {
+        let cover_url = "https://gutenberg.pglaf.org/cache/epub/1342/pg1342.med.jpg";
+        let mut data = vec![Ebook {
+            title: "Pride and Prejudice".to_string(),
+            alternative_titles: vec![],
+            issued_date: None,
+            agents: vec![],
+            description: None,
+            language: "en".to_string(),
+            formats: vec![],
+            taxonomy: Taxonomy {
+                domain: "General".to_string(),
+                genres: vec![],
+                topics: vec![],
+            },
+            downloads: 0,
+            ebook_id: "1342".to_string(),
+            cover_image: cover_url.to_string(),
+            license: "Public domain in the USA.".to_string(),
+        }];
+
+        let dir = tempfile::tempdir().unwrap();
+        let bridge_path = dir.path().join("bridge.json");
+        write_chunk(&mut data, bridge_path.to_str().unwrap(), true).unwrap();
+        let bridge_json = std::fs::read_to_string(&bridge_path).unwrap();
+        assert!(
+            bridge_json.contains(&format!("\"external_cover_url\":\"{}\"", cover_url)),
+            "bridge output must use external_cover_url: {}",
+            bridge_json
+        );
+        assert!(
+            !bridge_json.contains("md_cover_image_url"),
+            "bridge output must not use the legacy key: {}",
+            bridge_json
+        );
+
+        let parser_path = dir.path().join("parser.json");
+        write_chunk(&mut data, parser_path.to_str().unwrap(), false).unwrap();
+        let parser_json = std::fs::read_to_string(&parser_path).unwrap();
+        assert!(
+            parser_json.contains(&format!("\"cover_image\":\"{}\"", cover_url)),
+            "parser output must keep cover_image: {}",
+            parser_json
+        );
+        assert!(
+            !parser_json.contains("external_cover_url"),
+            "parser output must not use the bridge key: {}",
+            parser_json
+        );
+    }
 }

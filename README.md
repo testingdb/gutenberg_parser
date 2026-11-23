@@ -253,7 +253,7 @@ Passing `--bridge` keeps the same one-object-per-book structure but renames outp
 | `ebook_id` | `pg_id` | `books.pg_id` |
 | `language` | `lang_code` | `books.lang_code` |
 | `downloads` | `pg_download_count` | `books.pg_download_count` |
-| `cover_image` | `md_cover_image_url` | `books.md_cover_image_url` |
+| `cover_image` | `external_cover_url` | `books.external_cover_url` |
 | `license` | `license_statement` | `books.license_statement` |
 | `formats[].type` | `formats[].mime_type` | `formats.mime_type` |
 | `formats[].url` | `formats[].file_url` | `formats.file_url` |
@@ -323,7 +323,7 @@ Passing `--bridge` keeps the same one-object-per-book structure but renames outp
     },
     "pg_download_count": 45000,
     "pg_id": 103,
-    "md_cover_image_url": "https://www.gutenberg.org/cache/epub/103/pg103.cover.medium.jpg",
+    "external_cover_url": "https://www.gutenberg.org/cache/epub/103/pg103.cover.medium.jpg",
     "license_statement": "Public domain in the USA."
   }
 ]
@@ -388,7 +388,7 @@ These fields are **guaranteed present and non-null** for every output object:
 | `formats` | `formats` | Array of format objects (HTML + EPUB minimum) |
 | `taxonomy.domain` | `taxonomy.domain` | Primary domain classification |
 | `ebook_id` | `pg_id` | Project Gutenberg book ID |
-| `cover_image` | `md_cover_image_url` | Cover image URL |
+| `cover_image` | `external_cover_url` | Cover image URL |
 | `license` | `license_statement` | License text |
 | `downloads` | `pg_download_count` | Download counter |
 | `agents[]` | `agents[]` | At least one contributor (required by filter) |

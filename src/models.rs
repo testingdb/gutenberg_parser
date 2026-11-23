@@ -8,7 +8,7 @@
 //! ## Bridge Schema (`BridgeEbook`)
 //! When the CLI `--bridge` flag is enabled, each `Ebook` is mapped to a
 //! `BridgeEbook` with renamed fields (`lang_code`, `pg_download_count`,
-//! `md_cover_image_url`, etc.) that match the target database schema.
+//! `external_cover_url`, etc.) that match the target database schema.
 //!
 //! ## Serialization Pruning
 //! Optional fields (`agent_id`, `birth_date`, `death_date`, `image`,
@@ -222,7 +222,7 @@ pub struct BridgeFormat {
 
 /// Bridge representation of the complete ebook record.
 ///
-/// Field names (`lang_code`, `pg_download_count`, `md_cover_image_url`,
+/// Field names (`lang_code`, `pg_download_count`, `external_cover_url`,
 /// `license_statement`) match the external database target schema.
 #[derive(Serialize, Debug, Clone)]
 pub struct BridgeEbook {
@@ -260,8 +260,9 @@ pub struct BridgeEbook {
     /// Numeric ebook ID (renamed from `ebook_id`).
     pub pg_id: u64,
 
-    /// Cover image URL (renamed from `cover_image`).
-    pub md_cover_image_url: String,
+    /// Cover image URL (renamed from `cover_image` in bridge mode only).
+    /// Always emitted, as an empty string when no cover URL was resolved.
+    pub external_cover_url: String,
 
     /// License text (renamed from `license`).
     pub license_statement: String,
@@ -313,7 +314,7 @@ impl From<&Ebook> for BridgeEbook {
             taxonomy: ebook.taxonomy.clone(),
             pg_download_count: ebook.downloads,
             pg_id: ebook.ebook_id.parse::<u64>().unwrap_or(0),
-            md_cover_image_url: ebook.cover_image.clone(),
+            external_cover_url: ebook.cover_image.clone(),
             license_statement: ebook.license.clone(),
         }
     }
@@ -326,6 +327,28 @@ impl From<&Ebook> for BridgeEbook {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Minimal valid `Ebook` used to exercise both serialization modes.
+    fn sample_ebook(cover_image: &str) -> Ebook {
+        Ebook {
+            title: "Test".to_string(),
+            alternative_titles: vec![],
+            issued_date: None,
+            agents: vec![],
+            description: None,
+            language: "en".to_string(),
+            formats: vec![],
+            taxonomy: Taxonomy {
+                domain: "General".to_string(),
+                genres: vec![],
+                topics: vec![],
+            },
+            downloads: 0,
+            ebook_id: "42".to_string(),
+            cover_image: cover_image.to_string(),
+            license: "Public domain".to_string(),
+        }
+    }
 
     /// Basic agent creation and property verification.
     #[test]
@@ -347,27 +370,60 @@ mod tests {
     /// parsing from the `ebook_id` string.
     #[test]
     fn bridge_ebook_conversion() {
-        let ebook = Ebook {
-            title: "Test".to_string(),
-            alternative_titles: vec![],
-            issued_date: None,
-            agents: vec![],
-            description: None,
-            language: "en".to_string(),
-            formats: vec![],
-            taxonomy: Taxonomy {
-                domain: "General".to_string(),
-                genres: vec![],
-                topics: vec![],
-            },
-            downloads: 0,
-            ebook_id: "42".to_string(),
-            cover_image: "".to_string(),
-            license: "Public domain".to_string(),
-        };
+        let ebook = sample_ebook("");
         let bridge: BridgeEbook = BridgeEbook::from(&ebook);
         assert_eq!(bridge.title, "Test");
         assert_eq!(bridge.pg_id, 42);
+        assert_eq!(bridge.external_cover_url, "");
+
+        // An unresolved cover is still emitted as an empty string, not omitted.
+        let json = serde_json::to_string(&bridge).unwrap();
+        assert!(
+            json.contains("\"external_cover_url\":\"\""),
+            "empty cover URL must be emitted: {}",
+            json
+        );
+        assert!(
+            !json.contains("md_cover_image_url"),
+            "legacy cover key must be absent: {}",
+            json
+        );
+    }
+
+    /// Only the cover key changes in bridge mode; the parser-mode record keeps
+    /// `cover_image`, and every other bridge key keeps its established name.
+    #[test]
+    fn bridge_renames_only_the_cover_key() {
+        let cover_url = "https://gutenberg.pglaf.org/cache/epub/1342/pg1342.med.jpg";
+        let ebook = sample_ebook(cover_url);
+        let parser_json = serde_json::to_value(&ebook).unwrap();
+        let bridge_json = serde_json::to_value(BridgeEbook::from(&ebook)).unwrap();
+
+        assert_eq!(parser_json["cover_image"].as_str(), Some(cover_url));
+        assert!(parser_json.get("external_cover_url").is_none());
+        assert!(parser_json.get("md_cover_image_url").is_none());
+
+        assert_eq!(bridge_json["external_cover_url"].as_str(), Some(cover_url));
+        assert!(bridge_json.get("cover_image").is_none());
+        assert!(bridge_json.get("md_cover_image_url").is_none());
+
+        let mut keys: Vec<&str> = bridge_json.as_object().unwrap().keys().map(String::as_str).collect();
+        keys.sort_unstable();
+        assert_eq!(
+            keys,
+            vec![
+                "agents",
+                "alternative_titles",
+                "external_cover_url",
+                "formats",
+                "lang_code",
+                "license_statement",
+                "pg_download_count",
+                "pg_id",
+                "taxonomy",
+                "title",
+            ]
+        );
     }
 
     /// A resolved Wikipedia thumbnail survives the bridge conversion, and is
