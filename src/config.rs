@@ -66,12 +66,13 @@ pub static GUTENBERG_MIRRORS: LazyLock<HashMap<&'static str, &'static str>> = La
 /// URL of the RDF archive feed provided by Project Gutenberg.
 pub const RDF_FEED_URL: &str = "https://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.bz2";
 
-/// Base URL of the English Wikipedia REST summary endpoint.
+/// Template for the language-aware Wikipedia REST summary endpoint.
 ///
-/// The page name is appended verbatim to build the lookup URL
-/// (`.../page/summary/<pagename>`); its `thumbnail.source` field holds the
-/// image URL of the article lead image.
-pub const WIKIPEDIA_SUMMARY_API: &str = "https://en.wikipedia.org/api/rest_v1/page/summary/";
+/// `{language}` is replaced with the article's language subdomain (for example
+/// `en`, `fr`, `de`) and the encoded page title is appended to build the lookup
+/// URL. The summary payload's `thumbnail.source` holds the lead image URL and
+/// `extract` holds the plain-text lead / biographical summary.
+pub const WIKIPEDIA_SUMMARY_API: &str = "https://{language}.wikipedia.org/api/rest_v1/page/summary/";
 
 /// `User-Agent` sent with every Wikipedia API request.
 ///

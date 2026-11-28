@@ -42,7 +42,7 @@ use crate::xml_parser::*;
 /// The parser enforces mutual exclusion between `archive_path` and
 /// `--download`, and provides optional chunking, result limits,
 /// mirror selection, bridge-mode schema conversion, licensed-content
-/// inclusion, and Wikipedia image enrichment.
+/// inclusion, and Wikipedia enrichment (lead image and plain-text bio).
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Ultra-fast Multi-threaded Gutenberg Archive Extractor")]
 pub struct Args {
@@ -85,13 +85,14 @@ pub struct Args {
     )]
     include_licensed: bool,
 
-    /// Resolve agent images from Wikipedia.
+    /// Resolve agent Wikipedia lead images and biographical summaries.
     #[arg(
         short = 'w',
         long,
-        help = "Look up a thumbnail image for every agent that has a Wikipedia page (via the Wikipedia REST API)"
+        alias = "wiki-images",
+        help = "Look up a lead image and plain-text summary (bio) for every agent with a Wikipedia page, via the Wikipedia REST API"
     )]
-    wiki_images: bool,
+    wikipedia: bool,
 
     /// Automatically download the RDF archive, parse it, and delete it.
     #[arg(
@@ -310,8 +311,8 @@ pub fn run() {
     } else {
         println!("[INFO] Filtering to Public Domain ebooks only");
     }
-    if args.wiki_images {
-        println!("[INFO] Wikipedia image enrichment enabled: resolving thumbnails for agents with a Wikipedia page");
+    if args.wikipedia {
+        println!("[INFO] Wikipedia enrichment enabled: resolving lead images and biographical summaries for agents with a Wikipedia page");
     }
 
     // Bounded channels link producer → workers → consumer.
@@ -349,11 +350,11 @@ pub fn run() {
         let tx = parsed_tx.clone();
         let mirror = mirror_base.clone();
         let include_licensed = args.include_licensed;
-        let wiki_images = args.wiki_images;
+        let wikipedia = args.wikipedia;
 
         std::thread::spawn(move || {
             while let Ok(raw_bytes) = rx.recv() {
-                if let Ok(ebook) = process_rdf_xml(&raw_bytes, &mirror, include_licensed, wiki_images) {
+                if let Ok(ebook) = process_rdf_xml(&raw_bytes, &mirror, include_licensed, wikipedia) {
                     if tx.send(ebook).is_err() {
                         break;
                     }
@@ -484,5 +485,18 @@ mod tests {
             "parser output must not use the bridge key: {}",
             parser_json
         );
+    }
+
+    /// `--wikipedia`, `-w` and the hidden `--wiki-images` alias enable the
+    /// same flag; it is off by default.
+    #[test]
+    fn wikipedia_flag_parses_all_forms() {
+        for flag in ["--wikipedia", "-w", "--wiki-images"] {
+            let args = Args::try_parse_from(["gutenberg_parser", "archive.tar.bz2", flag]).unwrap();
+            assert!(args.wikipedia, "flag {flag} did not enable Wikipedia enrichment");
+        }
+
+        let args = Args::try_parse_from(["gutenberg_parser", "archive.tar.bz2"]).unwrap();
+        assert!(!args.wikipedia);
     }
 }

@@ -19,9 +19,9 @@
 //! `parse_agent` handles nested `agent` nodes inside `creator`, `trl`,
 //! `aui`, `ill`, `edt`, and `aut` tags. It reads `rdf:about`, `name`,
 //! `alias`, `birthdate`, `deathdate`, and `webpage` children (collected into
-//! the agent's `webpages` field). When `wiki_images` is enabled, agents whose
+//! the agent's `webpages` field). When `wikipedia` is enabled, agents whose
 //! `webpages` include a Wikipedia article are enriched with the article's
-//! thumbnail image URL.
+//! lead image (`image`) and plain-text summary (`bio`).
 
 use crate::config::*;
 use crate::models::*;
@@ -37,8 +37,8 @@ use std::collections::HashSet;
 /// * `agent_type` — Role string (`author`, `translator`, etc.).
 /// * `ebook_id` — Numeric ebook identifier (for URL transformation).
 /// * `mirror_base` — Mirror base URL (passed to `transform_url`).
-/// * `wiki_images` — When `true`, resolves a Wikipedia thumbnail for agents
-///   that have a Wikipedia page in their `webpages` list.
+/// * `wikipedia` — When `true`, resolves Wikipedia enrichment (`image` and
+///   `bio`) for agents that have a Wikipedia page in their `webpages` list.
 ///
 /// # Returns
 /// `Some(Agent)` if the agent has a non-empty `name`; `None` otherwise.
@@ -47,7 +47,7 @@ pub fn parse_agent(
     agent_type: &str,
     ebook_id: &str,
     mirror_base: &str,
-    wiki_images: bool,
+    wikipedia: bool,
 ) -> Option<Agent> {
     let parent = parent_node?;
 
@@ -112,11 +112,15 @@ pub fn parse_agent(
         .and_then(|n| n.text())
         .map(|t| t.trim().to_string());
 
-    // Resolve the Wikipedia thumbnail (only when enrichment is enabled).
-    let image = if wiki_images {
-        agent_wikipedia_image(&webpages)
+    // Resolve Wikipedia enrichment only when the flag is enabled.
+    let (image, bio) = if wikipedia {
+        let enrichment = agent_wikipedia_enrichment(&webpages);
+        (
+            enrichment.as_ref().and_then(|value| value.image.clone()),
+            enrichment.as_ref().and_then(|value| value.bio.clone()),
+        )
     } else {
-        None
+        (None, None)
     };
 
     Some(Agent {
@@ -128,6 +132,7 @@ pub fn parse_agent(
         birth_date,
         death_date,
         image,
+        bio,
     })
 }
 
@@ -149,7 +154,7 @@ pub fn parse_agent(
 /// * `xml_data` — Raw XML bytes from the archive entry.
 /// * `mirror_base` — Mirror base URL for URL transformation.
 /// * `include_licensed` — If `false`, excludes non-public-domain ebooks.
-/// * `wiki_images` — If `true`, resolves Wikipedia thumbnail images for
+/// * `wikipedia` — If `true`, resolves Wikipedia image and bio fields for
 ///   agents that have a Wikipedia page.
 ///
 /// # Returns
@@ -158,7 +163,7 @@ pub fn process_rdf_xml(
     xml_data: &[u8],
     mirror_base: &str,
     include_licensed: bool,
-    wiki_images: bool,
+    wikipedia: bool,
 ) -> Result<Ebook, &'static str> {
     // Decode UTF-8 and parse XML document.
     let xml_str = std::str::from_utf8(xml_data).map_err(|_| "utf8_error")?;
@@ -279,7 +284,7 @@ pub fn process_rdf_xml(
             .children()
             .filter(|n| n.is_element() && n.tag_name().name() == tag)
         {
-            if let Some(agent) = parse_agent(Some(node), agent_type, &ebook_id, mirror_base, wiki_images) {
+            if let Some(agent) = parse_agent(Some(node), agent_type, &ebook_id, mirror_base, wikipedia) {
                 agents.push(agent);
             }
         }
@@ -412,10 +417,10 @@ mod tests {
         let death_xml = death
             .map(|d| format!("<deathdate>{}</deathdate>", d))
             .unwrap_or_default();
-        let pages_xml = pages
-            .iter()
-            .map(|p| format!("<webpage rdf:resource=\"{}\"/>", p))
-            .collect::<String>();
+        let mut pages_xml = String::new();
+        for page in pages {
+            pages_xml.push_str(&format!("<webpage rdf:resource=\"{page}\"/>"));
+        }
         format!(
             r#"<agent xmlns="http://www.gutenberg.org/2009/pgterms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="{}">
 <name>{}</name>
@@ -488,10 +493,10 @@ mod tests {
         assert!(parse_agent(Some(doc.root_element()), "author", "1", "", false).is_none());
     }
 
-    /// No Wikipedia lookup is attempted while the flag is off, so `image`
-    /// stays absent even when the agent has a Wikipedia page.
+    /// No Wikipedia lookup is attempted while `--wikipedia` is off, so both
+    /// enrichment fields stay absent even when the agent has a Wikipedia page.
     #[test]
-    fn parse_agent_image_absent_when_wiki_images_disabled() {
+    fn parse_agent_wikipedia_fields_absent_when_disabled() {
         let xml = agent_xml_self(
             "Verne, Jules",
             &[],
@@ -503,19 +508,21 @@ mod tests {
         let doc = Document::parse(&xml).unwrap();
         let agent = parse_agent(Some(doc.root_element()), "author", "103", "", false).unwrap();
         assert!(agent.image.is_none());
+        assert!(agent.bio.is_none());
     }
 
     /// Network-backed check of the enrichment path: run with
-    /// `cargo test -- --ignored` to verify the Wikipedia thumbnail lookup.
+    /// `cargo test -- --ignored` to verify a non-English Wikipedia article
+    /// supplies both the lead image and the plain-text summary.
     #[test]
     #[ignore = "requires network access to the Wikipedia REST API"]
-    fn parse_agent_image_resolved_from_wikipedia() {
+    fn parse_agent_wikipedia_fields_resolved_from_wikipedia() {
         let xml = agent_xml_self(
             "Verne, Jules",
             &[],
             None,
             None,
-            &["https://example.com/verne", "https://en.wikipedia.org/wiki/Jules_Verne"],
+            &["https://example.com/verne", "https://fr.wikipedia.org/wiki/Jules_Verne"],
             "http://www.gutenberg.org/ebooks/agents/31",
         );
         let doc = Document::parse(&xml).unwrap();
@@ -523,6 +530,8 @@ mod tests {
         let image = agent.image.expect("expected a Wikipedia thumbnail URL");
         assert!(image.starts_with("http"), "unexpected image URL: {}", image);
         assert!(image.contains("wikimedia.org"), "unexpected image host: {}", image);
+        let bio = agent.bio.expect("expected a Wikipedia extract");
+        assert!(!bio.trim().is_empty(), "expected a non-empty Wikipedia extract");
     }
 
     // =======================================================================
